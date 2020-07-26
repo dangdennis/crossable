@@ -63,7 +63,7 @@ func main() {
 		}
 	}
 
-	fmt.Println(healthRecords)
+	fmt.Printf("%+v", healthRecords)
 }
 
 // constants for the header column names
