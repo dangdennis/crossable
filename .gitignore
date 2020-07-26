@@ -1,1 +1,8 @@
 node_modules
+
+.now
+node_modules
+
+# Environment Variables
+.env
+.env.build
