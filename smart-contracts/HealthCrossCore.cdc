@@ -1,5 +1,5 @@
 
-access(all) contract FitnessCrossingCore {
+access(all) contract HealthCrossCore {
 
     access(all) resource interface Interactible {}
     access(all) resource BodyNFT: Interactible {}

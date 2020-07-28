@@ -1,3 +1,3 @@
-module github.com/dangdennis/fitness-crossing/web
+module github.com/dangdennis/health-cross/web
 
 go 1.14

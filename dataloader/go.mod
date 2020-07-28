@@ -1,3 +1,3 @@
-module github.com/dangdennis/fitness-crossing/dataloader
+module github.com/dangdennis/health-cross/dataloader
 
 go 1.14

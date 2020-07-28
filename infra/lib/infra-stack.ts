@@ -7,6 +7,6 @@ export class InfraStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const bucket = new s3.Bucket(this, "FitnessCrossingStoreDev");
+    const bucket = new s3.Bucket(this, "HealthCrossStoreDev");
   }
 }
