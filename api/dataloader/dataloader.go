@@ -22,15 +22,15 @@ type HealthRecord struct {
 	DistanceWalkingRunning float64
 }
 
-// Read reads the healthkit csv into memory
-func Read() ([]HealthRecord, error) {
+// ReadFile reads the healthkit csv into memory
+func ReadFile(filePath string) ([]HealthRecord, error) {
 	var (
 		rowCount      int64
 		headers       map[string]int = make(map[string]int)
 		healthRecords []HealthRecord
 	)
 
-	f, err := os.Open("./dennis-export-07-25.csv")
+	f, err := os.Open(filePath)
 	if err != nil {
 		return healthRecords, err
 	}
