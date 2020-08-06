@@ -1,6 +1,5 @@
 
 access(all) contract HealthCrossCore {
-
     access(all) resource interface Interactible {}
     access(all) resource BodyNFT: Interactible {}
     access(all) resource WearableNFT: Interactible {}
@@ -8,25 +7,46 @@ access(all) contract HealthCrossCore {
     access(all) resource WearableNFTCollection {}
     access(all) resource WearableNFTMarketplace {}
 
+    pub struct HealthStat {
+        pub var type: String
+        pub var value: UFix64
+        pub var unit: String
+        
+        init(type: String, value: UFix64, unit: String) {
+            self.type = type
+            self.value = value
+            self.unit = unit
+        }
+    }
+
     access(all) resource Avatar {
         pub let id: UInt64
         pub let createdAt: String
-        pub let healthData: {String: UFix64}
+        pub let healthStats: {String: HealthStat}
         pub let bodyNFTCollection: @BodyNFTCollection
         pub let wearableNFTCollection: @WearableNFTCollection
-
+        pub var age: UInt64
+        
         init() {
             self.id = 0
-            self.createdAt = "2006-04-20"
-            self.healthData = {
-                activeEnergy: UFix64(0),         
-                exerciseTime: UFix64(0),         
-                pushCount: UFix64(0),              
-                hoursAsleep: UFix64(0),            
-                hoursInBed: UFix64(0),             
-                stepCount: UFix64(0),              
-                DistanceWalkingRunning: UFix64(0)
+            self.createdAt = "2006-04-20" // TODO: Get data creation time
+            self.age = 0
+            self.bodyNFTCollection <- create HealthCrossCore.BodyNFTCollection()
+            self.wearableNFTCollection <- create HealthCrossCore.WearableNFTCollection()
+            self.healthStats = {
+                "activeEnergy": HealthCrossCore.HealthStat(type: "activeEnergy", value: UFix64(0), unit: "kcal"),
+                "exerciseTime": HealthCrossCore.HealthStat(type: "exerciseTime", value: UFix64(0), unit: "kcal"),
+                "pushCount": HealthCrossCore.HealthStat(type: "pushCount", value: UFix64(0), unit: "kcal"),
+                "hoursAsleep": HealthCrossCore.HealthStat(type: "hoursAsleep", value: UFix64(0), unit: "kcal"),
+                "hoursInBed": HealthCrossCore.HealthStat(type: "hoursInBed", value: UFix64(0), unit: "kcal"),
+                "stepCount": HealthCrossCore.HealthStat(type: "stepCount", value: UFix64(0), unit: "kcal"),
+                "distanceWalkingRunning": HealthCrossCore.HealthStat(type: "distanceWalkingRunning", value: UFix64(0), unit: "kcal")
             }
+        }
+
+        destroy() {
+            destroy self.bodyNFTCollection
+            destroy self.wearableNFTCollection
         }
     }
 
