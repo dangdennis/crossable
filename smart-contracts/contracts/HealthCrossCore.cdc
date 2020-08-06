@@ -7,34 +7,77 @@ access(all) contract HealthCrossCore {
     // AvatarAttributeUpdated is emitted when an avatar's attribute fails to update
     pub event AvatarFailAttributeUpdated(avatarId: UInt64)
 
-    access(all) resource interface Interactible {}
-    access(all) resource BodyNFT: Interactible {}
-    access(all) resource WearableNFT: Interactible {}
-    access(all) resource BodyNFTCollection {}
-    access(all) resource WearableNFTCollection {}
-    access(all) resource WearableNFTMarketplace {}
+    // Interactible enforces the base requirements of a resource that interacts with an Avatar
+    access(all) resource interface Interactible {
+        pub let id: UInt64
+        pub var name: String
+    }
 
-    // HealthStat is a single data point as part of an Avatar's health stats.
-    pub struct HealthStat {
-        // type is the name of the health. i.e. "activeEnergy"
-        pub var type: String
-        pub var value: UFix64
-        // unit is the unit of measurement. i.e. "minutes/miles"
-        pub var unit: String
-        
-        init(type: String, value: UFix64, unit: String) {
-            self.type = type
-            self.value = value
-            self.unit = unit
+    // BodyNFT are physical characteristics that form the Avatar's unique identity
+    access(all) resource BodyNFT: Interactible {
+        pub let id: UInt64
+        pub var name: String
+
+        init(id: UInt64, name: String) {
+            self.id = id
+            self.name = name
         }
     }
 
-    pub resource Avatar {
+    // BodyNFTCollection is a collection for BodyNFTs
+    access(all) resource BodyNFTCollection {
+        // physique is the makeup of the Avatar's physique
+        pub let physique: @{String: BodyNFT}
+
+        init() {
+            self.physique <- {} // TODO: Set default physiques
+        }
+
+        destroy() {
+            destroy self.physique
+        }
+    }
+
+    // WearableNFT are items that an Avatar can don and trade with other Avatars
+    access(all) resource WearableNFT: Interactible {
+        pub let id: UInt64
+        pub var name: String
+        pub var outfitType: String
+
+        init(id: UInt64, name: String, outfitType: String) {
+            self.id = id
+            self.name = name
+            self.outfitType = outfitType
+        }
+    }
+
+    // WearableNFTCollection is a collection for WearableNFTs
+    access(all) resource WearableNFTCollection {
+        // closet is a collection of unworn WearableNFTs
+        pub let closet: @{UInt64: WearableNFT}
+        // outfit is a collection of WearableNFTs currently worn by the Avatar
+        pub let outfit: @{String: WearableNFT}
+
+        init() {
+            self.closet <- {} 
+            self.outfit <- {} // TODO: Set default outfit
+        }
+
+        destroy() {
+            destroy self.closet
+            destroy self.outfit
+        }
+    }
+
+    // WearableNFTMarketplace is public marketplace to sell wearables
+    access(all) resource WearableNFTMarketplace {}
+
+    access(all) resource Avatar {
         pub let id: UInt64
         pub let createdAt: String
-        pub let bodyNFTCollection: @BodyNFTCollection
-        pub let wearableNFTCollection: @WearableNFTCollection
-        pub let healthStats: {String: HealthStat}
+        pub let bodyNFTCollection: @HealthCrossCore.BodyNFTCollection
+        pub let wearableNFTCollection: @HealthCrossCore.WearableNFTCollection
+        pub let healthStats: {String: HealthCrossCore.HealthStat}
         pub var name: String
         pub var age: UInt64
         
@@ -56,16 +99,30 @@ access(all) contract HealthCrossCore {
             self.age = 0
         }
 
-        pub fun setName(name: String) {
-            self.name = name
+        // changeBodyNFT replaces the old body part with the new one.
+        // Destroy the old one because they are not meant to exist apart from an Avatar.
+        pub fun changeBodyNFT(type: String, bodyPart: @HealthCrossCore.BodyNFT) {
+            let prevBodyPart <- self.bodyNFTCollection.physique.remove(key: type) ?? panic("are you missing a body part?!")
+            self.bodyNFTCollection.physique[type] <-! bodyPart
+            destroy prevBodyPart
         }
 
+        // storeWearableNFT stores a wearableNFT into the Avatar's closet
+        pub fun storeWearableNFT(wearable: @HealthCrossCore.WearableNFT) {
+            self.wearableNFTCollection.closet[wearable.id] <-! wearable
+        }
+
+        // wearWearableNFT puts the wearableNFT onto the Avatar itself
+        pub fun wearWearableNFT(wearable: @HealthCrossCore.WearableNFT) {
+            self.wearableNFTCollection.outfit[wearable.outfitType] <-! wearable
+        }
+
+        // updateAttribute updates a single health stat
         pub fun updateAttribute(type: String, value: UFix64) {
             let prevStat = self.healthStats[type]!
             self.healthStats[type] = HealthStat(type: prevStat.type, value: prevStat.value + value, unit: prevStat.unit)
             emit AvatarAttributeUpdated(avatarId: self.id, type: prevStat.type)
         }
-
 
         destroy() {
             destroy self.bodyNFTCollection
@@ -73,7 +130,22 @@ access(all) contract HealthCrossCore {
         }
     }
 
-    pub resource AvatarMinter {
+    // HealthStat is a single data point as part of an Avatar's health stats.
+    pub struct HealthStat {
+        // type is the name of the health. i.e. "activeEnergy"
+        pub var type: String
+        pub var value: UFix64
+        // unit is the unit of measurement. i.e. "minutes/miles"
+        pub var unit: String
+        
+        init(type: String, value: UFix64, unit: String) {
+            self.type = type
+            self.value = value
+            self.unit = unit
+        }
+    }
+
+    access(all) resource AvatarMinter {
         pub var idCount: UInt64
         pub var totalSupply: UInt64
 
@@ -89,7 +161,7 @@ access(all) contract HealthCrossCore {
         }
     }
 
-    pub resource AvatarController {
+    access(all) resource AvatarController {
         pub fun updateAttributes(avatar: @HealthCrossCore.Avatar, attributes: {String: UFix64}): @HealthCrossCore.Avatar {
             for attributeType in attributes.keys {
                 avatar.updateAttribute(type: attributeType, value: attributes[attributeType]!)
@@ -98,28 +170,7 @@ access(all) contract HealthCrossCore {
         }
     }
 
-  
-
-    // Collections
-
-    // Avatar 
-    // pub fun mintAvatar(): @Avatar
-    // pub fun updateAttributes(avatar: @Avatar, healthDataMap: {String: UFix64}): @Avatar
-    // pub fun updateAttribute(avatar: @Avatar, healthDataKey: string, value: UFix64): @Avatar
-    
-    // // Interactibles
-    // pub fun mintBodyNFT(): @BodyNFT
-    // pub fun mintWearableNFT(): @WearableNFT
-    // pub fun addBodyNFT(avatar: @Avatar, nft: @BodyNFT): @Avatar
-    // pub fun addWearableNFT(avatar: @Avatar, nft: @WearableNFT): @Avatar
-    // pub fun removeBodyNFT(avatar: @Avatar, id: UInt64): @Avatar
-    // pub fun removeWearableNFT(avatar: @Avatar, id: UInt64): @Avatar
-
-    // // Marketplace
-    // pub fun mintMarketplace(): @WearableNFTMarketplace
-    // pub fun addToMarket(nft: @WearableNFT)
-    // pub fun addToMarket(id: UInt64): @WearableNFT
-
+    // TODO: COMPLETE AVATAR PROGRESSION LOGIC 
     // // Achievement Board
     // // Rewards and unlockables
     // // 1. Unlock based on absolute growth
