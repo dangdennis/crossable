@@ -14,34 +14,24 @@ access(all) contract HealthCrossCoin {
   // Event that is emitted when tokens are deposited to a Vault
   pub event TokensDeposited(amount: UFix64, to: Address?)
 
-  // Provider
-  //
-  // Interface that enforces the requirements for withdrawing
+  // Provider enforces the requirements for withdrawing
   // tokens from the implementing type.
-  //
   // We don't enforce requirements on `balance` here,
   // because it leaves open the possibility of creating custom providers
   // that don't necessarily need their own balance.
-  //
   pub resource interface Provider {
 
-      // withdraw
-      //
-      // Function that subtracts tokens from the owner's Vault
+      // withdraw subtracts tokens from the owner's Vault
       // and returns a Vault resource with the removed tokens.
-      //
       // The function's access level is public, but this isn't a problem
       // because only the owner can storing the resource in their account
       // can initially call this function.
-      //
       // The owner may grant other accounts access by creating a private
       // capability that would allow specific other users to access
       // the provider resource through a reference.
-      //
       // The owner may also grant all accounts access by creating a public
       // capability that would allow all other users to access the provider
       // resource through a reference.
-      //
       pub fun withdraw(amount: UFix64): @Vault {
           post {
               // `result` refers to the return value
@@ -51,23 +41,16 @@ access(all) contract HealthCrossCoin {
       }
     }
 
-    // Receiver
-    //
-    // Interface that enforces the requirements for depositing
+    // Receiver enforces the requirements for depositing
     // tokens into the implementing type.
-    //
     // We don't include a condition that checks the balance because
     // we want to give users the ability to make custom receivers that
     // can do custom things with the tokens, like split them up and
     // send them to different places.
-    //
     pub resource interface Receiver {
 
-        // deposit
-        //
-        // Function that can be called to deposit tokens
+        // deposit that can be called to deposit tokens
         // into the implementing resource type
-        //
         pub fun deposit(from: @Vault) {
             pre {
                 from.balance > UFix64(0):
@@ -76,14 +59,10 @@ access(all) contract HealthCrossCoin {
         }
     }
 
-    // Balance
-    //
-    // Interface that contains the `balance` field of the Vault
+    // Balance that contains the `balance` field of the Vault
     // and enforces that when new Vault's are created, the balance
     // is initialized correctly.
-    //
     pub resource interface Balance {
-
         // The total balance of the account's tokens
         pub var balance: UFix64
 
@@ -96,7 +75,6 @@ access(all) contract HealthCrossCoin {
     }
 
     pub resource Vault: Provider, Receiver, Balance {
-
         // holds the balance of a users tokens
         pub var balance: UFix64
 
@@ -105,24 +83,19 @@ access(all) contract HealthCrossCoin {
             self.balance = balance
         }
 
-        // withdraw
-        //
-        // Function that takes an integer amount as an argument
+        // withdraw takes an integer amount as an argument
         // and withdraws that amount from the Vault.
         // It creates a new temporary Vault that is used to hold
         // the money that is being transferred. It returns the newly
         // created Vault to the context that called so it can be deposited
         // elsewhere.
-        //
         pub fun withdraw(amount: UFix64): @Vault {
             self.balance = self.balance - amount
             emit TokensWithdrawn(amount: amount, from: self.owner?.address)
             return <-create Vault(balance: amount)
         }
 
-        // deposit
-        //
-        // Function that takes a Vault object as an argument and adds
+        // deposit takes a Vault object as an argument and adds
         // its balance to the balance of the owners Vault.
         // It is allowed to destroy the sent Vault because the Vault
         // was a temporary holder of the tokens. The Vault's balance has
@@ -144,7 +117,7 @@ access(all) contract HealthCrossCoin {
     return <-create Vault(balance: UFix64(0))
   }
 
-  pub resource HealthCrossCoinMinter {
+  pub resource CoinMinter {
     pub fun mintTokens(amount: UFix64): @Vault {
       HealthCrossCoin.totalSupply = HealthCrossCoin.totalSupply + amount
       return <- create Vault(balance: amount)
@@ -154,7 +127,7 @@ access(all) contract HealthCrossCoin {
   init() {
     self.totalSupply = UFix64(0)
     emit TokensInitialized(initialSupply: self.totalSupply)
-    self.account.save(<-create HealthCrossCoinMinter(), to: /storage/MainMinter)
+    self.account.save(<-create CoinMinter(), to: /storage/HealthCrossCoinMinter)
   }
 }
  
