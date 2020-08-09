@@ -1,5 +1,5 @@
 
-access(all) contract HealthCrossCore {
+access(all) contract HealthCrossingCore {
     // AvatarAttributeUpdated is emitted when an avatar's attribute is updated
     pub event AvatarAttributeUpdated(avatarId: UInt64, type: String)
 
@@ -25,13 +25,34 @@ access(all) contract HealthCrossCore {
         }
     }
 
+    access(all) resource BodyNFTMinter {
+        pub var idCount: UInt64
+        pub var totalSupply: UInt64
+
+        init() {
+            self.idCount = 0
+            self.totalSupply = 0
+        }
+    
+        pub fun mint(name: String, bodyType: String): @BodyNFT {
+            self.idCount = self.idCount + UInt64(1)
+            return <- create BodyNFT(id: self.idCount, name: name, bodyType: bodyType)
+        }
+    }
+
     // BodyNFTCollection is a collection for BodyNFTs
     access(all) resource BodyNFTCollection {
         // physique is the makeup of the Avatar's physique
         pub let physique: @{String: BodyNFT}
 
         init() {
-            self.physique <- {} // TODO: Set default physiques
+            self.physique <- {
+                // "eye": BodyNFT("eye2"),
+                // "nose": BodyNFT("eye2"),
+                // "lips": BodyNFT("eye2"),
+                // "ears": BodyNFT("eye2"),
+                // "bodyShape": BodyNFT("eye2"),
+            }
         }
 
         destroy() {
@@ -49,6 +70,21 @@ access(all) contract HealthCrossCore {
             self.id = id
             self.name = name
             self.outfitType = outfitType
+        }
+    }
+
+    access(all) resource WearableNFTMinter {
+        pub var idCount: UInt64
+        pub var totalSupply: UInt64
+
+        init() {
+            self.idCount = 0
+            self.totalSupply = 0
+        }
+        
+        pub fun mint(name: String, outfitType: String): @WearableNFT {
+            self.idCount = self.idCount + UInt64(1)
+            return <- create WearableNFT(id: self.idCount, name: name, outfitType: outfitType)
         }
     }
 
@@ -75,28 +111,27 @@ access(all) contract HealthCrossCore {
 
     access(all) resource Avatar {
         pub let id: UInt64
-        pub let createdAt: String
-        pub let bodyNFTCollection: @HealthCrossCore.BodyNFTCollection
-        pub let wearableNFTCollection: @HealthCrossCore.WearableNFTCollection
-        pub let healthStats: {String: HealthCrossCore.HealthStat}
+        pub let birthDate: String
+        pub let bodyNFTCollection: @HealthCrossingCore.BodyNFTCollection
+        pub let wearableNFTCollection: @HealthCrossingCore.WearableNFTCollection
+        pub let healthStats: {String: HealthCrossingCore.HealthStat}
         pub var name: String
         pub var age: UInt64
         
         init(id: UInt64, name: String) {
             self.id = id
-            self.createdAt = "2006-04-20" // TODO: Get data creation time
-            self.bodyNFTCollection <- create HealthCrossCore.BodyNFTCollection()
-            self.wearableNFTCollection <- create HealthCrossCore.WearableNFTCollection()
+            self.birthDate = "2006-04-20" // TODO: Get data creation time
+            self.bodyNFTCollection <- create HealthCrossingCore.BodyNFTCollection()
+            self.wearableNFTCollection <- create HealthCrossingCore.WearableNFTCollection()
 
             // TODO: sync this with the ProgressBoard using a shared parent data structure
             self.healthStats = {
-                "activeEnergy": HealthCrossCore.HealthStat(type: "activeEnergy", value: UFix64(0), unit: "kcal"),
-                "exerciseTime": HealthCrossCore.HealthStat(type: "exerciseTime", value: UFix64(0), unit: "kcal"),
-                "pushCount": HealthCrossCore.HealthStat(type: "pushCount", value: UFix64(0), unit: "kcal"),
-                "hoursAsleep": HealthCrossCore.HealthStat(type: "hoursAsleep", value: UFix64(0), unit: "kcal"),
-                "hoursInBed": HealthCrossCore.HealthStat(type: "hoursInBed", value: UFix64(0), unit: "kcal"),
-                "stepCount": HealthCrossCore.HealthStat(type: "stepCount", value: UFix64(0), unit: "kcal"),
-                "distanceWalkingRunning": HealthCrossCore.HealthStat(type: "distanceWalkingRunning", value: UFix64(0), unit: "kcal")
+                "activeEnergy": HealthCrossingCore.HealthStat(type: "activeEnergy", value: UFix64(0), unit: "calories"),
+                "exerciseTime": HealthCrossingCore.HealthStat(type: "exerciseTime", value: UFix64(0), unit: "minutes"),
+                "pushCount": HealthCrossingCore.HealthStat(type: "pushCount", value: UFix64(0), unit: "reps"),
+                "hoursAsleep": HealthCrossingCore.HealthStat(type: "hoursAsleep", value: UFix64(0), unit: "hours"),
+                "stepCount": HealthCrossingCore.HealthStat(type: "stepCount", value: UFix64(0), unit: "steps"),
+                "distanceWalkingRunning": HealthCrossingCore.HealthStat(type: "distanceWalkingRunning", value: UFix64(0), unit: "miles")
             }
 
             self.name = name
@@ -105,19 +140,19 @@ access(all) contract HealthCrossCore {
 
         // changeBodyNFT replaces the old body part with the new one.
         // Destroy the old one because they are not meant to exist apart from an Avatar.
-        pub fun changeBodyNFT(type: String, bodyPart: @HealthCrossCore.BodyNFT) {
+        pub fun changeBodyNFT(type: String, bodyPart: @HealthCrossingCore.BodyNFT) {
             let prevBodyPart <- self.bodyNFTCollection.physique.remove(key: type) ?? panic("are you missing a body part?!")
             self.bodyNFTCollection.physique[type] <-! bodyPart
             destroy prevBodyPart
         }
 
         // storeWearableNFT stores a wearableNFT into the Avatar's closet
-        pub fun storeWearableNFT(wearable: @HealthCrossCore.WearableNFT) {
+        pub fun storeWearableNFT(wearable: @HealthCrossingCore.WearableNFT) {
             self.wearableNFTCollection.closet[wearable.id] <-! wearable
         }
 
         // wearWearableNFT puts the wearableNFT onto the Avatar itself
-        pub fun wearWearableNFT(wearable: @HealthCrossCore.WearableNFT) {
+        pub fun wearWearableNFT(wearable: @HealthCrossingCore.WearableNFT) {
             self.wearableNFTCollection.outfit[wearable.outfitType] <-! wearable
         }
 
@@ -161,31 +196,48 @@ access(all) contract HealthCrossCore {
         pub fun mintAvatar(name: String): @Avatar {
             self.idCount = self.idCount + UInt64(1)
             self.totalSupply = self.totalSupply + UInt64(1)
-            return <- create HealthCrossCore.Avatar(id: self.idCount, name: name)
+            return <- create HealthCrossingCore.Avatar(id: self.idCount, name: name)
         }
     }
 
     access(all) resource AvatarController {
-        pub fun updateAttributes(avatar: @HealthCrossCore.Avatar, attributes: {String: UFix64}): @HealthCrossCore.Avatar {
+        pub fun updateAttributes(avatar: @HealthCrossingCore.Avatar, attributes: {String: UFix64}): @HealthCrossingCore.Avatar {
             for attributeType in attributes.keys {
                 let newStatVal = attributes[attributeType]!
                 avatar.updateAttribute(type: attributeType, value: newStatVal)
 
-                
-                // TODO: Update the Avatar with new NFTs here
-
+                let tier = HealthCrossingCore.progressEngine.computeTier(avatarStats: avatar.healthStats, statType: attributeType)
+                // TODO
+                // create the wearable and body NFTs
             }
             return <- avatar
         }
     }
+
+    // nftMapping represents an intermediate payload to communicate to NFT minters what to create
+    pub struct nftMapping {
+        pub let name: String
+        pub let interactibleType: String
+        init(name: String, interactibleType: String) {
+            self.name = name
+            self.interactibleType = interactibleType
+        }
+    }
+    
     
     // ProgressEngine aggregates and computes Avatar health stats against the ProgressBoard.
     // It then determines what new wearable and body NFTs to mint for the Avatar.
     pub struct ProgressEngine {
         // progressBoard constructs the progression hierarchy for Avatar health tracking.
         // It serves as a reference map to determine the current level for an Avatar's particular health stat.
-        pub var progressBoard: {String: [HealthCrossCore.HealthStat]}
+        pub var progressBoard: {String: [HealthCrossingCore.HealthStat]}
 
+        pub var statNFTMapping: {
+            String: {
+                Int: [nftMapping]
+            }
+        }
+        
         init() {
             // TODO: sync keys with avatar health stats map
             self.progressBoard = {
@@ -231,11 +283,50 @@ access(all) contract HealthCrossCore {
                     HealthStat(type: "pushCount", value: UFix64(0), unit: "reps")
                 ]
             }
+
+            self.statNFTMapping = {
+                "hoursAsleep": {
+                    1: [nftMapping(name: "eye4", interactibleType: "body")],
+                    2: [nftMapping(name: "eye9", interactibleType: "body")],
+                    3: [nftMapping(name: "eye14", interactibleType: "body")],
+                    4: [nftMapping(name: "eye1", interactibleType: "body")]
+                },
+                "distanceWalkingRunning": {
+                    1: [nftMapping(name: "eye4", interactibleType: "body")],
+                    2: [nftMapping(name: "eye9", interactibleType: "body")],
+                    3: [nftMapping(name: "eye14", interactibleType: "body")],
+                    4: [nftMapping(name: "eye1", interactibleType: "body")]
+                },
+                "stepCount": {
+                    1: [nftMapping(name: "eye4", interactibleType: "body")],
+                    2: [nftMapping(name: "eye9", interactibleType: "body")],
+                    3: [nftMapping(name: "eye14", interactibleType: "body")],
+                    4: [nftMapping(name: "eye1", interactibleType: "body")]
+                },
+                "activeEnergy": {
+                    1: [nftMapping(name: "eye4", interactibleType: "body")],
+                    2: [nftMapping(name: "eye9", interactibleType: "body")],
+                    3: [nftMapping(name: "eye14", interactibleType: "body")],
+                    4: [nftMapping(name: "eye1", interactibleType: "body")]
+                },
+                "exerciseTime": {
+                    1: [nftMapping(name: "eye4", interactibleType: "body")],
+                    2: [nftMapping(name: "eye9", interactibleType: "body")],
+                    3: [nftMapping(name: "eye14", interactibleType: "body")],
+                    4: [nftMapping(name: "eye1", interactibleType: "body")]
+                },
+                "pushCount": {
+                    1: [nftMapping(name: "eye4", interactibleType: "body")],
+                    2: [nftMapping(name: "eye9", interactibleType: "body")],
+                    3: [nftMapping(name: "eye14", interactibleType: "body")],
+                    4: [nftMapping(name: "eye1", interactibleType: "body")]
+                }
+            }
         }
         
-        pub fun compute(avatarRef: &HealthCrossCore.Avatar, statType: String): UInt64 {
+        pub fun computeTier(avatarStats: {String: HealthCrossingCore.HealthStat}, statType: String): UInt64 {
             let progressionTrack = self.progressBoard[statType]!
-            let avatarCurrStat = avatarRef.healthStats[statType]!
+            let avatarCurrStat = avatarStats[statType]!
 
             var i = 0
             while i < progressionTrack.length {
@@ -250,43 +341,14 @@ access(all) contract HealthCrossCore {
         }
     }
 
-    access(all) resource WearableNFTMinter {
-        pub var idCount: UInt64
-        pub var totalSupply: UInt64
-
-        init() {
-            self.idCount = 0
-            self.totalSupply = 0
-        }
-        
-        pub fun mint(name: String, outfitType: String): @WearableNFT {
-            self.idCount = self.idCount + UInt64(1)
-            return <- create WearableNFT(id: self.idCount, name: name, outfitType: outfitType)
-        }
-    }
-    access(all) resource BodyNFTMinter {
-        pub var idCount: UInt64
-        pub var totalSupply: UInt64
-
-        init() {
-            self.idCount = 0
-            self.totalSupply = 0
-        }
-    
-        pub fun mint(name: String, bodyType: String): @BodyNFT {
-            self.idCount = self.idCount + UInt64(1)
-            return <- create BodyNFT(id: self.idCount, name: name, bodyType: bodyType)
-        }
-    }
-
     // Internal state
     pub var progressEngine: ProgressEngine
 
     init() {
-        self.account.save(<-create AvatarMinter(), to: /storage/HealthCrossAvatarMinter)
-        self.account.save(<-create WearableNFTMinter(), to: /storage/HealthCrossWearableNFTMinter)
-        self.account.save(<-create BodyNFTMinter(), to: /storage/HealthCrossBodyNFTMinter)
-        self.account.save(<-create AvatarController(), to: /storage/HealthCrossAvatarController)
+        self.account.save(<-create AvatarMinter(), to: /storage/HealthCrossingAvatarMinter)
+        self.account.save(<-create WearableNFTMinter(), to: /storage/HealthCrossingWearableNFTMinter)
+        self.account.save(<-create BodyNFTMinter(), to: /storage/HealthCrossingBodyNFTMinter)
+        self.account.save(<-create AvatarController(), to: /storage/HealthCrossingAvatarController)
         self.progressEngine = ProgressEngine()
     }
 }

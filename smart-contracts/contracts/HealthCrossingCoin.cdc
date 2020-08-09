@@ -1,4 +1,4 @@
-access(all) contract HealthCrossCoin {
+access(all) contract HealthCrossingCoin {
 
   // The total number of tokens in existence.
   // It is up to the implementer to ensure that total supply
@@ -101,7 +101,7 @@ access(all) contract HealthCrossCoin {
         // was a temporary holder of the tokens. The Vault's balance has
         // been consumed and therefore can be destroyed.
         pub fun deposit(from: @Vault) {
-            let vault <- from as! @HealthCrossCoin.Vault
+            let vault <- from as! @HealthCrossingCoin.Vault
             self.balance = self.balance + vault.balance
             emit TokensDeposited(amount: vault.balance, to: self.owner?.address)
             vault.balance = 0.0
@@ -109,7 +109,7 @@ access(all) contract HealthCrossCoin {
         }
 
         destroy() {
-            HealthCrossCoin.totalSupply = HealthCrossCoin.totalSupply - self.balance
+            HealthCrossingCoin.totalSupply = HealthCrossingCoin.totalSupply - self.balance
         }
     }
 
@@ -119,7 +119,7 @@ access(all) contract HealthCrossCoin {
 
   pub resource CoinMinter {
     pub fun mintTokens(amount: UFix64): @Vault {
-      HealthCrossCoin.totalSupply = HealthCrossCoin.totalSupply + amount
+      HealthCrossingCoin.totalSupply = HealthCrossingCoin.totalSupply + amount
       return <- create Vault(balance: amount)
     }
   }
@@ -127,7 +127,7 @@ access(all) contract HealthCrossCoin {
   init() {
     self.totalSupply = UFix64(0)
     emit TokensInitialized(initialSupply: self.totalSupply)
-    self.account.save(<-create CoinMinter(), to: /storage/HealthCrossCoinMinter)
+    self.account.save(<-create CoinMinter(), to: /storage/HealthCrossingCoinMinter)
   }
 }
  

@@ -20,7 +20,7 @@ import (
 )
 
 const mockHealthKitFile = "./dennis-export-07-25.csv"
-const healthCrossContractFile = "../smart-contracts/HealthCrossCore.cdc"
+const healthCrossingContractFile = "../smart-contracts/HealthCrossingCore.cdc"
 const flowConfigFile = "./flow.json"
 
 var (
@@ -149,7 +149,7 @@ func DeployContractDemo() error {
 	fmt.Println("My Address:", myAddress.Hex())
 
 	// Deploy the Great NFT contract
-	nftCode := ReadFile(healthCrossContractFile)
+	nftCode := ReadFile(healthCrossingContractFile)
 	deployContractTx := templates.CreateAccount(nil, nftCode, myAddress)
 
 	deployContractTx.SetProposalKey(myAddress, myAcctKey.ID, myAcctKey.SequenceNumber)
