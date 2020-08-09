@@ -200,7 +200,7 @@ access(all) contract HealthCrossingCore {
         }
     }
 
-    access(all) resource AvatarController {
+    pub struct AvatarController {
         pub fun updateAttributes(avatar: @HealthCrossingCore.Avatar, attributes: {String: UFix64}): @HealthCrossingCore.Avatar {
             for attributeType in attributes.keys {
                 let newStatVal = attributes[attributeType]!
@@ -343,12 +343,16 @@ access(all) contract HealthCrossingCore {
 
     // Internal state
     pub var progressEngine: ProgressEngine
+    pub var avatarController: AvatarController
 
     init() {
         self.account.save(<-create AvatarMinter(), to: /storage/HealthCrossingAvatarMinter)
+        self.account.link<&AvatarMinter>(/public/HealthCrossingAvatarMinter, target: /storage/HealthCrossingAvatarMinter)
+        
         self.account.save(<-create WearableNFTMinter(), to: /storage/HealthCrossingWearableNFTMinter)
         self.account.save(<-create BodyNFTMinter(), to: /storage/HealthCrossingBodyNFTMinter)
-        self.account.save(<-create AvatarController(), to: /storage/HealthCrossingAvatarController)
+        self.avatarController = AvatarController()
         self.progressEngine = ProgressEngine()
     }
 }
+ 

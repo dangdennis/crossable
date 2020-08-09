@@ -48,7 +48,6 @@ access(all) contract HealthCrossingCoin {
     // can do custom things with the tokens, like split them up and
     // send them to different places.
     pub resource interface Receiver {
-
         // deposit that can be called to deposit tokens
         // into the implementing resource type
         pub fun deposit(from: @Vault) {
