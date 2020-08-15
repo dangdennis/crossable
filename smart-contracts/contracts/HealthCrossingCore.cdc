@@ -46,13 +46,17 @@ access(all) contract HealthCrossingCore {
         pub let physique: @{String: BodyNFT}
 
         init() {
+            let bodyNftMinter <- HealthCrossingCore.account.load<@HealthCrossingCore.BodyNFTMinter>(from: /storage/HealthCrossingBodyNFTMinter)!
+            
             self.physique <- {
-                // "eye": BodyNFT("eye2"),
-                // "nose": BodyNFT("eye2"),
-                // "lips": BodyNFT("eye2"),
-                // "ears": BodyNFT("eye2"),
-                // "bodyShape": BodyNFT("eye2"),
+                "eyes": <- bodyNftMinter.mint(name: "eye2", bodyType: "eyes"),
+                "nose": <- bodyNftMinter.mint(name: "nose1", bodyType: "nose"),
+                "lip": <- bodyNftMinter.mint(name: "lip1", bodyType: "lip"),
+                "ears": <- bodyNftMinter.mint(name: "ears1", bodyType: "ears"),
+                "bodyShape": <- bodyNftMinter.mint(name: "thicc", bodyType: "bodyShape")
             }
+
+            HealthCrossingCore.account.save(<-bodyNftMinter, to: /storage/HealthCrossingBodyNFTMinter)
         }
 
         destroy() {
@@ -140,9 +144,9 @@ access(all) contract HealthCrossingCore {
 
         // changeBodyNFT replaces the old body part with the new one.
         // Destroy the old one because they are not meant to exist apart from an Avatar.
-        pub fun changeBodyNFT(type: String, bodyPart: @HealthCrossingCore.BodyNFT) {
-            let prevBodyPart <- self.bodyNFTCollection.physique.remove(key: type) ?? panic("are you missing a body part?!")
-            self.bodyNFTCollection.physique[type] <-! bodyPart
+        pub fun changeBodyNFT(bodyType: String, bodyPart: @HealthCrossingCore.BodyNFT) {
+            let prevBodyPart <- self.bodyNFTCollection.physique.remove(key: bodyType) ?? panic("are you missing a body part?!")
+            self.bodyNFTCollection.physique[bodyType] <-! bodyPart
             destroy prevBodyPart
         }
 
@@ -159,7 +163,7 @@ access(all) contract HealthCrossingCore {
         // updateAttribute updates a single health stat
         pub fun updateAttribute(type: String, value: UFix64) {
             let prevStat = self.healthStats[type]!
-            self.healthStats[type] = HealthStat(type: prevStat.type, value: prevStat.value + value, unit: prevStat.unit)
+            self.healthStats[type] = HealthStat(type: prevStat.type, value: value, unit: prevStat.unit)
             emit AvatarAttributeUpdated(avatarId: self.id, type: prevStat.type)
         }
 
@@ -200,19 +204,52 @@ access(all) contract HealthCrossingCore {
         }
     }
 
-    pub struct AvatarController {
-        pub fun updateAttributes(avatar: @HealthCrossingCore.Avatar, attributes: {String: UFix64}): @HealthCrossingCore.Avatar {
-            for attributeType in attributes.keys {
-                let newStatVal = attributes[attributeType]!
-                avatar.updateAttribute(type: attributeType, value: newStatVal)
+    /*
+    * HEALTH CROSSING CORE PUBLIC METHODS
+    */
 
-                let tier = HealthCrossingCore.progressEngine.computeTier(avatarStats: avatar.healthStats, statType: attributeType)
-                // TODO
-                // create the wearable and body NFTs
-            }
-            return <- avatar
-        }
+    pub fun mintAvatar(name: String): @Avatar {
+        let avatarMinter <- self.account.load<@HealthCrossingCore.AvatarMinter>(from: /storage/HealthCrossingAvatarMinter)!
+        let avatar <- avatarMinter.mintAvatar(name: name)
+        self.account.save(<-avatarMinter, to: /storage/HealthCrossingAvatarMinter)
+        return <- avatar
     }
+    
+    pub fun updateAttributes(avatar: @HealthCrossingCore.Avatar, attributes: {String: UFix64}): @HealthCrossingCore.Avatar {
+        for attributeType in attributes.keys {
+            avatar.updateAttribute(type: attributeType, value: attributes[attributeType]!)
+
+            let tier = HealthCrossingCore.progressEngine.computeTier(avatarStats: avatar.healthStats, statType: attributeType)
+            let rewards = HealthCrossingCore.progressEngine.unlockRewards(attributeType: attributeType, tier: Int(tier))
+
+            let bodyNftMinter <- self.account.load<@HealthCrossingCore.BodyNFTMinter>(from: /storage/HealthCrossingBodyNFTMinter)!
+            let wearableNftMinter <- self.account.load<@HealthCrossingCore.WearableNFTMinter>(from: /storage/HealthCrossingWearableNFTMinter)!
+            
+            var i = 0
+            while i < rewards.length {
+                let reward = rewards[i]
+                if reward.interactibleType == "body" {
+                    // TODO: require more data architecture to determine nft's body type (i.e. eyes, lips, nose, legs, etc)
+                    let tempStaticBodyType = "eyes"
+                    let bodyNFT <- bodyNftMinter.mint(name: reward.name, bodyType: tempStaticBodyType)
+                    avatar.changeBodyNFT(bodyType: tempStaticBodyType, bodyPart: <-bodyNFT)
+                } else if reward.interactibleType == "wearable" {
+                    // TODO: require more data architecture to determine nft's body type (i.e. eyes, lips, nose, legs, etc)
+                    let tempStaticWearableType = "pants"
+                    let wearableNFT <- wearableNftMinter.mint(name: reward.name, outfitType: tempStaticWearableType)
+                    avatar.wearWearableNFT(wearable: <-wearableNFT)
+                }
+
+                i = i + 1 
+            }
+            // create the wearable and body NFTs based on the progression tier achieved
+
+            self.account.save(<-bodyNftMinter, to: /storage/HealthCrossingBodyNFTMinter)
+            self.account.save(<-wearableNftMinter, to: /storage/HealthCrossingWearableNFTMinter)
+        }
+        return <- avatar
+    }
+
 
     // nftMapping represents an intermediate payload to communicate to NFT minters what to create
     pub struct nftMapping {
@@ -232,10 +269,16 @@ access(all) contract HealthCrossingCore {
         // It serves as a reference map to determine the current level for an Avatar's particular health stat.
         pub var progressBoard: {String: [HealthCrossingCore.HealthStat]}
 
-        pub var statNFTMapping: {
+        pub var progressionReward: {
             String: {
                 Int: [nftMapping]
             }
+        }
+
+        pub fun unlockRewards(attributeType: String, tier: Int): [nftMapping] {
+            let rewardKind = self.progressionReward[attributeType]!
+            let rewards = rewardKind[tier]!
+            return rewards
         }
         
         init() {
@@ -284,7 +327,7 @@ access(all) contract HealthCrossingCore {
                 ]
             }
 
-            self.statNFTMapping = {
+            self.progressionReward = {
                 "hoursAsleep": {
                     1: [nftMapping(name: "eye4", interactibleType: "body")],
                     2: [nftMapping(name: "eye9", interactibleType: "body")],
@@ -328,6 +371,7 @@ access(all) contract HealthCrossingCore {
             let progressionTrack = self.progressBoard[statType]!
             let avatarCurrStat = avatarStats[statType]!
 
+            // Loop through the progression track, and get the earliest satisfied progression condition
             var i = 0
             while i < progressionTrack.length {
                 let currProgressMilestone = progressionTrack[i]
@@ -343,15 +387,13 @@ access(all) contract HealthCrossingCore {
 
     // Internal state
     pub var progressEngine: ProgressEngine
-    pub var avatarController: AvatarController
 
     init() {
         self.account.save(<-create AvatarMinter(), to: /storage/HealthCrossingAvatarMinter)
         self.account.link<&AvatarMinter>(/public/HealthCrossingAvatarMinter, target: /storage/HealthCrossingAvatarMinter)
-        
         self.account.save(<-create WearableNFTMinter(), to: /storage/HealthCrossingWearableNFTMinter)
         self.account.save(<-create BodyNFTMinter(), to: /storage/HealthCrossingBodyNFTMinter)
-        self.avatarController = AvatarController()
+        
         self.progressEngine = ProgressEngine()
     }
 }

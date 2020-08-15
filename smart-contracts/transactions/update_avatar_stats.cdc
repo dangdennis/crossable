@@ -5,12 +5,8 @@ import HealthCrossingCoin from 0x02
 
 transaction {
     prepare(acct: AuthAccount) {
-      let vault <- HealthCrossingCoin.createEmptyVault()
-      acct.save(<-vault, to: /storage/HealthCrossingCoinVault)
-      acct.link<&{HealthCrossingCoin.Receiver}>(/public/HealthCrossingCoinVault, target: /storage/HealthCrossingCoinVault)
-
-      let avatarMinter = acct.load<&HealthCrossingCore.AvatarMinter>(from: /public/HealthCrossingAvatarMinter)
-      let avatar <- avatarMinter.mintAvatar()
-      acct.save(<-avatar, to:/storage/HealthCrossingAvatar)
+      let avatar <- acct.load<@HealthCrossingCore.Avatar>(from: /storage/HealthCrossingAvatar)!
+      let avatar2 <- HealthCrossingCore.updateAttributes(avatar: <-avatar, attributes: {"hoursAsleep": UFix64(6)})
+      acct.save(<-avatar2, to:/storage/HealthCrossingAvatar)
     }
 }

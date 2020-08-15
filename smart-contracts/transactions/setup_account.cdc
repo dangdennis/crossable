@@ -9,8 +9,7 @@ transaction {
       acct.save(<-vault, to: /storage/HealthCrossingCoinVault)
       acct.link<&{HealthCrossingCoin.Receiver}>(/public/HealthCrossingCoinVault, target: /storage/HealthCrossingCoinVault)
 
-      let avatarMinter = acct.load<&HealthCrossingCore.AvatarMinter>(from: /public/HealthCrossingAvatarMinter)
-      let avatar <- avatarMinter.mintAvatar()
+      let avatar <- HealthCrossingCore.mintAvatar(name: "Avatar1")
       acct.save(<-avatar, to:/storage/HealthCrossingAvatar)
     }
 }
