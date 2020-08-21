@@ -145,9 +145,8 @@ access(all) contract HealthCrossingCore {
         // changeBodyNFT replaces the old body part with the new one.
         // Destroy the old one because they are not meant to exist apart from an Avatar.
         pub fun changeBodyNFT(bodyType: String, bodyPart: @HealthCrossingCore.BodyNFT) {
-            let prevBodyPart <- self.bodyNFTCollection.physique.remove(key: bodyType) ?? panic("are you missing a body part?!")
-            self.bodyNFTCollection.physique[bodyType] <-! bodyPart
-            destroy prevBodyPart
+            let oldBodyPart <- self.bodyNFTCollection.physique[bodyType] <- bodyPart
+            destroy oldBodyPart
         }
 
         // storeWearableNFT stores a wearableNFT into the Avatar's closet
@@ -222,31 +221,37 @@ access(all) contract HealthCrossingCore {
             let tier = HealthCrossingCore.progressEngine.computeTier(avatarStats: avatar.healthStats, statType: attributeType)
             let rewards = HealthCrossingCore.progressEngine.unlockRewards(attributeType: attributeType, tier: Int(tier))
 
+            log(tier)
+
             let bodyNftMinter <- self.account.load<@HealthCrossingCore.BodyNFTMinter>(from: /storage/HealthCrossingBodyNFTMinter)!
             let wearableNftMinter <- self.account.load<@HealthCrossingCore.WearableNFTMinter>(from: /storage/HealthCrossingWearableNFTMinter)!
             
             var i = 0
             while i < rewards.length {
                 let reward = rewards[i]
+                log(reward)
                 if reward.interactibleType == "body" {
                     // TODO: require more data architecture to determine nft's body type (i.e. eyes, lips, nose, legs, etc)
                     let tempStaticBodyType = "eyes"
                     let bodyNFT <- bodyNftMinter.mint(name: reward.name, bodyType: tempStaticBodyType)
                     avatar.changeBodyNFT(bodyType: tempStaticBodyType, bodyPart: <-bodyNFT)
+                    log(tempStaticBodyType)
                 } else if reward.interactibleType == "wearable" {
                     // TODO: require more data architecture to determine nft's body type (i.e. eyes, lips, nose, legs, etc)
                     let tempStaticWearableType = "pants"
-                    let wearableNFT <- wearableNftMinter.mint(name: reward.name, outfitType: tempStaticWearableType)
-                    avatar.wearWearableNFT(wearable: <-wearableNFT)
+                    // let wearableNFT <- wearableNftMinter.mint(name: reward.name, outfitType: tempStaticWearableType)
+                    // avatar.wearWearableNFT(wearable: <-wearableNFT)
+                    log(tempStaticWearableType)
                 }
 
                 i = i + 1 
             }
-            // create the wearable and body NFTs based on the progression tier achieved
 
+            // create the wearable and body NFTs based on the progression tier achieved
             self.account.save(<-bodyNftMinter, to: /storage/HealthCrossingBodyNFTMinter)
             self.account.save(<-wearableNftMinter, to: /storage/HealthCrossingWearableNFTMinter)
         }
+        
         return <- avatar
     }
 

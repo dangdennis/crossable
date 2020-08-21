@@ -148,7 +148,7 @@ func DeployContractDemo() error {
 
 	fmt.Println("My Address:", myAddress.Hex())
 
-	// Deploy the Great NFT contract
+	// Deploy the core contracts
 	nftCode := ReadFile(healthCrossingContractFile)
 	deployContractTx := templates.CreateAccount(nil, nftCode, myAddress)
 
@@ -159,92 +159,6 @@ func DeployContractDemo() error {
 	if err != nil {
 		return err
 	}
-
-	// err = flowClient.SendTransaction(ctx, *deployContractTx)
-	// if err != nil {
-	// 	return err
-	// }
-	//
-	// deployContractTxResp := examples.WaitForSeal(ctx, flowClient, deployContractTx.ID())
-	// if deployContractTxResp.Error != nil {
-	// 	return err
-	// }
-	//
-	// // Successful Tx, increment sequence number
-	// myAcctKey.SequenceNumber++
-	//
-	// var nftAddress flow.Address
-	//
-	// for _, event := range deployContractTxResp.Events {
-	// 	if event.Type == flow.EventAccountCreated {
-	// 		accountCreatedEvent := flow.AccountCreatedEvent(event)
-	// 		nftAddress = accountCreatedEvent.Address()
-	// 	}
-	// }
-	//
-	// fmt.Println("My Address:", nftAddress.Hex())
-
-	// // Next, instantiate the minter
-	// createMinterScript := GenerateCreateMinterScript(nftAddress, 1, 2)
-	//
-	// createMinterTx := flow.NewTransaction().
-	// 	SetScript(createMinterScript).
-	// 	SetProposalKey(myAddress, myAcctKey.ID, myAcctKey.SequenceNumber).
-	// 	SetPayer(myAddress).
-	// 	AddAuthorizer(myAddress)
-	//
-	// err = createMinterTx.SignEnvelope(myAddress, myAcctKey.ID, mySigner)
-	// if err != nil {
-	// return err
-	// }
-	//
-	// err = flowClient.SendTransaction(ctx, *createMinterTx)
-	// if err != nil {
-	// return err
-	// }
-	//
-	// createMinterTxResp := examples.WaitForSeal(ctx, flowClient, deployContractTx.ID())
-	// examples.Handle(createMinterTxResp.Error)
-	//
-	// // Successful Tx, increment sequence number
-	// myAcctKey.SequenceNumber++
-	//
-	// mintScript := GenerateMintScript(nftAddress)
-	//
-	// // Mint the NFT
-	// mintTx := flow.NewTransaction().
-	// 	SetScript(mintScript).
-	// 	SetProposalKey(myAddress, myAcctKey.ID, myAcctKey.SequenceNumber).
-	// 	SetPayer(myAddress).
-	// 	AddAuthorizer(myAddress)
-	//
-	// err = mintTx.SignEnvelope(myAddress, myAcctKey.ID, mySigner)
-	// if err != nil {
-	// return err
-	// }
-	//
-	// err = flowClient.SendTransaction(ctx, *mintTx)
-	// if err != nil {
-	// return err
-	// }
-	//
-	// mintTxResp := examples.WaitForSeal(ctx, flowClient, mintTx.ID())
-	// examples.Handle(mintTxResp.Error)
-	//
-	// // Successful Tx, increment sequence number
-	// myAcctKey.SequenceNumber++
-	//
-	// fmt.Println("NFT minted!")
-	//
-	// result, err := flowClient.ExecuteScriptAtLatestBlock(ctx, GenerateGetNFTIDScript(nftAddress, myAddress), nil)
-	// if err != nil {
-	// return err
-	// }
-	//
-	// myTokenID := result.(cadence.Int)
-	//
-	// fmt.Printf("You now own the Great NFT with ID: %d\n", myTokenID.Int())
-
 	return nil
 }
 
@@ -257,7 +171,7 @@ func ReadFile(path string) []byte {
 	return contents
 }
 
-// ServiceAccount creates a new service account
+// NewServiceAccount creates a new service account
 func NewServiceAccount(flowClient *client.Client) (flow.Address, *flow.AccountKey, crypto.Signer, error) {
 	privateKey, err := crypto.DecodePrivateKeyHex(servicePrivateKeySigAlgo, servicePrivateKeyHex)
 	if err != nil {
@@ -319,54 +233,44 @@ func RandomPrivateKey() crypto.PrivateKey {
 	return privateKey
 }
 
-// GenerateCreateMinterScript Creates a script that instantiates
-// a new GreatNFTMinter instance and stores it in memory.
-// Initial ID and special mod are arguments to the GreatNFTMinter constructor.
-// The GreatNFTMinter must have been deployed already.
-func GenerateCreateMinterScript(nftAddr flow.Address, initialID, specialMod int) []byte {
+// SetupNewAccountTransaction deploys a transaction to setup a new account with collections for Health Crossing resources
+func SetupNewAccountTransaction() string {
 	template := `
-		import GreatToken from 0x%s
+		import HealthCrossingCore from 0x01
+		import HealthCrossingCoin from 0x02
+		
+		// This transaction sets up an account to use Health Crossing with a vault and avatar.
+		
 		transaction {
 			prepare(acct: AuthAccount) {
-				let minter <- GreatToken.createGreatNFTMinter(firstID: %d, specialMod: %d)
-				acct.save(<-minter, to: /storage/GreatNFTMinter)
+			let vault <- HealthCrossingCoin.createEmptyVault()
+			acct.save(<-vault, to: /storage/HealthCrossingCoinVault)
+			acct.link<&{HealthCrossingCoin.Receiver}>(/public/HealthCrossingCoinVault, target: /storage/HealthCrossingCoinVault)
+		
+			let avatar <- HealthCrossingCore.mintAvatar(name: "Avatar1")
+			acct.save(<-avatar, to:/storage/HealthCrossingAvatar)
 			}
 		}
 	`
 
-	return []byte(fmt.Sprintf(template, nftAddr, initialID, specialMod))
+	return template
 }
 
-// GenerateMintScript Creates a script that mints an NFT and put it into storage.
-// The minter must have been instantiated already.
-func GenerateMintScript(nftCodeAddr flow.Address) []byte {
+// UpdateAvatarStatsTransaction deploys a transaction to update an avatar's health stats, unlocks new physical features, and wears new attire NFTs
+func UpdateAvatarStatsTransaction() string {
 	template := `
-		import GreatToken from 0x%s
-		transaction {
-			prepare(acct: AuthAccount) {
-			  let minter = acct.borrow<&GreatToken.GreatNFTMinter>(from: /storage/GreatNFTMinter)!
-			  if let nft <- acct.load<@GreatToken.GreatNFT>(from: /storage/GreatNFT) {
-				  destroy nft
-			  }
-			  acct.save(<-minter.mint(), to: /storage/GreatNFT)
-			  acct.link<&GreatToken.GreatNFT>(/public/GreatNFT, target: /storage/GreatNFT)
-			}
-		  }
-	`
-
-	return []byte(fmt.Sprintf(template, nftCodeAddr.String()))
-}
-
-// GenerateGetNFTIDScript creates a script that retrieves an NFT from storage and returns its ID.
-func GenerateGetNFTIDScript(nftCodeAddr, userAddr flow.Address) []byte {
-	template := `
-		import GreatToken from 0x%s
-		pub fun main(): Int {
-			let acct = getAccount(0x%s)
-			let nft = acct.getCapability(/public/GreatNFT)!.borrow<&GreatToken.GreatNFT>()!
-			return nft.id()
+	import HealthCrossingCore from 0x01
+	import HealthCrossingCoin from 0x02
+	
+	// This transaction sets up an account to use Health Crossing with a vault and avatar.
+	transaction {
+		prepare(acct: AuthAccount) {
+		  let avatar <- acct.load<@HealthCrossingCore.Avatar>(from: /storage/HealthCrossingAvatar)!
+		  let avatar2 <- HealthCrossingCore.updateAttributes(avatar: <-avatar, attributes: {"hoursAsleep": UFix64(6)})
+		  acct.save(<-avatar2, to:/storage/HealthCrossingAvatar)
 		}
+	}
 	`
 
-	return []byte(fmt.Sprintf(template, nftCodeAddr, userAddr))
+	return template
 }
