@@ -6,8 +6,8 @@ defmodule Crossing.Consumer.MessageCreate do
   @spec handle(Message.t()) :: :ok | nil
   def handle(msg) do
     unless msg.author.bot do
-      case msg.content do
-        "!new" ->
+      case String.split(msg.content, " ", trim: true) do
+        ["!new" | tail] ->
           IO.inspect(msg)
 
           Nostrum.Api.create_message(
@@ -20,6 +20,11 @@ defmodule Crossing.Consumer.MessageCreate do
           Nostrum.Api.create_message(
             msg.channel_id,
             "All done!"
+          )
+
+          Nostrum.Api.create_message(
+            msg.channel_id,
+            "Yeah I don't accept options for this command: " <> Enum.join(tail, " ")
           )
 
         _ ->
