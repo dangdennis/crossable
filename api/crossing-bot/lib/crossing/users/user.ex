@@ -6,6 +6,7 @@ defmodule Crossing.Users.User do
     field :firstname, :string
     field :lastname, :string
     field :username, :string
+    has_one :wallet, Wallets.Wallet
 
     timestamps()
   end
