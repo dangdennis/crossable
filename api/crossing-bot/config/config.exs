@@ -26,8 +26,13 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :nostrum,
+  # The token of your bot as a string
+  token: System.get_env("DISCORD_BOT_KEY"),
+
+  # The number of shards you want to run your bot under, or :auto.
+  num_shards: :auto
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
-
-import_config "#{Mix.env()}.secret.exs"
