@@ -6,7 +6,9 @@ defmodule Crossing.Users.User do
     field :firstname, :string
     field :lastname, :string
     field :username, :string
-    has_one :wallet, Wallets.Wallet
+    field :email, :string
+    field :password_hash, :string
+    field :password, :string
 
     timestamps()
   end
@@ -16,5 +18,6 @@ defmodule Crossing.Users.User do
     user
     |> cast(attrs, [:firstname, :lastname, :username])
     |> validate_required([:firstname, :lastname, :username])
+    |> check_constraint([:username])
   end
 end
