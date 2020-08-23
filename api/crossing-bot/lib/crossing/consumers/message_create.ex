@@ -16,7 +16,7 @@ defmodule Crossing.Consumer.MessageCreate do
               Nostrum.Api.create_message(
                 msg.channel_id,
                 """
-                Welome to Health Crossing! You're all set!
+                Welcome to Health Crossing! You're all set!
 
                 Commonly used commands:
                 !help - get a list of all available commands
@@ -32,26 +32,13 @@ defmodule Crossing.Consumer.MessageCreate do
               IO.inspect(user)
 
             {:error, message} ->
-              # read_error(message)
-
-              IO.inspect(message.errors)
-
-              IO.puts(
-                Enum.reduce(message.errors, "", fn error, acc ->
-                  acc <> error.username
-                end)
-              )
-
               Nostrum.Api.create_message(
                 msg.channel_id,
-                """
-                You already registered.
-                """
+                message.errors |> read_error |> Enum.join(" ")
               )
           end
 
         _ ->
-          # IO.inspect(msg)
           nil
       end
     end
@@ -59,8 +46,13 @@ defmodule Crossing.Consumer.MessageCreate do
 
   defp read_error(errors) do
     Enum.map(errors, fn error ->
-      IO.inspect(error.name)
-      IO.inspect(error.types)
+      case error do
+        {:username, _msg} ->
+          "Your username is already registered."
+
+        _ ->
+          "Something went wrong."
+      end
     end)
   end
 end
