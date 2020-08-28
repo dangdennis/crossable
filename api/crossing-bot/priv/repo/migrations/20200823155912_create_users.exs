@@ -3,12 +3,12 @@ defmodule Crossing.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users) do
-      add :firstname, :string
-      add :lastname, :string
       add :username, :string, null: false, unique: true
-      add :email, :string
+      add :email, :string, unique: true
+      add :phone_number, :string, unique: true
       add :password_hash, :string
       add :password, :string, virtual: true
+      add :deleted_at, :utc_datetime
 
       timestamps()
     end

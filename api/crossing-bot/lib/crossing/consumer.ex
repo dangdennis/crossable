@@ -25,7 +25,6 @@ defmodule Crossing.Consumer do
 
   use Nostrum.Consumer
 
-  @spec start_link :: Supervisor.on_start()
   def start_link do
     Consumer.start_link(__MODULE__, max_restarts: 0)
   end
@@ -112,7 +111,8 @@ defmodule Crossing.Consumer do
 
   # Default event handler, if you don't include this, your consumer WILL crash if
   # you don't have a method definition for each event type.
-  def handle_event(event) do
-    IO.inspect(event)
+  def handle_event(_event) do
+    nil
+    # IO.inspect(event)
   end
 end

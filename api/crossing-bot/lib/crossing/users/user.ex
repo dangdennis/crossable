@@ -3,10 +3,9 @@ defmodule Crossing.Users.User do
   import Ecto.Changeset
 
   schema "users" do
-    field :firstname, :string
-    field :lastname, :string
     field :username, :string
     field :email, :string
+    field :phone_number, :string
     field :password_hash, :string
     field :password, :string
 
