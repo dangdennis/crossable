@@ -6,6 +6,7 @@ defmodule Crossing.Repo.Migrations.CreateActions do
       add :value, :float, null: false
       add :unit, :string, null: false
       add :deleted_at, :utc_datetime
+      add :avatar_id, references(:actions), null: false
 
       timestamps()
     end

@@ -13,5 +13,9 @@ defmodule Crossing.Repo.Migrations.CreateAvatars do
       modify(:inserted_at, :timestamp, default: fragment("NOW()"))
       modify(:updated_at, :timestamp, default: fragment("NOW()"))
     end
+
+    alter table(:items) do
+      add :avatar_id, references(:avatars)
+    end
   end
 end

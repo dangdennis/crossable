@@ -7,6 +7,7 @@ defmodule Crossing.Actions.Action do
     field :unit, :string
     field :action_type_id, :id
     field :deleted_at, :utc_datetime
+    field :avatar_id, :id
 
     timestamps()
   end
@@ -14,7 +15,7 @@ defmodule Crossing.Actions.Action do
   @doc false
   def changeset(action, attrs) do
     action
-    |> cast(attrs, [:action_type_id, :value, :unit, :deleted_at])
-    |> validate_required([:action_type_id, :value, :unit])
+    |> cast(attrs, [:value, :unit, :avatar_id, :action_type_id, :deleted_at])
+    |> validate_required([:action_type_id, :value, :unit, :avatar_id, :action_type_id])
   end
 end

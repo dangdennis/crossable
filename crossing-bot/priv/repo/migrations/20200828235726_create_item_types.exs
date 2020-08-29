@@ -9,10 +9,6 @@ defmodule Crossing.Repo.Migrations.CreateItemTypes do
       timestamps()
     end
 
-    alter table(:items) do
-      add :item_type_id, references(:item_types)
-    end
-
     create index("item_types", [:name], unique: true)
   end
 end
