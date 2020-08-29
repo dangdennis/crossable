@@ -13,6 +13,6 @@ defmodule Crossing.ItemTypes.ItemType do
   def changeset(item_type, attrs) do
     item_type
     |> cast(attrs, [:name, :deleted_at])
-    |> validate_required([:name, :deleted_at])
+    |> validate_required([:name])
   end
 end

@@ -14,7 +14,7 @@ defmodule Crossing.Actions.Action do
   @doc false
   def changeset(action, attrs) do
     action
-    |> cast(attrs, [:name, :action_type_id, :value, :unit, :deleted_at])
-    |> validate_required([:name, :action_type_id, :value, :unit])
+    |> cast(attrs, [:action_type_id, :value, :unit, :deleted_at])
+    |> validate_required([:action_type_id, :value, :unit])
   end
 end

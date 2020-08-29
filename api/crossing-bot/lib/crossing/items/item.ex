@@ -16,7 +16,7 @@ defmodule Crossing.Items.Item do
   @doc false
   def changeset(item, attrs) do
     item
-    |> cast(attrs, [:name, :type, :image_url, :deleted_at])
-    |> validate_required([:name, :type, :image_url, :deleted_at])
+    |> cast(attrs, [:name, :type, :image_url, :collection_id, :deleted_at])
+    |> validate_required([:name, :type, :image_url, :collection_id])
   end
 end

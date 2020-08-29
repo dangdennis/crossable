@@ -13,7 +13,7 @@ defmodule Crossing.Wallets.Wallet do
   @doc false
   def changeset(wallet, attrs) do
     wallet
-    |> cast(attrs, [:balance])
-    |> validate_required([:balance])
+    |> cast(attrs, [:balance, :user_id, :deleted_at])
+    |> validate_required([:balance, :user_id])
   end
 end

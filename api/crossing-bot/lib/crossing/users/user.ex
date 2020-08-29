@@ -16,7 +16,7 @@ defmodule Crossing.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:firstname, :lastname, :username, :email])
+    |> cast(attrs, [:username, :email, :phone_number, :password_hash, :deleted_at])
     |> validate_required([:username])
     |> unique_constraint([:username])
   end

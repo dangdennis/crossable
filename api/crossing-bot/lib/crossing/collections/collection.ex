@@ -13,7 +13,7 @@ defmodule Crossing.Collections.Collection do
   @doc false
   def changeset(collection, attrs) do
     collection
-    |> cast(attrs, [:name])
+    |> cast(attrs, [:name, :user_id, :deleted_at])
     |> validate_required([:name, :user_id])
   end
 end
