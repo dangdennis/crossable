@@ -6,6 +6,8 @@ defmodule Crossing.Profiles.Profile do
     field :first_name, :string
     field :last_name, :string
     field :age, :integer
+    field :user_id, :id
+    field :deleted_at, :utc_datetime
 
     timestamps()
   end

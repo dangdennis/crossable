@@ -8,6 +8,7 @@ defmodule Crossing.Users.User do
     field :phone_number, :string
     field :password_hash, :string
     field :password, :string
+    field :deleted_at, :utc_datetime
 
     timestamps()
   end

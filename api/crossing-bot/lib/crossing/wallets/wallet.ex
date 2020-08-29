@@ -2,9 +2,10 @@ defmodule Crossing.Wallets.Wallet do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "wallet" do
+  schema "wallets" do
     field :balance, :float
     field :user_id, :id
+    field :deleted_at, :utc_datetime
 
     timestamps()
   end

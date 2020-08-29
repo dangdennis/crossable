@@ -4,6 +4,8 @@ defmodule Crossing.Collections.Collection do
 
   schema "collections" do
     field :name, :string
+    field :user_id, :id
+    field :deleted_at, :utc_datetime
 
     timestamps()
   end
@@ -12,6 +14,6 @@ defmodule Crossing.Collections.Collection do
   def changeset(collection, attrs) do
     collection
     |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> validate_required([:name, :user_id])
   end
 end

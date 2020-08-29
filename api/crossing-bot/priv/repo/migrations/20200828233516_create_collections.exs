@@ -3,9 +3,9 @@ defmodule Crossing.Repo.Migrations.CreateCollections do
 
   def change do
     create table(:collections) do
-      add :name, :string
+      add :name, :string, null: false
       add :deleted_at, :utc_datetime
-      add :user_id, references(:users, on_delete: :nothing)
+      add :user_id, references(:users, on_delete: :nothing), null: false
 
       timestamps()
     end
