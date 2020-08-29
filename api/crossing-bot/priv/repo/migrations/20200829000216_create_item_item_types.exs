@@ -20,12 +20,17 @@ defmodule Crossing.Repo.Migrations.CreateItemItemTypes do
       modify(:updated_at, :timestamp, default: fragment("NOW()"))
     end
 
-    alter table(:item_item_types) do
+    alter table(:items) do
       modify(:inserted_at, :timestamp, default: fragment("NOW()"))
       modify(:updated_at, :timestamp, default: fragment("NOW()"))
     end
 
-    alter table(:items) do
+    alter table(:item_types) do
+      modify(:inserted_at, :timestamp, default: fragment("NOW()"))
+      modify(:updated_at, :timestamp, default: fragment("NOW()"))
+    end
+
+    alter table(:item_item_types) do
       modify(:inserted_at, :timestamp, default: fragment("NOW()"))
       modify(:updated_at, :timestamp, default: fragment("NOW()"))
     end
@@ -36,6 +41,11 @@ defmodule Crossing.Repo.Migrations.CreateItemItemTypes do
     end
 
     alter table(:wallets) do
+      modify(:inserted_at, :timestamp, default: fragment("NOW()"))
+      modify(:updated_at, :timestamp, default: fragment("NOW()"))
+    end
+
+    alter table(:profiles) do
       modify(:inserted_at, :timestamp, default: fragment("NOW()"))
       modify(:updated_at, :timestamp, default: fragment("NOW()"))
     end
