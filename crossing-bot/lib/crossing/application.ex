@@ -23,7 +23,7 @@ defmodule Crossing.Application do
       # {Crossing.Worker, arg}
 
        # Supervises Discord Gateway event consumers.
-      #  Crossing.ConsumerSupervisor
+       Crossing.ConsumerSupervisor
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

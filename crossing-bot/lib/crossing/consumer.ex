@@ -23,15 +23,15 @@ defmodule Crossing.Consumer do
     # UserUpdate
   }
 
-  # use Nostrum.Consumer
+  use Nostrum.Consumer
 
-  # def start_link do
-  #   Consumer.start_link(__MODULE__, max_restarts: 0)
-  # end
+  def start_link do
+    Consumer.start_link(__MODULE__, max_restarts: 0)
+  end
 
-  # def handle_event({:MESSAGE_CREATE, msg, _ws_state}) do
-  #   MessageCreate.handle(msg)
-  # end
+  def handle_event({:MESSAGE_CREATE, msg, _ws_state}) do
+    MessageCreate.handle(msg)
+  end
 
   # @impl true
   # @spec handle_event(Nostrum.Consumer.event()) :: any()

@@ -74,3 +74,11 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# Configures Nostrum Discord SDK
+# config :nostrum,
+#   # The token of your bot as a string
+#   token: "require-a-token-from-discord-bot-api",
+
+#   # The number of shards you want to run your bot under, or :auto.
+#   num_shards: :auto
