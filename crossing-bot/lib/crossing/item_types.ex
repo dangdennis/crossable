@@ -6,7 +6,7 @@ defmodule Crossing.ItemTypes do
   import Ecto.Query, warn: false
   alias Crossing.Repo
 
-  alias Crossing.ItemTypes.ItemType
+  alias Crossing.Items.ItemType
 
   @doc """
   Returns the list of item_types.

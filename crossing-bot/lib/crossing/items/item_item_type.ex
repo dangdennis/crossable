@@ -1,4 +1,4 @@
-defmodule Crossing.ItemItemTypes.ItemItemType do
+defmodule Crossing.Items.ItemItemType do
   use Ecto.Schema
   import Ecto.Changeset
 

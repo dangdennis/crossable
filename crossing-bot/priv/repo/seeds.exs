@@ -42,13 +42,13 @@ defmodule Factory do
   end
 
   def item_type_factory(type) do
-    %Crossing.ItemTypes.ItemType{
+    %Crossing.Items.ItemType{
       name: type
     }
   end
 
   def item_item_type_factory(item_id, item_types_id) do
-    %Crossing.ItemItemTypes.ItemItemType{
+    %Crossing.Items.ItemItemType{
       item_id: item_id,
       item_types_id: item_types_id
     }

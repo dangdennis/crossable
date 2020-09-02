@@ -4,7 +4,7 @@ defmodule Crossing.ItemTypesTest do
   alias Crossing.ItemTypes
 
   describe "item_types" do
-    alias Crossing.ItemTypes.ItemType
+    alias Crossing.Items.ItemType
 
     @valid_attrs %{deleted_at: "2010-04-17T14:00:00Z", name: "some name"}
     @update_attrs %{deleted_at: "2011-05-18T15:01:01Z", name: "some updated name"}
