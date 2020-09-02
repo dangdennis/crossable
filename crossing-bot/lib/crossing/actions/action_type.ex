@@ -1,4 +1,4 @@
-defmodule Crossing.ActionTypes.ActionType do
+defmodule Crossing.Actions.ActionType do
   use Ecto.Schema
   import Ecto.Changeset
 

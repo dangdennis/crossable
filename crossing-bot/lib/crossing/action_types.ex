@@ -6,7 +6,7 @@ defmodule Crossing.ActionTypes do
   import Ecto.Query, warn: false
   alias Crossing.Repo
 
-  alias Crossing.ActionTypes.ActionType
+  alias Crossing.Actions.ActionType
 
   @doc """
   Returns the list of action_types.

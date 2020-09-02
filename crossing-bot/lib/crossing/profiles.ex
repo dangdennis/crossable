@@ -6,7 +6,7 @@ defmodule Crossing.Profiles do
   import Ecto.Query, warn: false
   alias Crossing.Repo
 
-  alias Crossing.Profiles.Profile
+  alias Crossing.Users.Profile
 
   @doc """
   Returns the list of profiles.

@@ -34,7 +34,7 @@ defmodule Factory do
   end
 
   def profile_factory(user_id) do
-    %Crossing.Profiles.Profile{
+    %Crossing.Users.Profile{
       first_name: Faker.Person.first_name(),
       last_name: Faker.Person.last_name(),
       user_id: user_id
@@ -74,7 +74,7 @@ defmodule Factory do
   end
 
   def action_type_factory(name) do
-    %Crossing.ActionTypes.ActionType{
+    %Crossing.Actions.ActionType{
       name: name
     }
   end

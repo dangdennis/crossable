@@ -1,4 +1,4 @@
-defmodule Crossing.Profiles.Profile do
+defmodule Crossing.Users.Profile do
   use Ecto.Schema
   import Ecto.Changeset
 

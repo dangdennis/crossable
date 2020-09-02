@@ -4,7 +4,7 @@ defmodule Crossing.ActionTypesTest do
   alias Crossing.ActionTypes
 
   describe "action_types" do
-    alias Crossing.ActionTypes.ActionType
+    alias Crossing.Actions.ActionType
 
     @valid_attrs %{deleted_at: "2010-04-17T14:00:00Z", name: "some name"}
     @update_attrs %{deleted_at: "2011-05-18T15:01:01Z", name: "some updated name"}
