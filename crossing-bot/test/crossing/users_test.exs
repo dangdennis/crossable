@@ -6,8 +6,16 @@ defmodule Crossing.UsersTest do
   describe "users" do
     alias Crossing.Users.User
 
-    @valid_attrs %{firstname: "some firstname", lastname: "some lastname", username: "some username"}
-    @update_attrs %{firstname: "some updated firstname", lastname: "some updated lastname", username: "some updated username"}
+    @valid_attrs %{
+      firstname: "some firstname",
+      lastname: "some lastname",
+      username: "some username"
+    }
+    @update_attrs %{
+      firstname: "some updated firstname",
+      lastname: "some updated lastname",
+      username: "some updated username"
+    }
     @invalid_attrs %{firstname: nil, lastname: nil, username: nil}
 
     def user_fixture(attrs \\ %{}) do

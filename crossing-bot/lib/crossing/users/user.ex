@@ -9,6 +9,7 @@ defmodule Crossing.Users.User do
     field :password_hash, :string
     field :password, :string
     field :deleted_at, :utc_datetime
+    has_one :wallets, Crossing.Wallets.Wallet
 
     timestamps()
   end

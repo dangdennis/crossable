@@ -49,7 +49,7 @@ defmodule Crossing.MixProject do
       # Nostrum deps
       {:nostrum, "~> 0.4"},
       {:cowlib, "~> 2.9", override: true},
-      {:faker, "~> 0.14", only: [:dev, :test]},
+      {:faker, "~> 0.14", only: [:dev, :test]}
       # {:ex_doc, "~> 0.14", only: :dev},
       # {:credo, "~> 0.4", only: [:dev, :test]},
       # {:dialyxir, "~> 0.5", only: [:dev], runtime: false},

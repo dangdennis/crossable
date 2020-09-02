@@ -20,21 +20,23 @@ defmodule Crossing.Consumer.MessageCreate do
 
                 Commonly used commands:
                 !help - get a list of all available commands
+                !join - to join the week's raid
+                !raid - learn what raid is happening this week
+                !party - receive a list of party members
                 !update - starts a new form to update your personal goals
-                !status - get a list of your avatar's health stats
-                !share - share your stats in the general channel and get some social media links
+                !status - receive a link to visit your stats
 
-                Dangerous commands:
+                Real serious commands:
                 !bomb - deletes all your data, including your avatar and your health stats
                 """
               )
 
               IO.inspect(user)
 
-            {:error, message} ->
+            {:error, changeset} ->
               Nostrum.Api.create_message(
                 msg.channel_id,
-                message.errors |> read_error |> Enum.join(" ")
+                changeset.errors |> error_response
               )
           end
 
@@ -44,7 +46,7 @@ defmodule Crossing.Consumer.MessageCreate do
     end
   end
 
-  defp read_error(errors) do
+  defp error_response(errors) do
     Enum.map(errors, fn error ->
       case error do
         {:username, _msg} ->
@@ -54,5 +56,6 @@ defmodule Crossing.Consumer.MessageCreate do
           "Something went wrong."
       end
     end)
+    |> Enum.join(" ")
   end
 end

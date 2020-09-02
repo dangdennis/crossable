@@ -41,14 +41,20 @@ defmodule Crossing.ActionTypesTest do
 
     test "update_action_type/2 with valid data updates the action_type" do
       action_type = action_type_fixture()
-      assert {:ok, %ActionType{} = action_type} = ActionTypes.update_action_type(action_type, @update_attrs)
+
+      assert {:ok, %ActionType{} = action_type} =
+               ActionTypes.update_action_type(action_type, @update_attrs)
+
       assert action_type.deleted_at == DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
       assert action_type.name == "some updated name"
     end
 
     test "update_action_type/2 with invalid data returns error changeset" do
       action_type = action_type_fixture()
-      assert {:error, %Ecto.Changeset{}} = ActionTypes.update_action_type(action_type, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               ActionTypes.update_action_type(action_type, @invalid_attrs)
+
       assert action_type == ActionTypes.get_action_type!(action_type.id)
     end
 

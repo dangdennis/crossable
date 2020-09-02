@@ -40,13 +40,19 @@ defmodule Crossing.CollectionsTest do
 
     test "update_collection/2 with valid data updates the collection" do
       collection = collection_fixture()
-      assert {:ok, %Collection{} = collection} = Collections.update_collection(collection, @update_attrs)
+
+      assert {:ok, %Collection{} = collection} =
+               Collections.update_collection(collection, @update_attrs)
+
       assert collection.name == "some updated name"
     end
 
     test "update_collection/2 with invalid data returns error changeset" do
       collection = collection_fixture()
-      assert {:error, %Ecto.Changeset{}} = Collections.update_collection(collection, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Collections.update_collection(collection, @invalid_attrs)
+
       assert collection == Collections.get_collection!(collection.id)
     end
 

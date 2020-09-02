@@ -28,7 +28,7 @@ defmodule Factory do
 
   def wallet_factory(user_id, balance) do
     %Crossing.Wallets.Wallet{
-      user_id: user_id,
+      # user_id: user_id,
       balance: balance
     }
   end

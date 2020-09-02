@@ -4,8 +4,8 @@ defmodule Crossing.Wallets.Wallet do
 
   schema "wallets" do
     field :balance, :float
-    field :user_id, :id
     field :deleted_at, :utc_datetime
+    # belongs_to :users, Crossing.Users.User
 
     timestamps()
   end
@@ -13,7 +13,7 @@ defmodule Crossing.Wallets.Wallet do
   @doc false
   def changeset(wallet, attrs) do
     wallet
-    |> cast(attrs, [:balance, :user_id, :deleted_at])
-    |> validate_required([:balance, :user_id])
+    |> cast(attrs, [:balance, :deleted_at])
+    |> validate_required([:balance])
   end
 end

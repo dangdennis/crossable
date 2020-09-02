@@ -22,8 +22,8 @@ defmodule Crossing.Application do
       # Start a worker by calling: Crossing.Worker.start_link(arg)
       # {Crossing.Worker, arg}
 
-       # Supervises Discord Gateway event consumers.
-       Crossing.ConsumerSupervisor
+      # Supervises Discord Gateway event consumers.
+      Crossing.ConsumerSupervisor
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

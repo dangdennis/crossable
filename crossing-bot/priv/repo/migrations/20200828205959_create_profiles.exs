@@ -11,6 +11,5 @@ defmodule Crossing.Repo.Migrations.CreateProfiles do
 
       timestamps()
     end
-
   end
 end

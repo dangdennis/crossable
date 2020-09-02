@@ -6,8 +6,18 @@ defmodule Crossing.ItemsTest do
   describe "items" do
     alias Crossing.Items.Item
 
-    @valid_attrs %{deleted_at: "2010-04-17T14:00:00Z", image_url: "some image_url", name: "some name", type: "some type"}
-    @update_attrs %{deleted_at: "2011-05-18T15:01:01Z", image_url: "some updated image_url", name: "some updated name", type: "some updated type"}
+    @valid_attrs %{
+      deleted_at: "2010-04-17T14:00:00Z",
+      image_url: "some image_url",
+      name: "some name",
+      type: "some type"
+    }
+    @update_attrs %{
+      deleted_at: "2011-05-18T15:01:01Z",
+      image_url: "some updated image_url",
+      name: "some updated name",
+      type: "some updated type"
+    }
     @invalid_attrs %{deleted_at: nil, image_url: nil, name: nil, type: nil}
 
     def item_fixture(attrs \\ %{}) do
