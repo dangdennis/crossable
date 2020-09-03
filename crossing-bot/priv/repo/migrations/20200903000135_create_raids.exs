@@ -13,5 +13,10 @@ defmodule Crossing.Repo.Migrations.CreateRaids do
     end
 
     create index(:raids, [:raid_boss_id])
+
+    alter table(:raids) do
+      modify(:inserted_at, :timestamp, default: fragment("NOW()"))
+      modify(:updated_at, :timestamp, default: fragment("NOW()"))
+    end
   end
 end

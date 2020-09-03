@@ -130,4 +130,67 @@ defmodule Crossing.RaidsTest do
       assert %Ecto.Changeset{} = Raids.change_raid(raid)
     end
   end
+
+  describe "raid_members" do
+    alias Crossing.Raids.RaidMember
+
+    @valid_attrs %{active: true, deleted_at: "2010-04-17T14:00:00Z", status: "some status"}
+    @update_attrs %{active: false, deleted_at: "2011-05-18T15:01:01Z", status: "some updated status"}
+    @invalid_attrs %{active: nil, deleted_at: nil, status: nil}
+
+    def raid_member_fixture(attrs \\ %{}) do
+      {:ok, raid_member} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Raids.create_raid_member()
+
+      raid_member
+    end
+
+    test "list_raid_members/0 returns all raid_members" do
+      raid_member = raid_member_fixture()
+      assert Raids.list_raid_members() == [raid_member]
+    end
+
+    test "get_raid_member!/1 returns the raid_member with given id" do
+      raid_member = raid_member_fixture()
+      assert Raids.get_raid_member!(raid_member.id) == raid_member
+    end
+
+    test "create_raid_member/1 with valid data creates a raid_member" do
+      assert {:ok, %RaidMember{} = raid_member} = Raids.create_raid_member(@valid_attrs)
+      assert raid_member.active == true
+      assert raid_member.deleted_at == DateTime.from_naive!(~N[2010-04-17T14:00:00Z], "Etc/UTC")
+      assert raid_member.status == "some status"
+    end
+
+    test "create_raid_member/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Raids.create_raid_member(@invalid_attrs)
+    end
+
+    test "update_raid_member/2 with valid data updates the raid_member" do
+      raid_member = raid_member_fixture()
+      assert {:ok, %RaidMember{} = raid_member} = Raids.update_raid_member(raid_member, @update_attrs)
+      assert raid_member.active == false
+      assert raid_member.deleted_at == DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
+      assert raid_member.status == "some updated status"
+    end
+
+    test "update_raid_member/2 with invalid data returns error changeset" do
+      raid_member = raid_member_fixture()
+      assert {:error, %Ecto.Changeset{}} = Raids.update_raid_member(raid_member, @invalid_attrs)
+      assert raid_member == Raids.get_raid_member!(raid_member.id)
+    end
+
+    test "delete_raid_member/1 deletes the raid_member" do
+      raid_member = raid_member_fixture()
+      assert {:ok, %RaidMember{}} = Raids.delete_raid_member(raid_member)
+      assert_raise Ecto.NoResultsError, fn -> Raids.get_raid_member!(raid_member.id) end
+    end
+
+    test "change_raid_member/1 returns a raid_member changeset" do
+      raid_member = raid_member_fixture()
+      assert %Ecto.Changeset{} = Raids.change_raid_member(raid_member)
+    end
+  end
 end

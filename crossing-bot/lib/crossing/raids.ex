@@ -197,4 +197,100 @@ defmodule Crossing.Raids do
   def change_raid(%Raid{} = raid, attrs \\ %{}) do
     Raid.changeset(raid, attrs)
   end
+
+  alias Crossing.Raids.RaidMember
+
+  @doc """
+  Returns the list of raid_members.
+
+  ## Examples
+
+      iex> list_raid_members()
+      [%RaidMember{}, ...]
+
+  """
+  def list_raid_members do
+    Repo.all(RaidMember)
+  end
+
+  @doc """
+  Gets a single raid_member.
+
+  Raises `Ecto.NoResultsError` if the Raid member does not exist.
+
+  ## Examples
+
+      iex> get_raid_member!(123)
+      %RaidMember{}
+
+      iex> get_raid_member!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_raid_member!(id), do: Repo.get!(RaidMember, id)
+
+  @doc """
+  Creates a raid_member.
+
+  ## Examples
+
+      iex> create_raid_member(%{field: value})
+      {:ok, %RaidMember{}}
+
+      iex> create_raid_member(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_raid_member(attrs \\ %{}) do
+    %RaidMember{}
+    |> RaidMember.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a raid_member.
+
+  ## Examples
+
+      iex> update_raid_member(raid_member, %{field: new_value})
+      {:ok, %RaidMember{}}
+
+      iex> update_raid_member(raid_member, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_raid_member(%RaidMember{} = raid_member, attrs) do
+    raid_member
+    |> RaidMember.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a raid_member.
+
+  ## Examples
+
+      iex> delete_raid_member(raid_member)
+      {:ok, %RaidMember{}}
+
+      iex> delete_raid_member(raid_member)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_raid_member(%RaidMember{} = raid_member) do
+    Repo.delete(raid_member)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking raid_member changes.
+
+  ## Examples
+
+      iex> change_raid_member(raid_member)
+      %Ecto.Changeset{data: %RaidMember{}}
+
+  """
+  def change_raid_member(%RaidMember{} = raid_member, attrs \\ %{}) do
+    RaidMember.changeset(raid_member, attrs)
+  end
 end
