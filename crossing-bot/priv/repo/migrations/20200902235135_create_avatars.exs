@@ -1,21 +1,19 @@
-defmodule Crossing.Repo.Migrations.CreateActionTypes do
+defmodule Crossing.Repo.Migrations.CreateAvatars do
   use Ecto.Migration
 
   def change do
-    create table(:action_types) do
-      add :name, :string
+    create table(:avatars) do
       add :deleted_at, :utc_datetime
+      add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()
     end
 
-    alter table(:action_types) do
+    create index(:avatars, [:user_id])
+
+    alter table(:users) do
       modify(:inserted_at, :timestamp, default: fragment("NOW()"))
       modify(:updated_at, :timestamp, default: fragment("NOW()"))
-    end
-
-    alter table(:actions) do
-      add :action_type_id, references(:action_types), null: false
     end
   end
 end

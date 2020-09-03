@@ -3,8 +3,8 @@ defmodule Crossing.Avatars.Avatar do
   import Ecto.Changeset
 
   schema "avatars" do
-    field :user_id, :id
     field :deleted_at, :utc_datetime
+    field :user_id, :id
 
     timestamps()
   end
@@ -12,7 +12,7 @@ defmodule Crossing.Avatars.Avatar do
   @doc false
   def changeset(avatar, attrs) do
     avatar
-    |> cast(attrs, [:user_id, :deleted_at])
-    |> validate_required([:user_id])
+    |> cast(attrs, [:deleted_at])
+    |> validate_required([:deleted_at])
   end
 end

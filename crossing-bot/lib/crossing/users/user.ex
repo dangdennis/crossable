@@ -3,13 +3,11 @@ defmodule Crossing.Users.User do
   import Ecto.Changeset
 
   schema "users" do
-    field :username, :string
-    field :email, :string
-    field :phone_number, :string
-    field :password_hash, :string
-    field :password, :string
     field :deleted_at, :utc_datetime
-    has_one :wallets, Crossing.Wallets.Wallet
+    field :email, :string
+    field :password_hash, :string
+    field :phone_number, :string
+    field :username, :string
 
     timestamps()
   end
@@ -18,7 +16,6 @@ defmodule Crossing.Users.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:username, :email, :phone_number, :password_hash, :deleted_at])
-    |> validate_required([:username])
-    |> unique_constraint([:username])
+    |> validate_required([:username, :email, :phone_number, :password_hash])
   end
 end
