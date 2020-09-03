@@ -6,6 +6,7 @@ defmodule Crossing.Users.User do
     field :deleted_at, :utc_datetime
     field :discord_user_id, :string
     field :password_hash, :string
+    has_one :avatars, Crossing.Avatars.Avatar
 
     timestamps()
   end

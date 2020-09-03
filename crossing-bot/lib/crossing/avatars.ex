@@ -56,6 +56,22 @@ defmodule Crossing.Avatars do
   end
 
   @doc """
+  Creates an avatar by association for a user.
+
+  ## Examples
+
+    iex> create_avatar_for_user(%Crossing.Users.User{field:value})
+    {:ok, %Avatar{}}
+
+    iex> create_avatar(%{field: bad_value})
+    {:error, %Ecto.Changeset{}}
+  """
+  def create_avatar_for_user(user) do
+    Ecto.build_assoc(user, :avatars, %{})
+    |> Repo.insert()
+  end
+
+  @doc """
   Updates a avatar.
 
   ## Examples

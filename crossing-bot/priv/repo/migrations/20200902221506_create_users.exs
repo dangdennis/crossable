@@ -3,7 +3,7 @@ defmodule Crossing.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users) do
-      add :discord_user_id, :string
+      add :discord_user_id, :string, null: false
       add :password_hash, :string
       add :deleted_at, :utc_datetime
 
