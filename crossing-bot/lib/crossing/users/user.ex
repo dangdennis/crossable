@@ -4,10 +4,8 @@ defmodule Crossing.Users.User do
 
   schema "users" do
     field :deleted_at, :utc_datetime
-    field :email, :string
+    field :discord_user_id, :string
     field :password_hash, :string
-    field :phone_number, :string
-    field :username, :string
 
     timestamps()
   end
@@ -15,7 +13,12 @@ defmodule Crossing.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:username, :email, :phone_number, :password_hash, :deleted_at])
-    |> validate_required([:username, :email, :phone_number, :password_hash])
+    |> cast(attrs, [
+      :discord_user_id,
+      :password_hash,
+      :deleted_at
+    ])
+    |> validate_required([:discord_user_id])
+    |> unique_constraint([:discord_user_id])
   end
 end

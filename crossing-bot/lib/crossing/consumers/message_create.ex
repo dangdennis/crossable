@@ -11,7 +11,10 @@ defmodule Crossing.Consumer.MessageCreate do
         ["!new" | _tail] ->
           IO.inspect(msg)
 
-          case Users.create_user(%{username: msg.author.username}) do
+          case Users.create_user(%{
+                 discord_user_id: msg.author.id |> Integer.to_string(),
+                 username: msg.author.username
+               }) do
             {:ok, user} ->
               Nostrum.Api.create_message(
                 msg.channel_id,
@@ -19,9 +22,9 @@ defmodule Crossing.Consumer.MessageCreate do
                 Welcome to Health Crossing! You're all set!
 
                 Commonly used commands:
+                !raid - learn what raid is happening this week
                 !help - get a list of all available commands
                 !join - to join the week's raid
-                !raid - learn what raid is happening this week
                 !party - receive a list of party members
                 !update - starts a new form to update your personal goals
                 !status - receive a link to visit your stats
@@ -36,7 +39,7 @@ defmodule Crossing.Consumer.MessageCreate do
             {:error, changeset} ->
               Nostrum.Api.create_message(
                 msg.channel_id,
-                changeset.errors |> error_response
+                changeset |> error_response
               )
           end
 
@@ -46,11 +49,11 @@ defmodule Crossing.Consumer.MessageCreate do
     end
   end
 
-  defp error_response(errors) do
-    Enum.map(errors, fn error ->
+  defp error_response(changeset) do
+    Enum.map(changeset.errors, fn error ->
       case error do
-        {:username, _msg} ->
-          "Your username is already registered."
+        {:discord_user_id, _msg} ->
+          "Your account is already registered."
 
         _ ->
           "Something went wrong."

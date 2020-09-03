@@ -3,19 +3,18 @@ defmodule Crossing.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users) do
-      add :username, :string, null: false
-      add :email, :string
-      add :phone_number, :string
+      add :discord_user_id, :string
       add :password_hash, :string
       add :deleted_at, :utc_datetime
 
       timestamps()
     end
 
+    create unique_index(:users, [:discord_user_id])
+
     alter table(:users) do
       modify(:inserted_at, :timestamp, default: fragment("NOW()"))
       modify(:updated_at, :timestamp, default: fragment("NOW()"))
     end
-
   end
 end

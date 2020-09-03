@@ -2,6 +2,7 @@ defmodule Crossing.Consumer do
   @moduledoc "Consumes events sent by the API gateway."
 
   alias Crossing.Consumer.{
+    MessageCreate
     # ChannelCreate,
     # ChannelDelete,
     # ChannelUpdate,
@@ -15,7 +16,6 @@ defmodule Crossing.Consumer do
     # GuildRoleCreate,
     # GuildRoleDelete,
     # GuildRoleUpdate,
-    MessageCreate
     # MessageDelete,
     # MessageReactionAdd,
     # MessageUpdate,
