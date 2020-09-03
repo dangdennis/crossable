@@ -16,6 +16,6 @@ defmodule Crossing.Users.Profile do
   def changeset(profile, attrs) do
     profile
     |> cast(attrs, [:first_name, :last_name, :age, :deleted_at])
-    |> validate_required([:first_name, :last_name, :age, :deleted_at])
+    |> validate_required([:first_name, :last_name, :age])
   end
 end

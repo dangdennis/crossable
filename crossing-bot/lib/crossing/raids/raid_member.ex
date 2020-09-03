@@ -16,6 +16,6 @@ defmodule Crossing.Raids.RaidMember do
   def changeset(raid_member, attrs) do
     raid_member
     |> cast(attrs, [:status, :active, :deleted_at])
-    |> validate_required([:status, :active, :deleted_at])
+    |> validate_required([:status, :active])
   end
 end

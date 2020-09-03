@@ -16,6 +16,6 @@ defmodule Crossing.Raids.Raid do
   def changeset(raid, attrs) do
     raid
     |> cast(attrs, [:player_limit, :status, :end_time, :deleted_at])
-    |> validate_required([:player_limit, :status, :end_time, :deleted_at])
+    |> validate_required([:player_limit, :status, :end_time])
   end
 end

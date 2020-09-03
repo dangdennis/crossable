@@ -13,6 +13,6 @@ defmodule Crossing.Avatars.Avatar do
   def changeset(avatar, attrs) do
     avatar
     |> cast(attrs, [:deleted_at])
-    |> validate_required([:deleted_at])
+    |> validate_required([])
   end
 end

@@ -14,6 +14,6 @@ defmodule Crossing.Raids.RaidBoss do
   def changeset(raid_boss, attrs) do
     raid_boss
     |> cast(attrs, [:name, :image_url, :deleted_at])
-    |> validate_required([:name, :image_url, :deleted_at])
+    |> validate_required([:name, :image_url])
   end
 end
