@@ -9,43 +9,35 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
-
-# Faker.start()
-
-# defmodule Factory do
-#   def build(:user) do
-#     %Crossing.Users.User{
-#       username:
-#         (Faker.Person.name() |> String.split(" ", trim: true) |> Enum.join()) <>
-#           "#" <>
-#           Integer.to_string(Enum.random(1_000..9_999)),
-#       email:
-#         (Faker.Person.name() |> String.split(" ", trim: true) |> Enum.join()) <>
-#           "email" <> Integer.to_string(Enum.random(1_000..9_999)) <> "@gmail.com",
-#       phone_number: Faker.Phone.EnUs.phone()
-#     }
-#   end
-
-#   def build(:profile) do
-#     %Crossing.Users.Profile{
-#       first_name: Faker.Person.first_name(),
-#       last_name: Faker.Person.last_name()
-#     }
-#   end
-
-#   def build(:avatar) do
-#     %Crossing.Avatars.Avatar{}
-#   end
-# end
+Faker.start()
 
 # USERS
-# user1 = Crossing.Repo.insert!(Factory.build(:user))
-# user2 = Crossing.Repo.insert!(Factory.build(:user))
+user1 =
+  Crossing.Repo.insert!(%Crossing.Users.User{
+    discord_user_id: System.unique_integer([:positive]) |> Integer.to_string()
+  })
 
-# PROFILES
-# Crossing.Repo.insert!(Factory.profile_factory(user1.id))
-# Crossing.Repo.insert!(Factory.profile_factory(user2.id))
+user2 =
+  Crossing.Repo.insert!(%Crossing.Users.User{
+    discord_user_id: System.unique_integer([:positive]) |> Integer.to_string()
+  })
+
+# RAID BOSSES
+boss_1 =
+  Crossing.Repo.insert!(%Crossing.Raids.RaidBoss{
+    name: "Alien Queen",
+    image_url:
+      "https://vignette.wikia.nocookie.net/avp/images/7/74/Promo07.PNG/revision/latest?cb=20120527102557"
+  })
+
+boss_2 =
+  Crossing.Repo.insert!(%Crossing.Raids.RaidBoss{
+    name: "Arthas Menethil, The Lich King",
+    image_url:
+      "https://cdn.vox-cdn.com/thumbor/k6m7tw54mdYa2yJoYbk3FuIYFZg=/0x0:1024x576/1920x0/filters:focal(0x0:1024x576):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/19748343/155054_the_lich_king.jpg"
+  })
 
 # AVATARS
+
 # avatar1 = Crossing.Repo.insert!(Factory.build(:avatar))
 # avatar2 = Crossing.Repo.insert!(Factory.build(:avatar))
