@@ -13,7 +13,7 @@ defmodule Crossing.Commands.Attack do
     #
     # 5. If attack is successful, lower the boss's health percentage accordingly. Print message to show who attacked and boss's status.
     raid = Raids.get_active_raid()
-    _raid_boss = raid.raid_bosses
+    _raid_boss = raid.raid_boss
 
     Nostrum.Api.create_message!(msg.channel_id, """
     ATTTTAACCCK!

@@ -12,6 +12,9 @@ defmodule Crossing.Commands.Invoker do
       ["!attack" | _tl] ->
         Crossing.Commands.Attack.invoke(msg)
 
+      ["!join" | _tl] ->
+        Crossing.Commands.Join.invoke(msg)
+
       _ ->
         nil
     end

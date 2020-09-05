@@ -22,7 +22,6 @@ defmodule Crossing.Raids.Raid do
       :start_time,
       :end_time,
       :deleted_at,
-      :raid_boss_id,
       :completion_percentage,
       :active
     ])
