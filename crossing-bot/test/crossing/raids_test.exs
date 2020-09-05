@@ -75,36 +75,36 @@ defmodule Crossing.RaidsTest do
   #   end
 
   describe "raids" do
-    alias Crossing.Raids.Raid
+    # alias Crossing.Raids.Raid
 
-    @valid_attrs %{
-      active: false,
-      status: "complete",
-      deleted_at: "2010-04-17T14:00:00Z",
-      start_time: "2010-04-17T14:00:00Z",
-      end_time: "2010-04-17T14:00:00Z",
-      player_limit: 42,
-      status: "some status"
-    }
-    @update_attrs %{
-      active: true,
-      status: "complete",
-      deleted_at: "2011-05-18T15:01:01Z",
-      start_time: "2011-05-18T15:01:01Z",
-      end_time: "2011-05-18T15:01:01Z",
-      player_limit: 43,
-      status: "some updated status"
-    }
-    @invalid_attrs %{deleted_at: nil, end_time: nil, player_limit: nil, status: nil}
+    # @valid_attrs %{
+    #   active: false,
+    #   status: "complete",
+    #   deleted_at: "2010-04-17T14:00:00Z",
+    #   start_time: "2010-04-17T14:00:00Z",
+    #   end_time: "2010-04-17T14:00:00Z",
+    #   player_limit: 42,
+    #   status: "some status"
+    # }
+    # @update_attrs %{
+    #   active: true,
+    #   status: "complete",
+    #   deleted_at: "2011-05-18T15:01:01Z",
+    #   start_time: "2011-05-18T15:01:01Z",
+    #   end_time: "2011-05-18T15:01:01Z",
+    #   player_limit: 43,
+    #   status: "some updated status"
+    # }
+    # @invalid_attrs %{deleted_at: nil, end_time: nil, player_limit: nil, status: nil}
 
-    def raid_fixture(attrs \\ %{}) do
-      {:ok, raid} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Raids.create_raid()
+    # def raid_fixture(attrs \\ %{}) do
+    #   {:ok, raid} =
+    #     attrs
+    #     |> Enum.into(@valid_attrs)
+    #     |> Raids.create_raid()
 
-      raid
-    end
+    #   raid
+    # end
 
     test "get_active_raid/0 returns the most recent, active raid" do
       raid = Raids.get_active_raid()

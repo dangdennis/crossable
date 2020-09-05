@@ -120,9 +120,10 @@ defmodule Crossing.Raids do
   def get_active_raid do
     from(Raid,
       where: [active: true],
-      select: [:id, :active, :start_time, :end_time, :raid_boss_id, :completion_percentage],
+      select: [:id, :active, :start_time, :end_time, :raid_bosses_id, :completion_percentage],
       order_by: [asc: :start_time],
-      limit: 1
+      limit: 1,
+      preload: [:raid_bosses]
     )
     |> Repo.one()
   end
