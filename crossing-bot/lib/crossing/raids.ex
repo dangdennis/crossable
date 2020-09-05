@@ -118,13 +118,13 @@ defmodule Crossing.Raids do
   end
 
   @spec get_active_raid :: Raid
-  def get_active_raid do
+  def get_active_raid() do
     from(Raid,
       where: [active: true],
       select: [:id, :active, :start_time, :end_time, :completion_percentage, :raid_boss_id],
       order_by: [asc: :start_time],
       limit: 1,
-      preload: [:raid_boss]
+      preload: [:raid_boss, :raid_members]
     )
     |> Repo.one()
   end
@@ -305,5 +305,18 @@ defmodule Crossing.Raids do
   """
   def change_raid_member(%RaidMember{} = raid_member, attrs \\ %{}) do
     RaidMember.changeset(raid_member, attrs)
+  end
+
+  def get_raid_member_by_discord_id(discord_id) do
+    query =
+      from r in RaidMember,
+        join: a in Crossing.Avatars.Avatar,
+        on: r.avatar_id == a.id,
+        join: u in Crossing.Users.User,
+        on: a.user_id == u.id,
+        where: u.discord_user_id == ^discord_id,
+        select: [:id]
+
+    query |> Repo.one()
   end
 end

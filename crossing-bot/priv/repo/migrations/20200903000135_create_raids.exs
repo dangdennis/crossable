@@ -7,7 +7,7 @@ defmodule Crossing.Repo.Migrations.CreateRaids do
       add :start_time, :utc_datetime
       add :end_time, :utc_datetime
       add :deleted_at, :utc_datetime
-      add :raid_boss_id, references(:raid_bosses, on_delete: :nothing)
+      add :raid_boss_id, references(:raid_bosses, on_delete: :delete_all)
       add :completion_percentage, :float
       add :active, :boolean
 

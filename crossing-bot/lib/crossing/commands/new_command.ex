@@ -17,7 +17,7 @@ defmodule Crossing.Commands.New do
           Commonly used commands:
           !raid - learn what raid is happening this week
           !join - to join the week's raid
-          !party - receive a list of party members
+          !attack - confirm that you've completed your daily task, and deal some damage to the raid boss!
           !help - get a list of all available commands
 
           Real serious commands:
