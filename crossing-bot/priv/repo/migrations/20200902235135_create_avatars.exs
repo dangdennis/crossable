@@ -4,12 +4,12 @@ defmodule Crossing.Repo.Migrations.CreateAvatars do
   def change do
     create table(:avatars) do
       add :deleted_at, :utc_datetime
-      add :user_id, references(:users, on_delete: :delete_all)
+      add :users_id, references(:users, on_delete: :delete_all)
 
       timestamps()
     end
 
-    create index(:avatars, [:user_id])
+    create index(:avatars, [:users_id])
 
     alter table(:users) do
       modify(:inserted_at, :timestamp, default: fragment("NOW()"))

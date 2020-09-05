@@ -4,7 +4,6 @@ defmodule Crossing.Avatars.Avatar do
 
   schema "avatars" do
     field :deleted_at, :utc_datetime
-    field :user_id, :id
     belongs_to :users, Crossing.Users.User
 
     timestamps()
@@ -13,7 +12,7 @@ defmodule Crossing.Avatars.Avatar do
   @doc false
   def changeset(avatar, attrs) do
     avatar
-    |> cast(attrs, [:deleted_at])
+    |> cast(attrs, [:users_id, :deleted_at])
     |> validate_required([])
   end
 end
