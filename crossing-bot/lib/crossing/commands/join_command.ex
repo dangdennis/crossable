@@ -1,16 +1,36 @@
 defmodule Crossing.Commands.Join do
   alias Crossing.Raids
+  alias Crossing.Avatars
 
   def invoke(msg) do
-    # raid = Raids.get_active_raid()
-    # raid_boss = raid.raid_boss
+    raid = Raids.get_active_raid()
+    avatar = Avatars.get_by_discord_id(msg.author.id |> Integer.to_string())
 
-    # 1 Find the user's avatar
-    # 2 Find the active raid of the week
     # 3 If the raid hasn't ended yet and it's not 48 hours past the start date, add the user's avatar to the raid as a raid member
+    day_diff = DateTime.diff(Timex.now(), raid.start_time, :second) / 60 / 60
 
-    Nostrum.Api.create_message!(msg.channel_id, """
-    You've joined this week's raid!
-    """)
+    case day_diff > 48 do
+      true ->
+        Nostrum.Api.create_message!(msg.channel_id, """
+        The raid has already started 48 hours ago. Come join again next week.
+        """)
+
+      false ->
+        case Crossing.Raids.create_raid_member(%{
+               avatar_id: avatar.id,
+               raid_id: raid.id,
+               status: "ready"
+             }) do
+          {:ok, _avatar} ->
+            Nostrum.Api.create_message!(msg.channel_id, """
+            You've joined this week's raid!
+            """)
+
+          {:error, _changeset} ->
+            Nostrum.Api.create_message!(msg.channel_id, """
+            You've already joined this week's raid!
+            """)
+        end
+    end
   end
 end

@@ -117,4 +117,15 @@ defmodule Crossing.Avatars do
   def change_avatar(%Avatar{} = avatar, attrs \\ %{}) do
     Avatar.changeset(avatar, attrs)
   end
+
+  def get_by_discord_id(discord_id) do
+    query =
+      from a in Avatar,
+        join: u in Crossing.Users.User,
+        on: a.user_id == u.id,
+        where: u.discord_user_id == ^discord_id,
+        select: [:id]
+
+    query |> Repo.one()
+  end
 end
