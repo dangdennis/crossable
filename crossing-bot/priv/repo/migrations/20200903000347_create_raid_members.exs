@@ -7,13 +7,14 @@ defmodule Crossing.Repo.Migrations.CreateRaidMembers do
       add :active, :boolean, default: true, null: false
       add :deleted_at, :utc_datetime
       add :raid_id, references(:raids, on_delete: :nothing)
-      add :user_id, references(:users, on_delete: :nothing)
+      add :avatar_id, references(:avatars, on_delete: :nothing)
 
       timestamps()
     end
 
     create index(:raid_members, [:raid_id])
-    create index(:raid_members, [:user_id])
+    create index(:raid_members, [:avatar_id])
+    create unique_index(:raid_members, [:avatar_id, :raid_id])
 
     alter table(:raid_members) do
       modify(:inserted_at, :timestamp, default: fragment("NOW()"))

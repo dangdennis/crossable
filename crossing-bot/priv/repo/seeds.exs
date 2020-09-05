@@ -9,17 +9,21 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+require Ecto.Query
+
 Faker.start()
 
 # USERS
 user1 =
-  Crossing.Repo.insert!(%Crossing.Users.User{
-    discord_user_id: System.unique_integer([:positive]) |> Integer.to_string()
+  Crossing.Users.create_user(%{
+    discord_user_id: System.unique_integer([:positive]) |> Integer.to_string(),
+    avatar: %{}
   })
 
 user2 =
-  Crossing.Repo.insert!(%Crossing.Users.User{
-    discord_user_id: System.unique_integer([:positive]) |> Integer.to_string()
+  Crossing.Users.create_user(%{
+    discord_user_id: System.unique_integer([:positive]) |> Integer.to_string(),
+    avatar: %{}
   })
 
 # RAID BOSSES
@@ -57,23 +61,42 @@ raid_2_active =
   })
 
 # RAID MEMBERS
+
+user1_preload_avatar =
+  Ecto.Query.from(Crossing.Users.User,
+    where: [id: 1],
+    select: [:id, :discord_user_id],
+    limit: 1,
+    preload: [:avatar]
+  )
+  |> Crossing.Repo.one()
+
+user2_preload_avatar =
+  Ecto.Query.from(Crossing.Users.User,
+    where: [id: 2],
+    select: [:id, :discord_user_id],
+    limit: 1,
+    preload: [:avatar]
+  )
+  |> Crossing.Repo.one()
+
 Crossing.Repo.insert!(%Crossing.Raids.RaidMember{
   active: true,
-  user_id: user1.id,
+  avatar_id: user1_preload_avatar.avatar.id,
   raid_id: raid_1_inactive.id,
   status: "completed"
 })
 
 Crossing.Repo.insert!(%Crossing.Raids.RaidMember{
   active: true,
-  user_id: user2.id,
+  avatar_id: user2_preload_avatar.avatar.id,
   raid_id: raid_1_inactive.id,
   status: "completed"
 })
 
 Crossing.Repo.insert!(%Crossing.Raids.RaidMember{
   active: true,
-  user_id: user1.id,
+  avatar_id: user1_preload_avatar.avatar.id,
   raid_id: raid_2_active.id,
   # "attacked"
   status: "ready"
@@ -81,7 +104,7 @@ Crossing.Repo.insert!(%Crossing.Raids.RaidMember{
 
 Crossing.Repo.insert!(%Crossing.Raids.RaidMember{
   active: true,
-  user_id: user2.id,
+  avatar_id: user2_preload_avatar.avatar.id,
   raid_id: raid_2_active.id,
   # "attacked"
   status: "ready"

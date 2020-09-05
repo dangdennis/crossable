@@ -6,8 +6,8 @@ defmodule Crossing.Raids.RaidMember do
     field :active, :boolean, default: true
     field :deleted_at, :utc_datetime
     field :status, :string
-    field :raid_id, :id
-    field :user_id, :id
+    belongs_to :raid, Crossing.Raids.Raid
+    belongs_to :avatar, Crossing.Avatars.Avatar
 
     timestamps()
   end

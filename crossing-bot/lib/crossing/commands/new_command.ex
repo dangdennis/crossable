@@ -4,7 +4,6 @@ defmodule Crossing.Commands.New do
   def invoke(msg) do
     case Users.create_user(%{
            discord_user_id: msg.author.id |> Integer.to_string(),
-           username: msg.author.username,
            avatar: %{}
          }) do
       {:ok, user} ->

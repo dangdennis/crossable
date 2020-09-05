@@ -3,9 +3,9 @@ defmodule Crossing.Raids.RaidBoss do
   import Ecto.Changeset
 
   schema "raid_bosses" do
-    field :deleted_at, :utc_datetime
-    field :image_url, :string
-    field :name, :string
+    field(:deleted_at, :utc_datetime)
+    field(:image_url, :string)
+    field(:name, :string)
 
     timestamps()
   end

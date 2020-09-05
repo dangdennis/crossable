@@ -9,7 +9,7 @@ defmodule Crossing.Repo.Migrations.CreateAvatars do
       timestamps()
     end
 
-    create index(:avatars, [:user_id])
+    create index(:avatars, [:user_id], unique: true)
 
     alter table(:users) do
       modify(:inserted_at, :timestamp, default: fragment("NOW()"))

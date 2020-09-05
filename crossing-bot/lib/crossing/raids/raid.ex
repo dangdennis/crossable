@@ -10,6 +10,7 @@ defmodule Crossing.Raids.Raid do
     field :completion_percentage, :float
     field :active, :boolean
     belongs_to :raid_boss, Crossing.Raids.RaidBoss
+    has_many :members, Crossing.Raids.RaidMember
 
     timestamps()
   end
