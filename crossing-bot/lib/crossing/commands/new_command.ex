@@ -1,21 +1,14 @@
 defmodule Crossing.Commands.New do
   alias Crossing.Users
-  alias Crossing.Avatars
-  alias Crossing.Avatars.Avatar
-  alias Nostrum.Struct.Message
 
   def invoke(msg) do
     case Users.create_user(%{
            discord_user_id: msg.author.id |> Integer.to_string(),
            username: msg.author.username,
-           avatars: %Avatar{}
+           avatar: %{}
          }) do
       {:ok, user} ->
         IO.inspect(user)
-
-        # case Avatars.create_avatar_for_user(user) do
-        #   {:ok, avatar} ->
-        #     IO.inspect(avatar)
 
         Nostrum.Api.create_message(
           msg.channel_id,
@@ -32,13 +25,6 @@ defmodule Crossing.Commands.New do
           !bomb - deletes all your data
           """
         )
-
-      #   {:error, changeset} ->
-      #     Nostrum.Api.create_message(
-      #       msg.channel_id,
-      #       changeset |> error_response
-      #     )
-      # end
 
       {:error, changeset} ->
         Nostrum.Api.create_message(
