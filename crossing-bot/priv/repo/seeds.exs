@@ -32,7 +32,7 @@ boss_1 =
 
 boss_2 =
   Crossing.Repo.insert!(%Crossing.Raids.RaidBoss{
-    name: "Alien Queen",
+    name: "The Alien Queen",
     image_url:
       "https://vignette.wikia.nocookie.net/avp/images/7/74/Promo07.PNG/revision/latest?cb=20120527102557"
   })
