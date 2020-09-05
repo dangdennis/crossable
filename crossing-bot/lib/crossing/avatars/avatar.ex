@@ -4,7 +4,7 @@ defmodule Crossing.Avatars.Avatar do
 
   schema "avatars" do
     field :deleted_at, :utc_datetime
-    belongs_to :users, Crossing.Users.User
+    belongs_to :user, Crossing.Users.User
 
     timestamps()
   end

@@ -18,7 +18,7 @@ defmodule Crossing.Users do
 
   """
   def list_users do
-    Repo.all(User)
+    User |> from(preload: [:avatar]) |> Repo.all()
   end
 
   @doc """

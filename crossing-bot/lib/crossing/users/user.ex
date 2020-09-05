@@ -6,7 +6,7 @@ defmodule Crossing.Users.User do
     field :deleted_at, :utc_datetime
     field :discord_user_id, :string
     field :password_hash, :string
-    has_one :avatars, Crossing.Avatars.Avatar
+    has_one :avatar, Crossing.Avatars.Avatar
 
     timestamps()
   end
@@ -17,7 +17,8 @@ defmodule Crossing.Users.User do
     |> cast(attrs, [
       :discord_user_id,
       :password_hash,
-      :deleted_at
+      :deleted_at,
+      :avatar_id
     ])
     |> validate_required([:discord_user_id])
     |> unique_constraint([:discord_user_id])
