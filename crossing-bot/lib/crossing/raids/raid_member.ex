@@ -3,7 +3,7 @@ defmodule Crossing.Raids.RaidMember do
   import Ecto.Changeset
 
   schema "raid_members" do
-    field :active, :boolean, default: false
+    field :active, :boolean, default: true
     field :deleted_at, :utc_datetime
     field :status, :string
     field :raid_id, :id

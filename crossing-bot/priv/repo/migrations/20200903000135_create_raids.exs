@@ -4,10 +4,12 @@ defmodule Crossing.Repo.Migrations.CreateRaids do
   def change do
     create table(:raids) do
       add :player_limit, :integer
-      add :status, :string
+      add :start_time, :utc_datetime
       add :end_time, :utc_datetime
       add :deleted_at, :utc_datetime
       add :raid_boss_id, references(:raid_bosses, on_delete: :nothing)
+      add :completion_percentage, :float
+      add :active, :boolean
 
       timestamps()
     end

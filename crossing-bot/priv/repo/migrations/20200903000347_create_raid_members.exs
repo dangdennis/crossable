@@ -4,7 +4,7 @@ defmodule Crossing.Repo.Migrations.CreateRaidMembers do
   def change do
     create table(:raid_members) do
       add :status, :string
-      add :active, :boolean, default: false, null: false
+      add :active, :boolean, default: true, null: false
       add :deleted_at, :utc_datetime
       add :raid_id, references(:raids, on_delete: :nothing)
       add :user_id, references(:users, on_delete: :nothing)
