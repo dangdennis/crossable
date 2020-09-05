@@ -9,6 +9,9 @@ defmodule Crossing.Commands.Invoker do
       ["!raid" | _tl] ->
         Crossing.Commands.Raid.invoke(msg)
 
+      ["!attack" | _tl] ->
+        Crossing.Commands.Attack.invoke(msg)
+
       _ ->
         nil
     end
