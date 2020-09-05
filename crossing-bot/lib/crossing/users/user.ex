@@ -17,9 +17,9 @@ defmodule Crossing.Users.User do
     |> cast(attrs, [
       :discord_user_id,
       :password_hash,
-      :deleted_at,
-      :avatar_id
+      :deleted_at
     ])
+    |> cast_assoc(:avatar, with: &Crossing.Avatars.Avatar.changeset/2)
     |> validate_required([:discord_user_id])
     |> unique_constraint([:discord_user_id])
   end

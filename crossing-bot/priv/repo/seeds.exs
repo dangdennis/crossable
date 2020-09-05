@@ -44,7 +44,7 @@ raid_1_inactive =
     completion_percentage: 1.0,
     start_time: Timex.now() |> DateTime.truncate(:second),
     end_time: DateTime.add(Timex.now(), 60 * 60 * 24, :second) |> DateTime.truncate(:second),
-    raid_bosses_id: boss_1.id
+    raid_boss_id: boss_1.id
   })
 
 raid_2_active =
@@ -52,7 +52,7 @@ raid_2_active =
     active: true,
     start_time: Timex.now() |> DateTime.truncate(:second),
     end_time: DateTime.add(Timex.now(), 604_800, :second) |> DateTime.truncate(:second),
-    raid_bosses_id: boss_2.id,
+    raid_boss_id: boss_2.id,
     completion_percentage: 0.0
   })
 

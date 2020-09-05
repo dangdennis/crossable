@@ -9,7 +9,7 @@ defmodule Crossing.Raids.Raid do
     field :player_limit, :integer
     field :completion_percentage, :float
     field :active, :boolean
-    belongs_to :raid_bosses, Crossing.Raids.RaidBoss
+    belongs_to :raid_boss, Crossing.Raids.RaidBoss
 
     timestamps()
   end
@@ -22,7 +22,7 @@ defmodule Crossing.Raids.Raid do
       :start_time,
       :end_time,
       :deleted_at,
-      :raid_bosses_id,
+      :raid_boss_id,
       :completion_percentage,
       :active
     ])

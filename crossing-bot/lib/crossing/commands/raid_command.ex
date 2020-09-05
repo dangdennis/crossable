@@ -3,7 +3,7 @@ defmodule Crossing.Commands.Raid do
 
   def invoke(msg) do
     raid = Raids.get_active_raid()
-    raid_boss = raid.raid_bosses
+    raid_boss = raid.raid_boss
 
     Nostrum.Api.create_message!(msg.channel_id, """
     This week's raid boss is #{raid_boss.name}, remaining hp #{
