@@ -117,6 +117,17 @@ defmodule Crossing.Raids do
     Repo.all(Raid)
   end
 
+  def get_active_raid do
+    from(Raid,
+      where: [active: true],
+      select: [:id, :active, :start_time, :end_time, :raid_boss_id, :completion_percentage],
+      order_by: [asc: :start_time],
+      limit: 1
+    )
+    |> Repo.one()
+  end
+
+  @spec get_raid!(any) :: any
   @doc """
   Gets a single raid.
 
