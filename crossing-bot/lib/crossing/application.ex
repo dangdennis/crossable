@@ -24,7 +24,7 @@ defmodule Crossing.Application do
 
       # Supervises Discord Gateway event consumers.
       Crossing.ConsumerSupervisor,
-      {Oban, oban_config()}
+      # {Oban, oban_config()}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

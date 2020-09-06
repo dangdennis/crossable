@@ -39,7 +39,8 @@ config :crossing, Oban,
   queues: [default: 10, events: 50, media: 20],
   crontab: [
     {"0 8 * * *", Crossing.Workers.Notification}
-  ]
+  ],
+  queue_target: 5000
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
