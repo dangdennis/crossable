@@ -14,9 +14,9 @@ defmodule Crossing.Commands.Raid do
         case raid.completion_percentage >= 1.0 do
           false ->
             Nostrum.Api.create_message!(msg.channel_id, """
-            This week's raid boss is #{raid_boss.name}, remaining hp #{
+            This week's raid boss is #{raid_boss.name}, HP #{
               (1 - raid.completion_percentage) * 100
-            }.
+            }%.
 
             !join to join this week's raid!
             !attack once a day to complete your goal.

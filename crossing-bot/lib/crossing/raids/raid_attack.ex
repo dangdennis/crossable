@@ -3,7 +3,7 @@ defmodule Crossing.Raids.RaidAttack do
   import Ecto.Changeset
 
   schema "raid_attacks" do
-    belongs_to :avatar, Crossing.Avatars.Avatar
+    belongs_to :raid_member, Crossing.Raids.RaidMember
     belongs_to :raid, Crossing.Raids.Raid
     field :deleted_at, :utc_datetime
 
@@ -13,7 +13,7 @@ defmodule Crossing.Raids.RaidAttack do
   @doc false
   def changeset(raid_attack, attrs) do
     raid_attack
-    |> cast(attrs, [:deleted_at, :raid_id, :avatar_id])
-    |> validate_required([:raid_id, :avatar_id])
+    |> cast(attrs, [:deleted_at, :raid_id, :raid_member_id])
+    |> validate_required([:raid_id, :raid_member_id])
   end
 end

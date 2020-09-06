@@ -16,7 +16,7 @@ defmodule Crossing.Commands.Attack do
         raidMembersCount = Enum.count(raid.raid_members)
         dmg = 1.0 / 3 / trunc(raidMembersCount * (2 / 3))
 
-        case Raids.attacked_today?() do
+        case Raids.attacked_today?(raid_member) do
           true ->
             Nostrum.Api.create_message!(msg.channel_id, """
             You've already attacked today. Loving the enthusiasm!
@@ -28,7 +28,7 @@ defmodule Crossing.Commands.Attack do
             IO.inspect(raid)
 
             {:ok, atk} =
-              Raids.create_raid_attack(%{raid_id: raid.id, avatar_id: raid_member.avatar_id})
+              Raids.create_raid_attack(%{raid_id: raid.id, raid_member_id: raid_member.id})
 
             IO.inspect(atk)
             # 4. Only allow users to attack if:
@@ -53,7 +53,7 @@ defmodule Crossing.Commands.Attack do
                 |> Crossing.Repo.update!()
 
                 Nostrum.Api.create_message!(msg.channel_id, """
-                #{raid.raid_boss.name}'s hp is #{
+                #{raid.raid_boss.name}'s HP dropped to #{
                   ((1.0 - new_completion_pct) * 100) |> Float.round()
                 }%!
                 """)

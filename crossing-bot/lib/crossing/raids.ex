@@ -328,8 +328,22 @@ defmodule Crossing.Raids do
     |> Repo.insert()
   end
 
-  @spec attacked_today? :: boolean()
-  def attacked_today?() do
-    true
+  @spec attacked_today?(RaidMember) :: boolean()
+  def attacked_today?(raid_member) do
+    today = Date.utc_today()
+
+    query =
+      from a in RaidAttack,
+        join: r in RaidMember,
+        on: r.id == a.raid_member_id,
+        where: r.id == ^raid_member.id and fragment("?::date", a.inserted_at) == ^today
+
+    case Repo.one(query) do
+      nil ->
+        false
+
+      _ ->
+        true
+    end
   end
 end

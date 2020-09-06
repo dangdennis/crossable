@@ -4,7 +4,7 @@ defmodule Crossing.Repo.Migrations.CreateRaidAttack do
   def change do
     create table(:raid_attacks) do
       add :raid_id, references(:raids, on_delete: :delete_all)
-      add :avatar_id, references(:avatars, on_delete: :delete_all)
+      add :raid_member_id, references(:raid_members, on_delete: :delete_all)
       add :deleted_at, :utc_datetime
 
       timestamps()

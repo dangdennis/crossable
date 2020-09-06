@@ -14,17 +14,15 @@ require Ecto.Query
 Faker.start()
 
 # USERS
-user1 =
-  Crossing.Users.create_user(%{
-    discord_user_id: System.unique_integer([:positive]) |> Integer.to_string(),
-    avatar: %{}
-  })
+Crossing.Users.create_user(%{
+  discord_user_id: System.unique_integer([:positive]) |> Integer.to_string(),
+  avatar: %{}
+})
 
-user2 =
-  Crossing.Users.create_user(%{
-    discord_user_id: System.unique_integer([:positive]) |> Integer.to_string(),
-    avatar: %{}
-  })
+Crossing.Users.create_user(%{
+  discord_user_id: System.unique_integer([:positive]) |> Integer.to_string(),
+  avatar: %{}
+})
 
 # RAID BOSSES
 boss_1 =
