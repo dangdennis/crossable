@@ -11,8 +11,5 @@ npm install --prefix ./assets
 npm run deploy --prefix ./assets
 mix phx.digest
 
-# Database setup
-mix ecto.setup
-
 # Build the release and overwrite the existing release directory
 MIX_ENV=prod mix release --overwrite
