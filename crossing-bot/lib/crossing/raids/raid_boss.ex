@@ -15,5 +15,6 @@ defmodule Crossing.Raids.RaidBoss do
     raid_boss
     |> cast(attrs, [:name, :image_url, :deleted_at])
     |> validate_required([:name, :image_url])
+    |> unique_constraint([:name], name: "raid_bosses_name_index")
   end
 end

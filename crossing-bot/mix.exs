@@ -36,7 +36,7 @@ defmodule Crossing.MixProject do
       {:phoenix, "~> 1.5.4"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
-      {:postgrex, ">= 0.0.0"},
+      {:postgrex, "~> 0.15.5"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_dashboard, "~> 0.2"},
@@ -51,7 +51,7 @@ defmodule Crossing.MixProject do
       # Nostrum deps
       {:nostrum, "~> 0.4"},
       {:cowlib, "~> 2.9", override: true},
-      {:faker, "~> 0.14", only: [:dev, :test]}
+      {:faker, "~> 0.14"}
       # {:ex_doc, "~> 0.14", only: :dev},
       # {:credo, "~> 0.4", only: [:dev, :test]},
       # {:dialyxir, "~> 0.5", only: [:dev], runtime: false},

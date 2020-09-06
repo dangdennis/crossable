@@ -59,51 +59,19 @@ raid_2_active =
   })
 
 # RAID MEMBERS
+Crossing.Users.list_users()
+|> Enum.each(fn user ->
+  Crossing.Repo.insert!(%Crossing.Raids.RaidMember{
+    active: true,
+    avatar_id: user.avatar.id,
+    raid_id: raid_1_inactive.id,
+    status: "completed"
+  })
 
-user1_preload_avatar =
-  Ecto.Query.from(Crossing.Users.User,
-    where: [id: 1],
-    select: [:id, :discord_user_id],
-    limit: 1,
-    preload: [:avatar]
-  )
-  |> Crossing.Repo.one()
-
-user2_preload_avatar =
-  Ecto.Query.from(Crossing.Users.User,
-    where: [id: 2],
-    select: [:id, :discord_user_id],
-    limit: 1,
-    preload: [:avatar]
-  )
-  |> Crossing.Repo.one()
-
-Crossing.Repo.insert!(%Crossing.Raids.RaidMember{
-  active: true,
-  avatar_id: user1_preload_avatar.avatar.id,
-  raid_id: raid_1_inactive.id,
-  status: "completed"
-})
-
-Crossing.Repo.insert!(%Crossing.Raids.RaidMember{
-  active: true,
-  avatar_id: user2_preload_avatar.avatar.id,
-  raid_id: raid_1_inactive.id,
-  status: "completed"
-})
-
-Crossing.Repo.insert!(%Crossing.Raids.RaidMember{
-  active: true,
-  avatar_id: user1_preload_avatar.avatar.id,
-  raid_id: raid_2_active.id,
-  # "attacked"
-  status: "ready"
-})
-
-Crossing.Repo.insert!(%Crossing.Raids.RaidMember{
-  active: true,
-  avatar_id: user2_preload_avatar.avatar.id,
-  raid_id: raid_2_active.id,
-  # "attacked"
-  status: "ready"
-})
+  Crossing.Repo.insert!(%Crossing.Raids.RaidMember{
+    active: true,
+    avatar_id: user.avatar.id,
+    raid_id: raid_2_active.id,
+    status: "ready"
+  })
+end)
