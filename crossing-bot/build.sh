@@ -13,3 +13,8 @@ mix phx.digest
 
 # Build the release and overwrite the existing release directory
 MIX_ENV=prod mix release --overwrite
+
+# Database setup
+mix ecto.create 
+mix ecto.migrate 
+mix run priv/repo/seeds.exs
