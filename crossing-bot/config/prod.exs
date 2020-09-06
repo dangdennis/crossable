@@ -13,15 +13,6 @@ config :crossing, CrossingWeb.Endpoint,
   url: [host: System.get_env("RENDER_EXTERNAL_HOSTNAME") || "localhost", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
-# Configure your database
-config :crossing, Crossing.Repo,
-  username: System.get_env("DB_USER"),
-  password: System.get_env("DB_PASS"),
-  hostname: System.get_env("DB_HOST"),
-  database: System.get_env("DB_NAME"),
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
-
 # Do not print debug messages in production
 config :logger, level: :info
 
