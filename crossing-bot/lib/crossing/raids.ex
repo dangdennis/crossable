@@ -117,7 +117,7 @@ defmodule Crossing.Raids do
     Repo.all(Raid)
   end
 
-  @spec get_active_raid :: Raid
+  @spec get_active_raid :: Raid | nil
   def get_active_raid() do
     from(Raid,
       where: [active: true],
@@ -315,8 +315,21 @@ defmodule Crossing.Raids do
         join: u in Crossing.Users.User,
         on: a.user_id == u.id,
         where: u.discord_user_id == ^discord_id,
-        select: [:id]
+        select: [:id, :avatar_id, :raid_id]
 
     query |> Repo.one()
+  end
+
+  alias Crossing.Raids.RaidAttack
+
+  def create_raid_attack(attrs \\ %{}) do
+    %RaidAttack{}
+    |> RaidAttack.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @spec attacked_today? :: boolean()
+  def attacked_today?() do
+    true
   end
 end

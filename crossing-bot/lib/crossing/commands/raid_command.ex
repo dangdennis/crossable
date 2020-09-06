@@ -2,16 +2,33 @@ defmodule Crossing.Commands.Raid do
   alias Crossing.Raids
 
   def invoke(msg) do
-    raid = Raids.get_active_raid()
-    raid_boss = raid.raid_boss
+    case Raids.get_active_raid() do
+      nil ->
+        Nostrum.Api.create_message!(msg.channel_id, """
+        No active raid this week.
+        """)
 
-    Nostrum.Api.create_message!(msg.channel_id, """
-    This week's raid boss is #{raid_boss.name}, remaining hp #{
-      (1 - raid.completion_percentage) * 100
-    }.
+      raid ->
+        raid_boss = raid.raid_boss
 
-    !join to join this week's raid!
-    !attack once a day to complete your goal.
-    """)
+        case raid.completion_percentage >= 1.0 do
+          false ->
+            Nostrum.Api.create_message!(msg.channel_id, """
+            This week's raid boss is #{raid_boss.name}, remaining hp #{
+              (1 - raid.completion_percentage) * 100
+            }.
+
+            !join to join this week's raid!
+            !attack once a day to complete your goal.
+            """)
+
+          true ->
+            Nostrum.Api.create_message!(msg.channel_id, """
+            This week's raid boss, #{raid_boss.name}, has been defeated.
+
+            !join to join next week's raid!
+            """)
+        end
+    end
   end
 end
