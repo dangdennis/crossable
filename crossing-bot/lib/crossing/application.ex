@@ -23,7 +23,8 @@ defmodule Crossing.Application do
       # {Crossing.Worker, arg}
 
       # Supervises Discord Gateway event consumers.
-      Crossing.ConsumerSupervisor
+      Crossing.ConsumerSupervisor,
+      {Oban, oban_config()}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -37,5 +38,10 @@ defmodule Crossing.Application do
   def config_change(changed, _new, removed) do
     CrossingWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  # Conditionally disable crontab, queues, or plugins here.
+  defp oban_config do
+    Application.get_env(:crossing, Oban)
   end
 end

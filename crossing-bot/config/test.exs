@@ -20,3 +20,5 @@ config :crossing, CrossingWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :crossing, Oban, crontab: false, queues: false, plugins: false

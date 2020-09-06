@@ -33,6 +33,11 @@ config :nostrum,
   # The number of shards you want to run your bot under, or :auto.
   num_shards: :auto
 
+config :crossing, Oban,
+  repo: Crossing.Repo,
+  plugins: [Oban.Plugins.Pruner],
+  queues: [default: 10, events: 50, media: 20]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

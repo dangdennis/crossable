@@ -1,8 +1,5 @@
 defmodule Crossing.Commands.Help do
-  alias Crossing.Raids
-
   def invoke(msg) do
-
     Nostrum.Api.create_message!(msg.channel_id, """
     Available commands:
     !new - registers your account onto Crossing

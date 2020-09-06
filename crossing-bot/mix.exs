@@ -46,6 +46,7 @@ defmodule Crossing.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:timex, "~> 3.5"},
+      {:oban, "~> 2.1"},
 
       # Nostrum deps
       {:nostrum, "~> 0.4"},
