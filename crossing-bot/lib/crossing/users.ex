@@ -102,6 +102,14 @@ defmodule Crossing.Users do
     User.changeset(user, attrs)
   end
 
+  def get_user_by_discord_id(discord_id) do
+    query =
+      from u in User,
+        where: u.discord_user_id == ^discord_id
+
+    query |> Repo.one()
+  end
+
   alias Crossing.Users.Profile
 
   @doc """

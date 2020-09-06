@@ -15,6 +15,12 @@ defmodule Crossing.Commands.Invoker do
       ["!join" | _tl] ->
         Crossing.Commands.Join.invoke(msg)
 
+      ["!bomb" | _tl] ->
+        Crossing.Commands.Bomb.invoke(msg)
+
+      ["!help" | _tl] ->
+        Crossing.Commands.Help.invoke(msg)
+
       _ ->
         nil
     end

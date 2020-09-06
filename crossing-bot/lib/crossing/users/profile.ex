@@ -9,7 +9,7 @@ defmodule Crossing.Users.Profile do
     field :last_name, :string
     field :phone_number, :string
     field :username, :string
-    field :user_id, :id
+    belongs_to :user, Crossing.Users.User
 
     timestamps()
   end
