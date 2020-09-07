@@ -207,7 +207,7 @@ defmodule Crossing.Raids do
       %Ecto.Changeset{data: %Raid{}}
 
   """
-  def change_raid(%Raid{} = raid, attrs \\ %{}) do
+  def change_raid(raid, attrs \\ %{}) do
     Raid.changeset(raid, attrs)
   end
 

@@ -37,18 +37,25 @@ defmodule Crossing.Commands.Attack do
 
             new_completion_pct = raid.completion_percentage + dmg
 
-            case new_completion_pct >= 1.0 do
-              true ->
-                # 5. If attack is successful, lower the boss's health percentage accordingly. Print message to show who attacked and boss's status.
+            # 5. If attack is successful, lower the boss's health percentage accordingly. Print message to show who attacked and boss's status.
+            # Cap the raid completion to 100%
+            case {new_completion_pct >= 1.0, raid.active} do
+              {true, true} ->
                 Raids.change_raid(raid, %{completion_percentage: 1.0, active: false})
                 |> Crossing.Repo.update!()
 
                 Nostrum.Api.create_message!(msg.channel_id, """
-                #{raid.raid_boss.name} has been defeated!
+                #{msg.author.username}#{msg.author.discriminator} lands the finishing blow on #{raid.raid_boss.name}! Raid is complete.
+
+                #{raid.raid_boss.image_url}
                 """)
 
-              false ->
-                # 5. If attack is successful, lower the boss's health percentage accordingly. Print message to show who attacked and boss's status.
+              {true, false} ->
+                Nostrum.Api.create_message!(msg.channel_id, """
+                #{raid.raid_boss.name} has already been defeated!
+                """)
+
+              {false, _active} ->
                 Raids.change_raid(raid, %{completion_percentage: new_completion_pct})
                 |> Crossing.Repo.update!()
 
