@@ -117,16 +117,22 @@ defmodule Crossing.Raids do
     Repo.all(Raid)
   end
 
-  @spec get_active_raid :: Raid | nil
+  @spec get_active_raid :: {:error, String.t()} | {:ok, Crossing.Raids.Raid}
   def get_active_raid() do
-    from(Raid,
-      where: [active: true],
-      select: [:id, :active, :start_time, :end_time, :completion_percentage, :raid_boss_id],
-      order_by: [asc: :start_time],
-      limit: 1,
-      preload: [:raid_boss, :raid_members]
-    )
-    |> Repo.one()
+    case from(Raid,
+           where: [active: true],
+           select: [:id, :active, :start_time, :end_time, :completion_percentage, :raid_boss_id],
+           order_by: [asc: :start_time],
+           limit: 1,
+           preload: [:raid_boss, :raid_members]
+         )
+         |> Repo.one() do
+      nil ->
+        {:error, "Failed to find an active raid"}
+
+      active_raid ->
+        {:ok, active_raid}
+    end
   end
 
   @spec get_raid!(any) :: any

@@ -107,7 +107,10 @@ defmodule Crossing.Users do
       from u in User,
         where: u.discord_user_id == ^discord_id
 
-    query |> Repo.one()
+    case query |> Repo.one() do
+      nil -> {:error, "User of discord id #{discord_id} is missing"}
+      user -> {:ok, user}
+    end
   end
 
   alias Crossing.Users.Profile

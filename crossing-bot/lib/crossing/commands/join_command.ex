@@ -3,7 +3,7 @@ defmodule Crossing.Commands.Join do
   alias Crossing.Avatars
 
   def invoke(msg) do
-    raid = Raids.get_active_raid()
+    {:ok, raid} = Raids.get_active_raid()
     avatar = Avatars.get_by_discord_id(msg.author.id |> Integer.to_string())
 
     # 3 If the raid hasn't ended yet and it's not 48 hours past the start date, add the user's avatar to the raid as a raid member

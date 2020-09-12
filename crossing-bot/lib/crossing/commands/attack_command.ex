@@ -9,7 +9,9 @@ defmodule Crossing.Commands.Attack do
         """)
 
       raid_member ->
-        raid = Raids.get_active_raid()
+        {:ok, raid} = Raids.get_active_raid()
+
+        IO.inspect(raid)
 
         # The dmg dealt to the raid boss = 1.0 / 3 / two-thirds of raid members.
         # This means only 2/3 of participating members need to attack the boss 3 times a week to defeat the boss.
@@ -23,14 +25,9 @@ defmodule Crossing.Commands.Attack do
             """)
 
           false ->
-            IO.inspect(dmg)
-            IO.inspect(raid_member)
-            IO.inspect(raid)
-
-            {:ok, atk} =
+            {:ok, _atk} =
               Raids.create_raid_attack(%{raid_id: raid.id, raid_member_id: raid_member.id})
 
-            IO.inspect(atk)
             # 4. Only allow users to attack if:
             # a. they not have done so today
             # b. raid boss completion is under 100%
@@ -44,8 +41,12 @@ defmodule Crossing.Commands.Attack do
                 Raids.change_raid(raid, %{completion_percentage: 1.0, active: false})
                 |> Crossing.Repo.update!()
 
+
                 Nostrum.Api.create_message!(msg.channel_id, """
-                #{msg.author.username}#{msg.author.discriminator} lands the finishing blow on #{raid.raid_boss.name}! Raid is complete.
+                #{msg.author.username}##{msg.author.discriminator} lands the finishing blow on #{
+                  raid.raid_boss.name
+                }!
+
 
                 #{raid.raid_boss.image_url}
                 """)
