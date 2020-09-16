@@ -107,8 +107,7 @@ defmodule Crossing.RaidsTest do
     # end
 
     test "get_active_raid/0 returns the most recent, active raid" do
-      {:ok, raid} = Raids.get_active_raid()
-      IO.inspect(raid)
+      {:ok, _raid} = Raids.get_active_raid()
     end
 
     # test "list_raids/0 returns all raids" do

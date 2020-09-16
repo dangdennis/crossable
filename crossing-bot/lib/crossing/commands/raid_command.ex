@@ -3,12 +3,12 @@ defmodule Crossing.Commands.Raid do
 
   def invoke(msg) do
     case Raids.get_active_raid() do
-      nil ->
+      {:error, _} ->
         Nostrum.Api.create_message!(msg.channel_id, """
         No active raid this week.
         """)
 
-      raid ->
+      {:ok, raid} ->
         raid_boss = raid.raid_boss
 
         case raid.completion_percentage >= 1.0 do

@@ -208,4 +208,8 @@ defmodule Crossing.Users do
   def change_profile(%Profile{} = profile, attrs \\ %{}) do
     Profile.changeset(profile, attrs)
   end
+
+  # def get_users_from_raid(%Crossing.Raids.Raid{} = raid) do
+
+  # end
 end

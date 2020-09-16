@@ -213,7 +213,7 @@ defmodule Crossing.Raids do
       %Ecto.Changeset{data: %Raid{}}
 
   """
-  def change_raid(raid, attrs \\ %{}) do
+  def change_raid(%Raid{} = raid, attrs \\ %{}) do
     Raid.changeset(raid, attrs)
   end
 
@@ -313,7 +313,7 @@ defmodule Crossing.Raids do
     RaidMember.changeset(raid_member, attrs)
   end
 
-  def get_raid_member_by_discord_id(discord_id) do
+  def get_raid_member_by_discord_id(discord_id, raid_id) do
     query =
       from r in RaidMember,
         join: a in Crossing.Avatars.Avatar,
@@ -321,6 +321,7 @@ defmodule Crossing.Raids do
         join: u in Crossing.Users.User,
         on: a.user_id == u.id,
         where: u.discord_user_id == ^discord_id,
+        where: r.raid_id == ^raid_id,
         select: [:id, :avatar_id, :raid_id]
 
     query |> Repo.one()

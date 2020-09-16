@@ -7,8 +7,6 @@ defmodule Crossing.Commands.New do
            avatar: %{}
          }) do
       {:ok, user} ->
-        IO.inspect(user)
-
         Nostrum.Api.create_message(
           msg.channel_id,
           """
