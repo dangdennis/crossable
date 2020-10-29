@@ -7,6 +7,7 @@ defmodule Crossing.Commands.Bomb do
       Nostrum.Api.create_message!(msg.channel_id, """
       Your account and data has been thoroughly deleted. Like as in, I don't know you know anymore.
       """)
+
     else
       {:error, reason} ->
         IO.inspect(reason)
