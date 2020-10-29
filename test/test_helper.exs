@@ -2,4 +2,4 @@
 
 ExUnit.start()
 Faker.start()
-Ecto.Adapters.SQL.Sandbox.mode(Crossing.Repo, :manual)
+Ecto.Adapters.SQL.Sandbox.mode(Crossable.Repo, :manual)

@@ -1,4 +1,4 @@
-defmodule Crossing.Repo.Migrations.AddObanJobsTable do
+defmodule Crossable.Repo.Migrations.AddObanJobsTable do
   use Ecto.Migration
 
   def up do

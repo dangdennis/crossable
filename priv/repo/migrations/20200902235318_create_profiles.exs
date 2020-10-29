@@ -1,4 +1,4 @@
-defmodule Crossing.Repo.Migrations.CreateProfiles do
+defmodule Crossable.Repo.Migrations.CreateProfiles do
   use Ecto.Migration
 
   def change do

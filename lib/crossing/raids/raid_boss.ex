@@ -1,4 +1,4 @@
-defmodule Crossing.Raids.RaidBoss do
+defmodule Crossable.Raids.RaidBoss do
   use Ecto.Schema
   import Ecto.Changeset
 

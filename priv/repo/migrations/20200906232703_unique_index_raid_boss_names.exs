@@ -1,4 +1,4 @@
-defmodule Crossing.Repo.Migrations.UniqueIndexRaidBossNames do
+defmodule Crossable.Repo.Migrations.UniqueIndexRaidBossNames do
   use Ecto.Migration
 
   def change do

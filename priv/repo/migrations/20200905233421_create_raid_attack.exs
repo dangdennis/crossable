@@ -1,4 +1,4 @@
-defmodule Crossing.Repo.Migrations.CreateRaidAttack do
+defmodule Crossable.Repo.Migrations.CreateRaidAttack do
   use Ecto.Migration
 
   def change do

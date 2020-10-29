@@ -1,5 +1,5 @@
-defmodule Crossing.Commands.Attack do
-  alias Crossing.Raids
+defmodule Crossable.Commands.Attack do
+  alias Crossable.Raids
 
   def invoke(msg) do
     case Raids.get_active_raid() do
@@ -50,7 +50,7 @@ defmodule Crossing.Commands.Attack do
                 case {new_completion_pct >= 1.0, raid.active} do
                   {true, true} ->
                     Raids.change_raid(raid, %{completion_percentage: 1.0, active: false})
-                    |> Crossing.Repo.update!()
+                    |> Crossable.Repo.update!()
 
                     Nostrum.Api.create_message!(msg.channel_id, """
                     #{msg.author.username}##{msg.author.discriminator} lands the finishing blow on #{
@@ -68,7 +68,7 @@ defmodule Crossing.Commands.Attack do
 
                   {false, _active} ->
                     Raids.change_raid(raid, %{completion_percentage: new_completion_pct})
-                    |> Crossing.Repo.update!()
+                    |> Crossable.Repo.update!()
 
                     Nostrum.Api.create_message!(msg.channel_id, """
                     #{raid.raid_boss.name}'s HP dropped to #{

@@ -7,15 +7,15 @@
 # General application configuration
 use Mix.Config
 
-config :crossing,
-  ecto_repos: [Crossing.Repo]
+config :crossable,
+  ecto_repos: [Crossable.Repo]
 
 # Configures the endpoint
-config :crossing, CrossingWeb.Endpoint,
+config :crossable, CrossingWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "D2TN0D0JY97FxvxIfO/HsX+nx0X7R/nT9HQZxbh1+REo34vlrwQJk+uFLzKQtdC1",
   render_errors: [view: CrossingWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Crossing.PubSub,
+  pubsub_server: Crossable.PubSub,
   live_view: [signing_salt: "zRuyz1E8"]
 
 # Configures Elixir's Logger
@@ -33,12 +33,12 @@ config :nostrum,
   # The number of shards you want to run your bot under, or :auto.
   num_shards: :auto
 
-config :crossing, Oban,
-  repo: Crossing.Repo,
+config :crossable, Oban,
+  repo: Crossable.Repo,
   plugins: [Oban.Plugins.Pruner],
   queues: [default: 10, events: 50, media: 20],
   crontab: [
-    {"0 8 * * *", Crossing.Workers.Notification}
+    {"0 8 * * *", Crossable.Workers.Notification}
   ]
 
 # Import environment specific config. This must remain at the bottom

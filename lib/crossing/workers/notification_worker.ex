@@ -1,4 +1,4 @@
-defmodule Crossing.Workers.Notification do
+defmodule Crossable.Workers.Notification do
   use Oban.Worker, queue: :events
 
   @impl Oban.Worker

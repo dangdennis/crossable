@@ -1,6 +1,6 @@
-defmodule Crossing do
+defmodule Crossable do
   @moduledoc """
-  Crossing keeps the contexts that define your domain
+  Crossable keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless

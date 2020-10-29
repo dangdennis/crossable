@@ -1,12 +1,12 @@
-defmodule Crossing.Raids do
+defmodule Crossable.Raids do
   @moduledoc """
   The Raids context.
   """
 
   import Ecto.Query, warn: false
-  alias Crossing.Repo
+  alias Crossable.Repo
 
-  alias Crossing.Raids.RaidBoss
+  alias Crossable.Raids.RaidBoss
 
   @doc """
   Returns the list of raid_bosses.
@@ -102,7 +102,7 @@ defmodule Crossing.Raids do
     RaidBoss.changeset(raid_boss, attrs)
   end
 
-  alias Crossing.Raids.Raid
+  alias Crossable.Raids.Raid
 
   @doc """
   Returns the list of raids.
@@ -117,7 +117,7 @@ defmodule Crossing.Raids do
     Repo.all(Raid)
   end
 
-  @spec get_active_raid :: {:error, String.t()} | {:ok, Crossing.Raids.Raid}
+  @spec get_active_raid :: {:error, String.t()} | {:ok, Crossable.Raids.Raid}
   def get_active_raid() do
     case from(Raid,
            where: [active: true],
@@ -217,7 +217,7 @@ defmodule Crossing.Raids do
     Raid.changeset(raid, attrs)
   end
 
-  alias Crossing.Raids.RaidMember
+  alias Crossable.Raids.RaidMember
 
   @doc """
   Returns the list of raid_members.
@@ -316,9 +316,9 @@ defmodule Crossing.Raids do
   def get_raid_member_by_discord_id(discord_id, raid_id) do
     query =
       from r in RaidMember,
-        join: a in Crossing.Avatars.Avatar,
+        join: a in Crossable.Avatars.Avatar,
         on: r.avatar_id == a.id,
-        join: u in Crossing.Users.User,
+        join: u in Crossable.Users.User,
         on: a.user_id == u.id,
         where: u.discord_user_id == ^discord_id,
         where: r.raid_id == ^raid_id,
@@ -327,7 +327,7 @@ defmodule Crossing.Raids do
     query |> Repo.one()
   end
 
-  alias Crossing.Raids.RaidAttack
+  alias Crossable.Raids.RaidAttack
 
   def create_raid_attack(attrs \\ %{}) do
     %RaidAttack{}

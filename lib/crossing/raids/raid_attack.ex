@@ -1,10 +1,10 @@
-defmodule Crossing.Raids.RaidAttack do
+defmodule Crossable.Raids.RaidAttack do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "raid_attacks" do
-    belongs_to :raid_member, Crossing.Raids.RaidMember
-    belongs_to :raid, Crossing.Raids.Raid
+    belongs_to :raid_member, Crossable.Raids.RaidMember
+    belongs_to :raid, Crossable.Raids.Raid
     field :deleted_at, :utc_datetime
 
     timestamps()

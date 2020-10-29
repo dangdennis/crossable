@@ -1,4 +1,7 @@
-# Crossing
+# Crossables
+
+1. Elixir protobuf generation: https://github.com/tony612/protobuf-elixir#usage
+2. https://www.onflow.org/post/interact-with-flow-using-ruby
 
 To start your Phoenix server:
 

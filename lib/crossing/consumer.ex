@@ -1,7 +1,7 @@
-defmodule Crossing.Consumer do
+defmodule Crossable.Consumer do
   @moduledoc "Consumes events sent by the API gateway."
 
-  alias Crossing.Consumer.{
+  alias Crossable.Consumer.{
     MessageCreate
     # ChannelCreate,
     # ChannelDelete,

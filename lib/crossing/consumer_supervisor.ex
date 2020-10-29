@@ -1,8 +1,8 @@
-defmodule Crossing.ConsumerSupervisor do
+defmodule Crossable.ConsumerSupervisor do
   @moduledoc """
-  Supervises Crossing's consumers.
+  Supervises Crossable's consumers.
 
-  Crossing spawns one consumer per online scheduler at startup,
+  Crossable spawns one consumer per online scheduler at startup,
   which means one consumer per CPU core in the default ERTS settings.
   """
 
@@ -16,7 +16,7 @@ defmodule Crossing.ConsumerSupervisor do
   def init(_args) do
     children =
       for n <- 1..System.schedulers_online(),
-          do: Supervisor.child_spec({Crossing.Consumer, []}, id: {:crossing, :consumer, n})
+          do: Supervisor.child_spec({Crossable.Consumer, []}, id: {:crossable, :consumer, n})
 
     Supervisor.init(children, strategy: :one_for_one)
   end

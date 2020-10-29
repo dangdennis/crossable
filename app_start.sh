@@ -1,2 +1,2 @@
-_build/prod/rel/crossing/bin/crossing start
+_build/prod/rel/crossable/bin/crossable start
 

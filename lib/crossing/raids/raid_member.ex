@@ -1,4 +1,4 @@
-defmodule Crossing.Raids.RaidMember do
+defmodule Crossable.Raids.RaidMember do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -6,8 +6,8 @@ defmodule Crossing.Raids.RaidMember do
     field :active, :boolean, default: true
     field :deleted_at, :utc_datetime
     field :status, :string
-    belongs_to :raid, Crossing.Raids.Raid
-    belongs_to :avatar, Crossing.Avatars.Avatar
+    belongs_to :raid, Crossable.Raids.Raid
+    belongs_to :avatar, Crossable.Avatars.Avatar
 
     timestamps()
   end

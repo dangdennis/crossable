@@ -1,10 +1,10 @@
-defmodule Crossing.UsersTest do
-  use Crossing.DataCase
+defmodule Crossable.UsersTest do
+  use Crossable.DataCase
 
-  alias Crossing.Users
+  alias Crossable.Users
 
   describe "users" do
-    alias Crossing.Users.User
+    alias Crossable.Users.User
 
     # @valid_attrs %{
     #   deleted_at: "2010-04-17T14:00:00Z",
@@ -76,7 +76,7 @@ defmodule Crossing.UsersTest do
   end
 
   #   describe "profiles" do
-  #     alias Crossing.Users.Profile
+  #     alias Crossable.Users.Profile
 
   #     @valid_attrs %{
   #       deleted_at: "2010-04-17T14:00:00Z",

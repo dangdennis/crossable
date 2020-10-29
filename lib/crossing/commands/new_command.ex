@@ -1,5 +1,5 @@
-defmodule Crossing.Commands.New do
-  alias Crossing.Users
+defmodule Crossable.Commands.New do
+  alias Crossable.Users
 
   def invoke(msg) do
     case Users.create_user(%{
@@ -10,7 +10,7 @@ defmodule Crossing.Commands.New do
         Nostrum.Api.create_message(
           msg.channel_id,
           """
-          Welcome to Health Crossing! You're all set!
+          Welcome to Health Crossable! You're all set!
 
           Commonly used commands:
           !raid - learn what raid is happening this week

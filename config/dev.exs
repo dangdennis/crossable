@@ -1,7 +1,7 @@
 use Mix.Config
 
 # Configure your database
-config :crossing, Crossing.Repo,
+config :crossable, Crossable.Repo,
   username: "postgres",
   password: "postgres",
   database: "crossing_dev",
@@ -15,7 +15,7 @@ config :crossing, Crossing.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
-config :crossing, CrossingWeb.Endpoint,
+config :crossable, CrossingWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -55,7 +55,7 @@ config :crossing, CrossingWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :crossing, CrossingWeb.Endpoint,
+config :crossable, CrossingWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",

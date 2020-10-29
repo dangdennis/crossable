@@ -29,10 +29,10 @@ defmodule CrossingWeb.ChannelCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Crossing.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Crossable.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Crossing.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Crossable.Repo, {:shared, self()})
     end
 
     :ok

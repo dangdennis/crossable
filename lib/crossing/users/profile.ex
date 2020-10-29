@@ -1,4 +1,4 @@
-defmodule Crossing.Users.Profile do
+defmodule Crossable.Users.Profile do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -9,7 +9,7 @@ defmodule Crossing.Users.Profile do
     field :last_name, :string
     field :phone_number, :string
     field :username, :string
-    belongs_to :user, Crossing.Users.User
+    belongs_to :user, Crossable.Users.User
 
     timestamps()
   end

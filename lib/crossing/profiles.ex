@@ -1,12 +1,12 @@
-defmodule Crossing.Profiles do
+defmodule Crossable.Profiles do
   @moduledoc """
   The Profiles context.
   """
 
   import Ecto.Query, warn: false
-  alias Crossing.Repo
+  alias Crossable.Repo
 
-  alias Crossing.Users.Profile
+  alias Crossable.Users.Profile
 
   @doc """
   Returns the list of profiles.

@@ -1,8 +1,8 @@
-defmodule Crossing.Consumer.MessageCreate do
+defmodule Crossable.Consumer.MessageCreate do
   @moduledoc "Handles the `MESSAGE_CREATE` gateway event."
 
   alias Nostrum.Struct.Message
-  alias Crossing.Users
+  alias Crossable.Users
 
   @spec handle(Message.t()) :: :ok | nil
   def handle(msg) do
@@ -20,7 +20,7 @@ defmodule Crossing.Consumer.MessageCreate do
               Nostrum.Api.create_message(
                 msg.channel_id,
                 """
-                Welcome to Health Crossing! You're all set!
+                Welcome to Health Crossable! You're all set!
 
                 Commonly used commands:
                 !raid - learn what raid is happening this week
@@ -41,7 +41,7 @@ defmodule Crossing.Consumer.MessageCreate do
           end
       end
 
-      Crossing.Commands.Invoker.handle(msg)
+      Crossable.Commands.Invoker.handle(msg)
     end
   end
 

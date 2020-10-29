@@ -1,12 +1,12 @@
-defmodule Crossing.Users do
+defmodule Crossable.Users do
   @moduledoc """
   The Users context.
   """
 
   import Ecto.Query, warn: false
-  alias Crossing.Repo
+  alias Crossable.Repo
 
-  alias Crossing.Users.User
+  alias Crossable.Users.User
 
   @doc """
   Returns the list of users.
@@ -113,7 +113,7 @@ defmodule Crossing.Users do
     end
   end
 
-  alias Crossing.Users.Profile
+  alias Crossable.Users.Profile
 
   @doc """
   Returns the list of profiles.
@@ -209,7 +209,7 @@ defmodule Crossing.Users do
     Profile.changeset(profile, attrs)
   end
 
-  # def get_users_from_raid(%Crossing.Raids.Raid{} = raid) do
+  # def get_users_from_raid(%Crossable.Raids.Raid{} = raid) do
 
   # end
 end

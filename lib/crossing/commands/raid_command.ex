@@ -1,5 +1,5 @@
-defmodule Crossing.Commands.Raid do
-  alias Crossing.Raids
+defmodule Crossable.Commands.Raid do
+  alias Crossable.Raids
 
   def invoke(msg) do
     case Raids.get_active_raid() do

@@ -1,4 +1,4 @@
-defmodule Crossing.Repo.Migrations.CreateAvatars do
+defmodule Crossable.Repo.Migrations.CreateAvatars do
   use Ecto.Migration
 
   def change do

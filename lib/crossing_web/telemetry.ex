@@ -31,11 +31,11 @@ defmodule CrossingWeb.Telemetry do
       ),
 
       # Database Metrics
-      summary("crossing.repo.query.total_time", unit: {:native, :millisecond}),
-      summary("crossing.repo.query.decode_time", unit: {:native, :millisecond}),
-      summary("crossing.repo.query.query_time", unit: {:native, :millisecond}),
-      summary("crossing.repo.query.queue_time", unit: {:native, :millisecond}),
-      summary("crossing.repo.query.idle_time", unit: {:native, :millisecond}),
+      summary("crossable.repo.query.total_time", unit: {:native, :millisecond}),
+      summary("crossable.repo.query.decode_time", unit: {:native, :millisecond}),
+      summary("crossable.repo.query.query_time", unit: {:native, :millisecond}),
+      summary("crossable.repo.query.queue_time", unit: {:native, :millisecond}),
+      summary("crossable.repo.query.idle_time", unit: {:native, :millisecond}),
 
       # VM Metrics
       summary("vm.memory.total", unit: {:byte, :kilobyte}),

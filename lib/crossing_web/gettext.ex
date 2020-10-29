@@ -20,5 +20,5 @@ defmodule CrossingWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :crossing
+  use Gettext, otp_app: :crossable
 end

@@ -1,6 +1,6 @@
-defmodule Crossing.Commands.Join do
-  alias Crossing.Raids
-  alias Crossing.Avatars
+defmodule Crossable.Commands.Join do
+  alias Crossable.Raids
+  alias Crossable.Avatars
 
   def invoke(msg) do
     case Raids.get_active_raid() do
@@ -22,7 +22,7 @@ defmodule Crossing.Commands.Join do
             """)
 
           false ->
-            case Crossing.Raids.create_raid_member(%{
+            case Crossable.Raids.create_raid_member(%{
                    avatar_id: avatar.id,
                    raid_id: raid.id,
                    status: "ready"

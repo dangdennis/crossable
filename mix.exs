@@ -1,9 +1,9 @@
-defmodule Crossing.MixProject do
+defmodule Crossable.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :crossing,
+      app: :crossable,
       version: "0.1.0",
       elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -19,7 +19,7 @@ defmodule Crossing.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Crossing.Application, []},
+      mod: {Crossable.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

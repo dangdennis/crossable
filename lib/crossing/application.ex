@@ -1,4 +1,4 @@
-defmodule Crossing.Application do
+defmodule Crossable.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -8,28 +8,28 @@ defmodule Crossing.Application do
   def start(_type, _args) do
     children = [
       # Start the Ecto repository
-      Crossing.Repo,
+      Crossable.Repo,
 
       # Start the Telemetry supervisor
       CrossingWeb.Telemetry,
 
       # Start the PubSub system
-      {Phoenix.PubSub, name: Crossing.PubSub},
+      {Phoenix.PubSub, name: Crossable.PubSub},
 
       # Start the Endpoint (http/https)
       CrossingWeb.Endpoint,
 
-      # Start a worker by calling: Crossing.Worker.start_link(arg)
-      # {Crossing.Worker, arg}
+      # Start a worker by calling: Crossable.Worker.start_link(arg)
+      # {Crossable.Worker, arg}
 
       # Supervises Discord Gateway event consumers.
-      Crossing.ConsumerSupervisor,
+      Crossable.ConsumerSupervisor,
       {Oban, oban_config()}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Crossing.Supervisor]
+    opts = [strategy: :one_for_one, name: Crossable.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
@@ -42,6 +42,6 @@ defmodule Crossing.Application do
 
   # Conditionally disable crontab, queues, or plugins here.
   defp oban_config do
-    Application.get_env(:crossing, Oban)
+    Application.get_env(:crossable, Oban)
   end
 end

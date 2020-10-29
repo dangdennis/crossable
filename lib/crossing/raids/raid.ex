@@ -1,4 +1,4 @@
-defmodule Crossing.Raids.Raid do
+defmodule Crossable.Raids.Raid do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -9,8 +9,8 @@ defmodule Crossing.Raids.Raid do
     field :player_limit, :integer
     field :completion_percentage, :float
     field :active, :boolean
-    belongs_to :raid_boss, Crossing.Raids.RaidBoss
-    has_many :raid_members, Crossing.Raids.RaidMember
+    belongs_to :raid_boss, Crossable.Raids.RaidBoss
+    has_many :raid_members, Crossable.Raids.RaidMember
 
     timestamps()
   end

@@ -1,4 +1,4 @@
-defmodule Crossing.Users.User do
+defmodule Crossable.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -6,7 +6,7 @@ defmodule Crossing.Users.User do
     field :deleted_at, :utc_datetime
     field :discord_user_id, :string
     field :password_hash, :string
-    has_one :avatar, Crossing.Avatars.Avatar
+    has_one :avatar, Crossable.Avatars.Avatar
 
     timestamps()
   end
@@ -19,7 +19,7 @@ defmodule Crossing.Users.User do
       :password_hash,
       :deleted_at
     ])
-    |> cast_assoc(:avatar, with: &Crossing.Avatars.Avatar.changeset/2)
+    |> cast_assoc(:avatar, with: &Crossable.Avatars.Avatar.changeset/2)
     |> validate_required([:discord_user_id])
     |> unique_constraint([:discord_user_id])
   end
