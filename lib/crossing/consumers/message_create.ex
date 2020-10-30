@@ -1,4 +1,4 @@
-defmodule Crossable.Consumer.MessageCreate do
+defmodule Crossable.Consumers.MessageCreate do
   @moduledoc "Handles the `MESSAGE_CREATE` gateway event."
 
   alias Nostrum.Struct.Message
@@ -16,7 +16,7 @@ defmodule Crossable.Consumer.MessageCreate do
                  discord_user_id: msg.author.id |> Integer.to_string(),
                  avatar: %{}
                }) do
-            {:ok, user} ->
+            {:ok, _user} ->
               Nostrum.Api.create_message(
                 msg.channel_id,
                 """
@@ -41,7 +41,7 @@ defmodule Crossable.Consumer.MessageCreate do
           end
       end
 
-      Crossable.Commands.Invoker.handle(msg)
+      Crossable.Commands.Commander.handle(msg)
     end
   end
 

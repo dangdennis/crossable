@@ -1,4 +1,4 @@
-defmodule Crossable.ConsumerSupervisor do
+defmodule Crossable.Consumers.Supervisor do
   @moduledoc """
   Supervises Crossable's consumers.
 
@@ -16,7 +16,7 @@ defmodule Crossable.ConsumerSupervisor do
   def init(_args) do
     children =
       for n <- 1..System.schedulers_online(),
-          do: Supervisor.child_spec({Crossable.Consumer, []}, id: {:crossable, :consumer, n})
+          do: Supervisor.child_spec({Crossable.Consumers, []}, id: {:crossable, :consumer, n})
 
     Supervisor.init(children, strategy: :one_for_one)
   end

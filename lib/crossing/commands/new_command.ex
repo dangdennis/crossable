@@ -6,7 +6,7 @@ defmodule Crossable.Commands.New do
            discord_user_id: msg.author.id |> Integer.to_string(),
            avatar: %{}
          }) do
-      {:ok, user} ->
+      {:ok, _user} ->
         Nostrum.Api.create_message(
           msg.channel_id,
           """

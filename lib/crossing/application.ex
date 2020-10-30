@@ -23,7 +23,7 @@ defmodule Crossable.Application do
       # {Crossable.Worker, arg}
 
       # Supervises Discord Gateway event consumers.
-      Crossable.ConsumerSupervisor,
+      Crossable.Consumers.Supervisor,
       {Oban, oban_config()}
     ]
 

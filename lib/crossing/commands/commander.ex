@@ -1,4 +1,4 @@
-defmodule Crossable.Commands.Invoker do
+defmodule Crossable.Commands.Commander do
   def handle(msg) do
     IO.inspect(msg)
 

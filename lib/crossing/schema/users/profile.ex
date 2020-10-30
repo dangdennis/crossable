@@ -1,12 +1,30 @@
-defmodule Crossable.Profiles do
-  @moduledoc """
-  The Profiles context.
-  """
+defmodule Crossable.Users.Profile do
+  use Ecto.Schema
 
+  import Ecto.Changeset
   import Ecto.Query, warn: false
+
+  alias __MODULE__
   alias Crossable.Repo
 
-  alias Crossable.Users.Profile
+  schema "profiles" do
+    field :deleted_at, :utc_datetime
+    field :email, :string
+    field :first_name, :string
+    field :last_name, :string
+    field :phone_number, :string
+    field :username, :string
+    belongs_to :user, Crossable.Users.User
+
+    timestamps()
+  end
+
+  @doc false
+  def changeset(profile, attrs) do
+    profile
+    |> cast(attrs, [:first_name, :last_name, :username, :email, :phone_number, :deleted_at])
+    |> validate_required([:first_name, :last_name, :username, :email, :phone_number])
+  end
 
   @doc """
   Returns the list of profiles.
@@ -51,7 +69,7 @@ defmodule Crossable.Profiles do
   """
   def create_profile(attrs \\ %{}) do
     %Profile{}
-    |> Profile.changeset(attrs)
+    |> changeset(attrs)
     |> Repo.insert()
   end
 

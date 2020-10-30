@@ -4,7 +4,7 @@ defmodule Crossable.Factory do
   # Factories
 
   def build(:avatar) do
-    %Crossable.Avatars.Avatar{}
+    %Crossable.Avatar{}
   end
 
   def build(:raid) do

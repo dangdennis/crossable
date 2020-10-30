@@ -1,12 +1,33 @@
-defmodule Crossable.Users do
-  @moduledoc """
-  The Users context.
-  """
+defmodule Crossable.Users.User do
+  use Ecto.Schema
 
+  import Ecto.Changeset
   import Ecto.Query, warn: false
+
+  alias __MODULE__
   alias Crossable.Repo
 
-  alias Crossable.Users.User
+  schema "users" do
+    field :deleted_at, :utc_datetime
+    field :discord_user_id, :string
+    field :password_hash, :string
+    has_one :avatar, Crossable.Avatar
+
+    timestamps()
+  end
+
+  @doc false
+  def changeset(user, attrs) do
+    user
+    |> cast(attrs, [
+      :discord_user_id,
+      :password_hash,
+      :deleted_at
+    ])
+    |> cast_assoc(:avatar, with: &Crossable.Avatar.changeset/2)
+    |> validate_required([:discord_user_id])
+    |> unique_constraint([:discord_user_id])
+  end
 
   @doc """
   Returns the list of users.
@@ -51,7 +72,7 @@ defmodule Crossable.Users do
   """
   def create_user(attrs \\ %{}) do
     %User{}
-    |> User.changeset(attrs)
+    |> changeset(attrs)
     |> Repo.insert()
   end
 
