@@ -7,6 +7,7 @@ defmodule Crossable.Users.User do
     field :discord_user_id, :string
     field :password_hash, :string
     has_one :avatar, Crossable.Avatars.Avatar
+    has_one :wallet, Crossable.Tokenomics.Wallet
 
     timestamps()
   end
