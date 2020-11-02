@@ -1,25 +1,21 @@
 defmodule Crossable.Commands.New do
   alias Crossable.Users
 
-  def invoke(msg) do
+  def handle(msg) do
     case Users.create_user(%{
            discord_user_id: msg.author.id |> Integer.to_string(),
            avatar: %{}
          }) do
-      {:ok, user} ->
+      {:ok, _user} ->
         Nostrum.Api.create_message(
           msg.channel_id,
           """
-          Welcome to Health Crossable! You're all set!
+          Welcome to Crossable! You're all set!
 
-          Commonly used commands:
-          !raid - learn what raid is happening this week
-          !join - to join the week's raid
-          !attack - confirm that you've completed your daily task, and deal some damage to the raid boss!
-          !help - get a list of all available commands
-
-          Real serious commands:
-          !bomb - deletes all your data
+          Available commands:
+          !daily - make mindful progress on your habit and check-in!
+          !wallet - view your wallet balance.
+          !help - see these set of instructions again.
           """
         )
 
