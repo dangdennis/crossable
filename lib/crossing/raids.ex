@@ -1,39 +1,12 @@
-defmodule Crossable.Raids.Raid do
-  use Ecto.Schema
+defmodule Crossable.Raids do
+  @moduledoc """
+  The Raids context.
+  """
 
-  import Ecto.Changeset
   import Ecto.Query, warn: false
-
   alias Crossable.Repo
-  # alias __MODULE__
+
   alias Crossable.Raids.RaidBoss
-
-  schema "raids" do
-    field :deleted_at, :utc_datetime
-    field :start_time, :utc_datetime
-    field :end_time, :utc_datetime
-    field :player_limit, :integer
-    field :completion_percentage, :float
-    field :active, :boolean
-    belongs_to :raid_boss, Crossable.Raids.RaidBoss
-    has_many :raid_members, Crossable.Raids.RaidMember
-
-    timestamps()
-  end
-
-  @doc false
-  def changeset(raid, attrs) do
-    raid
-    |> cast(attrs, [
-      :player_limit,
-      :start_time,
-      :end_time,
-      :deleted_at,
-      :completion_percentage,
-      :active
-    ])
-    |> validate_required([])
-  end
 
   @doc """
   Returns the list of raid_bosses.
@@ -343,7 +316,7 @@ defmodule Crossable.Raids.Raid do
   def get_raid_member_by_discord_id(discord_id, raid_id) do
     query =
       from r in RaidMember,
-        join: a in Crossable.Avatar,
+        join: a in Crossable.Avatars.Avatar,
         on: r.avatar_id == a.id,
         join: u in Crossable.Users.User,
         on: a.user_id == u.id,

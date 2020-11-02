@@ -4,7 +4,7 @@
 #   alias Crossable.Avatars
 
 #   describe "avatars" do
-#     alias Crossable.Avatar
+#     alias Crossable.Avatars.Avatar
 
 #     @valid_attrs %{deleted_at: "2010-04-17T14:00:00Z"}
 #     @update_attrs %{deleted_at: "2011-05-18T15:01:01Z"}

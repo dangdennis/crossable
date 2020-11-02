@@ -1,25 +1,12 @@
-defmodule Crossable.Avatar do
-  use Ecto.Schema
+defmodule Crossable.Avatars do
+  @moduledoc """
+  The Avatars context.
+  """
 
-  import Ecto.Changeset
   import Ecto.Query, warn: false
-
-  alias __MODULE__
   alias Crossable.Repo
 
-  schema "avatars" do
-    field :deleted_at, :utc_datetime
-    belongs_to :user, Crossable.Users.User
-
-    timestamps()
-  end
-
-  @doc false
-  def changeset(avatar, attrs) do
-    avatar
-    |> cast(attrs, [:user_id, :deleted_at])
-    |> validate_required([])
-  end
+  alias Crossable.Avatars.Avatar
 
   @doc """
   Returns the list of avatars.

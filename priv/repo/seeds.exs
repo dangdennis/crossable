@@ -11,17 +11,15 @@
 # and so on) as they will fail if something goes wrong.
 require Ecto.Query
 
-alias Crossable.Users.User
-
 Faker.start()
 
 # USERS
-User.create_user(%{
+Crossable.Users.create_user(%{
   discord_user_id: System.unique_integer([:positive]) |> Integer.to_string(),
   avatar: %{}
 })
 
-User.create_user(%{
+Crossable.Users.create_user(%{
   discord_user_id: System.unique_integer([:positive]) |> Integer.to_string(),
   avatar: %{}
 })
@@ -61,7 +59,7 @@ raid_2_active =
   })
 
 # RAID MEMBERS
-User.list_users()
+Crossable.Users.list_users()
 |> Enum.each(fn user ->
   Crossable.Repo.insert!(%Crossable.Raids.RaidMember{
     active: true,

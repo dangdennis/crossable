@@ -7,7 +7,7 @@ defmodule Crossable.Raids.RaidMember do
     field :deleted_at, :utc_datetime
     field :status, :string
     belongs_to :raid, Crossable.Raids.Raid
-    belongs_to :avatar, Crossable.Avatar
+    belongs_to :avatar, Crossable.Avatars.Avatar
 
     timestamps()
   end
