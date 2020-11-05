@@ -19,7 +19,7 @@ defmodule Crossable.Commands.Invoker do
       #   Crossable.Commands.Bomb.invoke(msg)
 
       ["!wallet" | _tl] ->
-        Crossable.Commands.Wallet.invoke(msg)
+        Crossable.Commands.Balance.invoke(msg)
 
       ["!daily" | _tl] ->
         Crossable.Commands.Daily.invoke(msg)
