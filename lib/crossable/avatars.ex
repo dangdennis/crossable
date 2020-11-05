@@ -63,7 +63,7 @@ defmodule Crossable.Avatars do
     iex> create_avatar_for_user(%Crossable.Users.User{field:value})
     {:ok, %Avatar{}}
 
-    iex> create_avatar(%{field: bad_value})
+    iex> create_avatar_for_user(%{field: bad_value})
     {:error, %Ecto.Changeset{}}
   """
   def create_avatar_for_user(user) do

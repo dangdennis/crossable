@@ -56,6 +56,22 @@ defmodule Crossable.Tokenomics do
   end
 
   @doc """
+  Creates a wallet by association for a user.
+
+  ## Examples
+
+    iex> create_wallet_for_user(%Crossable.Users.User{field:value})
+    {:ok, %Avatar{}}
+
+    iex> create_wallet_for_user(%{field: bad_value})
+    {:error, %Ecto.Changeset{}}
+  """
+  def create_wallet_for_user(user) do
+    Ecto.build_assoc(user, :wallet, %{})
+    |> Repo.insert()
+  end
+
+  @doc """
   Updates a wallet.
 
   ## Examples

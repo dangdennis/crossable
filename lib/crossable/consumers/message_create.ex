@@ -3,6 +3,8 @@ defmodule Crossable.Consumer.MessageCreate do
 
   alias Nostrum.Struct.Message
   alias Crossable.Users
+  alias Crossable.Avatars
+  alias Crossable.Tokenomics
 
   @spec handle(Message.t()) :: :ok | nil
   def handle(msg) do
@@ -12,27 +14,33 @@ defmodule Crossable.Consumer.MessageCreate do
           nil
 
         {:error, _} ->
-          case Users.create_user(%{
-                 discord_user_id: msg.author.id |> Integer.to_string(),
-                 avatar: %{}
-               }) do
-            {:ok, _user} ->
-              Nostrum.Api.create_message(
-                msg.channel_id,
-                """
-                Welcome to Crossable! You're all set!
+          # This should be done all in a transaction
+          with {:ok, user} <-
+                 Users.create_user(%{
+                   discord_user_id: msg.author.id |> Integer.to_string(),
+                   avatar: %{}
+                 }),
+               {:ok, _} <- Avatars.create_avatar_for_user(user),
+               {:ok, _} <- Tokenomics.create_wallet_for_user(user) do
+            Nostrum.Api.create_message(
+              msg.channel_id,
+              """
+              Welcome to Crossable! You're all set!
 
-                Commands:
-                !mindful - stay mindful and check-in for your habit progress!
-                !wallet - see your token balance.
-                """
-              )
-
+              Commands:
+              !mindful - stay mindful and check-in for your habit progress!
+              !wallet - see your token balance.
+              """
+            )
+          else
             {:error, changeset} ->
               Nostrum.Api.create_message(
                 msg.channel_id,
                 changeset |> error_response
               )
+
+            _ ->
+              nil
           end
       end
 
