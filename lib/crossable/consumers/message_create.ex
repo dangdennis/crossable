@@ -17,6 +17,7 @@ defmodule Crossable.Consumer.MessageCreate do
           # This should be done all in a transaction
           with {:ok, user} <-
                  Users.create_user(%{
+                   active: true,
                    discord_user_id: msg.author.id |> Integer.to_string(),
                    avatar: %{}
                  }),

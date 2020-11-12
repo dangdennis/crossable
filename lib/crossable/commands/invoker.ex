@@ -18,14 +18,17 @@ defmodule Crossable.Commands.Invoker do
       # ["!bomb" | _tl] ->
       #   Crossable.Commands.Bomb.invoke(msg)
 
-      ["!wallet" | _tl] ->
+      # ["!wallet" | _tl] ->
+      #   Crossable.Commands.Balance.invoke(msg)
+
+      # ["!daily" | _tl] ->
+      #   Crossable.Commands.Daily.invoke(msg)
+
+      ["!balance" | _tl] ->
         Crossable.Commands.Balance.invoke(msg)
 
-      ["!daily" | _tl] ->
-        Crossable.Commands.Daily.invoke(msg)
-
-      ["!help" | _tl] ->
-        Crossable.Commands.Help.invoke(msg)
+      # ["!help" | _tl] ->
+      #   Crossable.Commands.Help.invoke(msg)
 
       _ ->
         nil

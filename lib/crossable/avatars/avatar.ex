@@ -13,6 +13,7 @@ defmodule Crossable.Avatars.Avatar do
   def changeset(avatar, attrs) do
     avatar
     |> cast(attrs, [:user_id, :deleted_at])
-    |> validate_required([])
+    |> validate_required([:user_id])
+    |> unique_constraint([:user_id])
   end
 end

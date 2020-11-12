@@ -67,7 +67,7 @@ defmodule Crossable.Avatars do
     {:error, %Ecto.Changeset{}}
   """
   def create_avatar_for_user(user) do
-    Ecto.build_assoc(user, :avatars, %{})
+    Ecto.build_assoc(user, :avatar, %{})
     |> Repo.insert()
   end
 

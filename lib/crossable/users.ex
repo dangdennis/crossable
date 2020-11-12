@@ -6,6 +6,10 @@ defmodule Crossable.Users do
   import Ecto.Query, warn: false
   alias Crossable.Repo
 
+  ###########################
+  # USER
+  ###########################
+
   alias Crossable.Users.User
 
   @doc """
@@ -102,6 +106,15 @@ defmodule Crossable.Users do
     User.changeset(user, attrs)
   end
 
+  @doc """
+  Finds a `%Crossing.User{}` by their discord_id.
+
+  ## Examples
+
+      iex> get_user_by_discord_id("4123123")
+      {:ok, %Crossing.Users.User{}}
+
+  """
   def get_user_by_discord_id(discord_id) do
     query =
       from u in User,
@@ -112,6 +125,17 @@ defmodule Crossable.Users do
       user -> {:ok, user}
     end
   end
+
+  def list_active_users!() do
+    from(u in User,
+      where: u.active == true
+    )
+    |> Repo.one!()
+  end
+
+  ###########################
+  # PROFILE
+  ###########################
 
   alias Crossable.Users.Profile
 

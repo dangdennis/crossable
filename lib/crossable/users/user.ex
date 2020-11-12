@@ -6,6 +6,7 @@ defmodule Crossable.Users.User do
     field :deleted_at, :utc_datetime
     field :discord_user_id, :string
     field :password_hash, :string
+    field :active, :boolean
     has_one :avatar, Crossable.Avatars.Avatar
     has_one :wallet, Crossable.Tokenomics.Wallet
 
