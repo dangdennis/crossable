@@ -5,7 +5,7 @@ defmodule Crossable.Tokenomics.Transaction do
   schema "transactions" do
     field :deleted_at, :utc_datetime
     field :amount, :float
-    belongs_to :wallets, Crossable.Tokenomics.Wallet
+    belongs_to :wallet, Crossable.Tokenomics.Wallet
 
     timestamps()
   end

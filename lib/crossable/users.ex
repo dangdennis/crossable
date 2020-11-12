@@ -126,11 +126,11 @@ defmodule Crossable.Users do
     end
   end
 
-  def list_active_users!() do
+  def list_active_users() do
     from(u in User,
       where: u.active == true
     )
-    |> Repo.one!()
+    |> Repo.all()
   end
 
   ###########################

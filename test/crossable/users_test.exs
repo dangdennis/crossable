@@ -4,34 +4,37 @@ defmodule Crossable.UsersTest do
   alias Crossable.Users
 
   describe "users" do
-    alias Crossable.Users.User
-
-    # @valid_attrs %{
-    #   deleted_at: "2010-04-17T14:00:00Z",
-    #   discord_user_id: "some discord_user_id",
-    #   password_hash: "some password_hash"
-    # }
+    @valid_attrs %{
+      deleted_at: "2010-04-17T14:00:00Z",
+      discord_user_id: "some discord_user_id",
+      password_hash: "some password_hash",
+      avatar: %{user_id: 1}
+    }
     # @update_attrs %{
     #   deleted_at: "2011-05-18T15:01:01Z",
     #   discord_user_id: "some updated discord_user_id",
-    #   password_hash: "some updated password_hash"
+    #   password_hash: "some updated password_hash",
+    #   avatar: %{}
     # }
     # @invalid_attrs %{deleted_at: nil, discord_user_id: nil, password_hash: nil}
 
-    # def user_fixture(attrs \\ %{}) do
-    #   {:ok, user} =
-    #     attrs
-    #     |> Enum.into(@valid_attrs)
-    #     |> Users.create_user()
+    def user_fixture(attrs \\ %{}) do
+      {:ok, user} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Users.create_user()
 
-    #   user
-    # end
+      user
+    end
 
     test "list_users/0 returns all users" do
-      # user = user_fixture()
-      # assert Users.list_users() == [user]
-      Users.list_users() |> IO.inspect()
+      user = user_fixture()
+      assert Users.list_users() == [user]
     end
+
+    # test "list_active_users/0 returs all active users" do
+    #   Users.list_active_users() |> IO.inspect()
+    # end
 
     #     test "get_user!/1 returns the user with given id" do
     #       user = user_fixture()

@@ -20,7 +20,7 @@ defmodule Crossable.Application do
       CrossableWeb.Endpoint,
 
       # Start a worker by calling: Crossable.Worker.start_link(arg)
-      # {Crossable.Worker, arg}
+      #  {Crossable.Worker, arg}
 
       # Supervises Discord Gateway event consumers.
       Crossable.ConsumerSupervisor,
