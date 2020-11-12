@@ -15,7 +15,7 @@ config :crossable, Crossable.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
-config :crossable, CrossingWeb.Endpoint,
+config :crossable, CrossableWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -55,7 +55,7 @@ config :crossable, CrossingWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :crossable, CrossingWeb.Endpoint,
+config :crossable, CrossableWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",

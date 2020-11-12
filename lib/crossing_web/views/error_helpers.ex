@@ -1,4 +1,4 @@
-defmodule CrossingWeb.ErrorHelpers do
+defmodule CrossableWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -39,9 +39,9 @@ defmodule CrossingWeb.ErrorHelpers do
     # should be written to the errors.po file. The :count option is
     # set by Ecto and indicates we should also apply plural rules.
     if count = opts[:count] do
-      Gettext.dngettext(CrossingWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(CrossableWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(CrossingWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(CrossableWeb.Gettext, "errors", msg, opts)
     end
   end
 end

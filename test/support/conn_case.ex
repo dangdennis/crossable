@@ -1,4 +1,4 @@
-defmodule CrossingWeb.ConnCase do
+defmodule CrossableWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,7 +11,7 @@ defmodule CrossingWeb.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use CrossingWeb.ConnCase, async: true`, although
+  by setting `use CrossableWeb.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -22,12 +22,12 @@ defmodule CrossingWeb.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import CrossingWeb.ConnCase
+      import CrossableWeb.ConnCase
 
-      alias CrossingWeb.Router.Helpers, as: Routes
+      alias CrossableWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
-      @endpoint CrossingWeb.Endpoint
+      @endpoint CrossableWeb.Endpoint
     end
   end
 

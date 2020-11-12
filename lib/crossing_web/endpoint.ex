@@ -1,4 +1,4 @@
-defmodule CrossingWeb.Endpoint do
+defmodule CrossableWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :crossable
 
   # The session will be stored in the cookie and signed,
@@ -10,7 +10,7 @@ defmodule CrossingWeb.Endpoint do
     signing_salt: "jqD9iNOQ"
   ]
 
-  socket "/socket", CrossingWeb.UserSocket,
+  socket "/socket", CrossableWeb.UserSocket,
     websocket: true,
     longpoll: false
 
@@ -50,5 +50,5 @@ defmodule CrossingWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug CrossingWeb.Router
+  plug CrossableWeb.Router
 end

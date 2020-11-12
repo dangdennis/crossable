@@ -1,3 +1,3 @@
-defmodule CrossingWeb.PageViewTest do
-  use CrossingWeb.ConnCase, async: true
+defmodule CrossableWeb.PageViewTest do
+  use CrossableWeb.ConnCase, async: true
 end

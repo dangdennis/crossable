@@ -1,5 +1,5 @@
-defmodule CrossingWeb.PageController do
-  use CrossingWeb, :controller
+defmodule CrossableWeb.PageController do
+  use CrossableWeb, :controller
 
   def index(conn, _params) do
     render(conn, "index.html")

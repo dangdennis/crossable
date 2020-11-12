@@ -11,10 +11,10 @@ config :crossable,
   ecto_repos: [Crossable.Repo]
 
 # Configures the endpoint
-config :crossable, CrossingWeb.Endpoint,
+config :crossable, CrossableWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "D2TN0D0JY97FxvxIfO/HsX+nx0X7R/nT9HQZxbh1+REo34vlrwQJk+uFLzKQtdC1",
-  render_errors: [view: CrossingWeb.ErrorView, accepts: ~w(html json), layout: false],
+  render_errors: [view: CrossableWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Crossable.PubSub,
   live_view: [signing_salt: "zRuyz1E8"]
 

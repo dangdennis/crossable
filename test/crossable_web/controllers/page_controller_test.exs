@@ -1,5 +1,5 @@
-defmodule CrossingWeb.PageControllerTest do
-  use CrossingWeb.ConnCase
+defmodule CrossableWeb.PageControllerTest do
+  use CrossableWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")

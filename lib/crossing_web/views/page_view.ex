@@ -1,3 +1,3 @@
-defmodule CrossingWeb.PageView do
-  use CrossingWeb, :view
+defmodule CrossableWeb.PageView do
+  use CrossableWeb, :view
 end

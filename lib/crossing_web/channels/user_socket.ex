@@ -1,8 +1,8 @@
-defmodule CrossingWeb.UserSocket do
+defmodule CrossableWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", CrossingWeb.RoomChannel
+  # channel "room:*", CrossableWeb.RoomChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -27,7 +27,7 @@ defmodule CrossingWeb.UserSocket do
   # Would allow you to broadcast a "disconnect" event and terminate
   # all active sockets and channels for a given user:
   #
-  #     CrossingWeb.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
+  #     CrossableWeb.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
   @impl true

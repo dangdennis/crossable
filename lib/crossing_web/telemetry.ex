@@ -1,4 +1,4 @@
-defmodule CrossingWeb.Telemetry do
+defmodule CrossableWeb.Telemetry do
   use Supervisor
   import Telemetry.Metrics
 
@@ -49,7 +49,7 @@ defmodule CrossingWeb.Telemetry do
     [
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {CrossingWeb, :count_users, []}
+      # {CrossableWeb, :count_users, []}
     ]
   end
 end

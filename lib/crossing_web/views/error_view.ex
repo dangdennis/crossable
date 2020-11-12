@@ -1,5 +1,5 @@
-defmodule CrossingWeb.ErrorView do
-  use CrossingWeb, :view
+defmodule CrossableWeb.ErrorView do
+  use CrossableWeb, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

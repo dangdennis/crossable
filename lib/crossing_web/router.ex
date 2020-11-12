@@ -1,5 +1,5 @@
-defmodule CrossingWeb.Router do
-  use CrossingWeb, :router
+defmodule CrossableWeb.Router do
+  use CrossableWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,14 +13,14 @@ defmodule CrossingWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", CrossingWeb do
+  scope "/", CrossableWeb do
     pipe_through :browser
 
     get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", CrossingWeb do
+  # scope "/api", CrossableWeb do
   #   pipe_through :api
   # end
 
@@ -36,7 +36,7 @@ defmodule CrossingWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: CrossingWeb.Telemetry
+      live_dashboard "/dashboard", metrics: CrossableWeb.Telemetry
     end
   end
 end

@@ -1,3 +1,3 @@
-defmodule CrossingWeb.LayoutView do
-  use CrossingWeb, :view
+defmodule CrossableWeb.LayoutView do
+  use CrossableWeb, :view
 end

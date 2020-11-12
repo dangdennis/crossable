@@ -11,13 +11,13 @@ defmodule Crossable.Application do
       Crossable.Repo,
 
       # Start the Telemetry supervisor
-      CrossingWeb.Telemetry,
+      CrossableWeb.Telemetry,
 
       # Start the PubSub system
       {Phoenix.PubSub, name: Crossable.PubSub},
 
       # Start the Endpoint (http/https)
-      CrossingWeb.Endpoint,
+      CrossableWeb.Endpoint,
 
       # Start a worker by calling: Crossable.Worker.start_link(arg)
       # {Crossable.Worker, arg}
@@ -36,7 +36,7 @@ defmodule Crossable.Application do
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    CrossingWeb.Endpoint.config_change(changed, removed)
+    CrossableWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 
