@@ -10,13 +10,14 @@ defmodule Crossable.TokenomicsTest do
     @valid_attrs %{
       user_id: 1,
       wallet_id: 1
+      balance: 0
     }
     @update_attrs %{
       user_id: 2
     }
     @invalid_attrs %{
       user_id: nil,
-      amount: nil
+      balance: nil
     }
 
     def wallet_fixture(attrs \\ %{}) do

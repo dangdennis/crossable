@@ -4,6 +4,7 @@ defmodule Crossable.Tokenomics.Wallet do
 
   schema "wallets" do
     field :deleted_at, :utc_datetime
+    field :balance, :float
     belongs_to :user, Crossable.Users.User
     has_many :transactions, Crossable.Tokenomics.Transaction
 
@@ -13,8 +14,8 @@ defmodule Crossable.Tokenomics.Wallet do
   @doc false
   def changeset(wallet, attrs) do
     wallet
-    |> cast(attrs, [:user_id, :deleted_at])
-    |> validate_required([:user_id])
+    |> cast(attrs, [:float, :user_id, :deleted_at])
+    |> validate_required([:float, :user_id])
     |> foreign_key_constraint(:user_id)
   end
 end

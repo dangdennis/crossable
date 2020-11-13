@@ -47,14 +47,12 @@ defmodule Crossable.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:timex, "~> 3.5"},
       {:oban, "~> 2.1"},
-
-      # Nostrum deps
-      {:nostrum, "~> 0.4"},
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.14", only: :dev},
       {:cowlib, "~> 2.9", override: true},
-      {:faker, "~> 0.14"}
-      # {:ex_doc, "~> 0.14", only: :dev},
-      # {:credo, "~> 0.4", only: [:dev, :test]},
-      # {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
+      {:faker, "~> 0.14"},
+      {:nostrum, "~> 0.4"},
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       # {:recon, "~> 2.3", only: :dev}
     ]
   end

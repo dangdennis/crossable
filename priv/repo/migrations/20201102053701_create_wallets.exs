@@ -5,6 +5,7 @@ defmodule Crossable.Repo.Migrations.CreateWallets do
     create table(:wallets) do
       add :deleted_at, :utc_datetime
       add :user_id, references(:users, on_delete: :delete_all)
+      add :balance, :float
 
       timestamps()
     end
