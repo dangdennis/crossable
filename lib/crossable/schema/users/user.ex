@@ -20,8 +20,9 @@ defmodule Crossable.Users.User do
       :discord_user_id,
       :password_hash,
       :deleted_at,
-      :active
+      :active,
     ])
+    |> cast_assoc(:avatar, with: &Crossable.Avatars.Avatar.changeset/2)
     |> validate_required([:discord_user_id])
     |> unique_constraint([:discord_user_id])
   end

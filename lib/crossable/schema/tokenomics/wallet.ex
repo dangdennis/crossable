@@ -15,7 +15,7 @@ defmodule Crossable.Tokenomics.Wallet do
   def changeset(wallet, attrs) do
     wallet
     |> cast(attrs, [:balance, :user_id, :deleted_at])
-    |> validate_required([:balance, :user_id])
+    |> validate_required([:user_id])
     |> foreign_key_constraint(:user_id)
   end
 end

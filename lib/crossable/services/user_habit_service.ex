@@ -1,4 +1,4 @@
-defmodule Crossable.Services.Habit.Reminder do
+defmodule Crossable.Services.UserHabit.Reminder do
   def send_reminder(_to_user_id) do
     # retrieve the user's current habit
     # get their individual habit

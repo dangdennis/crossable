@@ -9,7 +9,7 @@ defmodule Crossable.TokenomicsTest do
 
     @valid_attrs %{
       user_id: 1,
-      wallet_id: 1
+      wallet_id: 1,
       balance: 0
     }
     @update_attrs %{
@@ -44,7 +44,7 @@ defmodule Crossable.TokenomicsTest do
 
     test "get_wallet!/1 returns the wallet with given id" do
       {:ok, user} = Users.create_user(%{discord_user_id: "asdfas"})
-      {:ok, wallet} = Tokenomics.create_wallet(%{user_id: user.id})
+      {:ok, wallet} = Tokenomics.create_wallet(%{user_id: user.id, balance: 0})
       assert Tokenomics.get_wallet!(wallet.id) == wallet
     end
 
@@ -66,7 +66,7 @@ defmodule Crossable.TokenomicsTest do
 
     test "update_wallet/2 with invalid data returns error changeset" do
       {:ok, user} = Users.create_user(%{discord_user_id: "asdfas"})
-      {:ok, wallet} = Tokenomics.create_wallet(%{user_id: user.id})
+      {:ok, wallet} = Tokenomics.create_wallet(%{user_id: user.id, balance: 0})
       assert {:error, %Ecto.Changeset{}} = Tokenomics.update_wallet(wallet, @invalid_attrs)
       assert wallet == Tokenomics.get_wallet!(wallet.id)
     end
