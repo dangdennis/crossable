@@ -5,20 +5,19 @@ defmodule Crossable.Commands.Balance do
     # DM their balance
     dm_channel = Nostrum.Api.create_dm!(msg.author.id)
 
-    case Crossable.Tokenomics.get_wallet_by_discord_id(msg.author.id) do
-      {:error, _} ->
-        Nostrum.Api.create_message!(dm_channel.id, """
-        You do not have a wallet.
-        """)
+    Crossable.Tokenomics.get_wallet_by_discord_id(msg.author.id |> Integer.to_string())
+    |> handle_balance_retrieval(dm_channel.id)
+  end
 
-      {:ok, wallet} ->
-        Nostrum.Api.create_message!(dm_channel.id, """
-        Your total token balance so far is #{wallet.balance}
-        """)
-    end
+  def handle_balance_retrieval({:ok, wallet}, channel_id) do
+    Nostrum.Api.create_message!(channel_id, """
+    Your total balance is #{wallet.balance |> :erlang.float_to_binary(decimals: 0)}.
+    """)
+  end
 
-    Nostrum.Api.create_message!(dm_channel.id, """
-    Your total token balance so far is
+  def handle_balance_retrieval({:error, _reason}, channel_id) do
+    Nostrum.Api.create_message!(channel_id, """
+    You do not have a wallet.
     """)
   end
 end

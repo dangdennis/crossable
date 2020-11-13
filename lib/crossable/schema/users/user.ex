@@ -22,7 +22,6 @@ defmodule Crossable.Users.User do
       :deleted_at,
       :active
     ])
-    |> cast_assoc(:avatar, with: &Crossable.Avatars.Avatar.changeset/2)
     |> validate_required([:discord_user_id])
     |> unique_constraint([:discord_user_id])
   end

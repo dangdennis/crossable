@@ -1,10 +1,12 @@
 defmodule Crossable.Commands.Invoker do
   def handle(msg) do
-    IO.inspect(msg)
-
     case String.split(msg.content, " ", trim: true) do
-      # ["!new" | _tl] ->
-      #   Crossable.Commands.New.invoke(msg)
+      ["!new" | _tl] ->
+        IO.inspect(msg)
+        Crossable.Commands.New.invoke(msg)
+
+      ["!balance" | _tl] ->
+        Crossable.Commands.Balance.invoke(msg)
 
       # ["!raid" | _tl] ->
       #   Crossable.Commands.Raid.invoke(msg)
@@ -24,11 +26,8 @@ defmodule Crossable.Commands.Invoker do
       # ["!daily" | _tl] ->
       #   Crossable.Commands.Daily.invoke(msg)
 
-      ["!balance" | _tl] ->
-        Crossable.Commands.Balance.invoke(msg)
-
-      # ["!help" | _tl] ->
-      #   Crossable.Commands.Help.invoke(msg)
+      ["!help" | _tl] ->
+        Crossable.Commands.Help.invoke(msg)
 
       _ ->
         nil
