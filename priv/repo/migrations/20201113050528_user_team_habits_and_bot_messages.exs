@@ -35,5 +35,14 @@ defmodule Crossable.Repo.Migrations.UserHabits do
       timestamps()
     end
 
+    # HABIT_LOGS
+    create table(:habit_logs) do
+      add :user_id, references(:users)
+      add :habit_id, references(:user_habits)
+      add :completed, :boolean
+
+      timestamps()
+    end
+
   end
 end
