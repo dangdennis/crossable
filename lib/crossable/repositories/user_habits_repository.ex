@@ -1,10 +1,11 @@
-defmodule Crossable.UserHabits do
+defmodule Crossable.Repository.UserHabits do
   @moduledoc """
   The UserHabits context.
   """
 
   import Ecto.Query, warn: false
   alias Crossable.Repo
+
   def create_user_habit(attrs \\ %{}) do
     %Crossable.Habits.UserHabit{}
     |> Crossable.Habits.UserHabit.changeset(attrs)

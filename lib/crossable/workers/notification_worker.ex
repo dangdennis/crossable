@@ -3,7 +3,7 @@ defmodule Crossable.Workers.Notification.DailyHabit do
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{}}) do
-    Crossable.Services.UserHabit.Reminder.send_reminder(5)
+    Crossable.Services.UserHabit.send_reminder(5)
 
     :ok
   end
