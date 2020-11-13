@@ -28,6 +28,13 @@ defmodule Crossable.TokenomicsTest do
       wallet
     end
 
+    test "get_wallet_by_discord_id/1" do
+      discord_id = "afsfasfsaf"
+      {:ok, user} = Users.create_user(%{discord_user_id: discord_id})
+      wallet = wallet_fixture(%{user_id: user.id})
+      assert {:ok, wallet} == Tokenomics.get_wallet_by_discord_id(discord_id)
+    end
+
     test "list_wallets/0 returns all wallets" do
       {:ok, user} = Users.create_user(%{discord_user_id: "afsfasfsaf"})
       wallet = wallet_fixture(%{user_id: user.id})
