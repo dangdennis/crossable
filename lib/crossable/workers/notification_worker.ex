@@ -1,15 +1,9 @@
 defmodule Crossable.Workers.Notification.DailyHabit do
   use Oban.Worker, queue: :events
 
-  alias Crossing.Users
-
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{}}) do
-    # users =
-
-    Nostrum.Api.create_message!(747_154_772_561_363_025, """
-    Daily check-in! When you hit your goal today, deal damage to the raid boss!
-    """)
+    Crossable.Services.Habit.Reminder.send_reminder(5)
 
     :ok
   end

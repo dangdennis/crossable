@@ -9,7 +9,7 @@ defmodule Crossable.Repo.Migrations.CreateProfiles do
       add :email, :string
       add :phone_number, :string
       add :deleted_at, :utc_datetime
-      add :user_id, references(:users, on_delete: :delete_all)
+      add :user_id, references(:users)
 
       timestamps()
     end

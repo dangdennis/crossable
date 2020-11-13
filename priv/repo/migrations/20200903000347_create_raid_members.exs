@@ -6,8 +6,8 @@ defmodule Crossable.Repo.Migrations.CreateRaidMembers do
       add :status, :string
       add :active, :boolean, default: true, null: false
       add :deleted_at, :utc_datetime
-      add :raid_id, references(:raids, on_delete: :delete_all)
-      add :avatar_id, references(:avatars, on_delete: :delete_all)
+      add :raid_id, references(:raids)
+      add :avatar_id, references(:avatars)
 
       timestamps()
     end

@@ -1,8 +1,5 @@
 defmodule Crossable.Commands.Balance do
   def invoke(msg) do
-    # find the discord user
-    # find their wallet
-    # DM their balance
     dm_channel = Nostrum.Api.create_dm!(msg.author.id)
 
     Crossable.Tokenomics.get_wallet_by_discord_id(msg.author.id |> Integer.to_string())
