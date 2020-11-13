@@ -6,7 +6,33 @@ defmodule Crossable.Tokenomics do
   import Ecto.Query, warn: false
   alias Crossable.Repo
 
+  #####################
+  # WALLET
+  #####################
+
   alias Crossable.Tokenomics.Wallet
+
+  @doc """
+  Returns the wallet belonging to a discord user.any()
+
+  ## Examples
+
+      iex> get_wallet_by_discord_id(412)
+      {:ok, wallet}
+
+  """
+  def get_wallet_by_discord_id(discord_id) do
+    query =
+      from w in Wallet,
+        join: u in Crossable.Users.User,
+        on: w.user_id == u.id,
+        where: u.discord_user_id == ^discord_id
+
+    case Repo.one(query) do
+      nil -> {:error, "failed to find wallet"}
+      wallet -> {:ok, wallet}
+    end
+  end
 
   @doc """
   Returns the list of wallets.
@@ -117,6 +143,10 @@ defmodule Crossable.Tokenomics do
   def change_wallet(%Wallet{} = wallet, attrs \\ %{}) do
     Wallet.changeset(wallet, attrs)
   end
+
+  #####################
+  # TRANSACTIONS
+  #####################
 
   alias Crossable.Tokenomics.Transaction
 
