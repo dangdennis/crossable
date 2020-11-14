@@ -5,8 +5,9 @@ defmodule Crossable.Schema.Messages.DiscordMessage do
   schema "discord_messages" do
     field :recipient_id, :integer
     field :sender_id, :integer
+    field :message_id, :integer
     field :is_bot, :boolean
-    field :message, :string
+    field :content, :string
     field :deleted_at, :utc_datetime
     belongs_to :user, Crossable.Schema.Users.User
 
@@ -14,9 +15,9 @@ defmodule Crossable.Schema.Messages.DiscordMessage do
   end
 
   @doc false
-  def changeset(habit, attrs) do
-    habit
-    |> cast(attrs, [:recipient_id, :sender_id, :is_bot, :message, :deleted_at])
-    |> validate_required([:recipient_id, :message, :is_bot])
+  def changeset(msg, attrs) do
+    msg
+    |> cast(attrs, [:message_id, :recipient_id, :sender_id, :is_bot, :content, :deleted_at])
+    |> validate_required([:message_id, :recipient_id, :content, :is_bot])
   end
 end

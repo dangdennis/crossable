@@ -16,8 +16,9 @@ defmodule Crossable.Habits do
     query =
       from h in Crossable.Schema.Habits.Habit,
         join: u in Crossable.Schema.Users.User,
-        on: u.discord_user_id == ^discord_id,
-        where: h.active == true
+        on: u.id == h.user_id,
+        where: h.active == true,
+        where: u.discord_user_id == ^discord_id
 
     case Repo.one(query) do
       nil -> {:error, "failed to find active user habit"}
@@ -42,8 +43,28 @@ defmodule Crossable.Habits do
       Daily check-in! Did you complete your individual habit, #{user_habit.habit}?
       """)
 
-    Nostrum.Api.create_reaction!(dm_channel.id, msg.id, "👍")
+    IO.inspect(msg)
+
+    Nostrum.Api.create_reaction(dm_channel.id, msg.id, "👍")
     :timer.sleep(500)
-    Nostrum.Api.create_reaction!(dm_channel.id, msg.id, "❌")
+    Nostrum.Api.create_reaction(dm_channel.id, msg.id, "❌")
+
+    {:ok, user} =
+      Crossable.Users.get_user_by_discord_id(
+        discord_user_id
+        |> Integer.to_string()
+      )
+
+    Crossable.Messages.create_discord_message(%{
+      recipient_id: user.id,
+      is_bot: true,
+      message_id: msg.id,
+      content: msg.content
+    })
+  end
+
+  def print_sql(queryable) do
+    IO.inspect(Ecto.Adapters.SQL.to_sql(:all, Repo, queryable))
+    queryable
   end
 end

@@ -121,7 +121,7 @@ defmodule Crossable.Users do
         where: u.discord_user_id == ^discord_id
 
     case query |> Repo.one() do
-      nil -> {:error, "User of discord id #{discord_id} is missing"}
+      nil -> {:error, "failed to find user of discord id #{discord_id}"}
       user -> {:ok, user}
     end
   end

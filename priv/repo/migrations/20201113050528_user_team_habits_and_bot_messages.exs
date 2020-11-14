@@ -21,15 +21,13 @@ defmodule Crossable.Repo.Migrations.UserHabits do
       modify(:updated_at, :timestamp, default: fragment("NOW()"))
     end
 
-    # TEAM HABITS
-    # TODO
-
     # DISCORD MESSAGES
     create table(:discord_messages) do
-      add :recipient_id, :integer
-      add :sender_id, :integer
+      add :recipient_id, references(:users)
+      add :sender_id, references(:users)
+      add :message_id, :bigint
       add :is_bot, :boolean
-      add :message, :string
+      add :content, :string
       add :deleted_at, :utc_datetime
 
       timestamps()
