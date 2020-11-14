@@ -1,4 +1,4 @@
-defmodule Crossable.Habits.UserHabit do
+defmodule Crossable.Schema.Habits.Habit do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -7,7 +7,7 @@ defmodule Crossable.Habits.UserHabit do
     field :active, :boolean
     # field :frequency, Postgrex.Interval
     field :deleted_at, :utc_datetime
-    belongs_to :user, Crossable.Users.User
+    belongs_to :user, Crossable.Schema.Users.User
 
     timestamps()
   end

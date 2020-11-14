@@ -1,7 +1,7 @@
 defmodule Crossable.UserHabitsTest do
   use Crossable.DataCase
 
-  alias Crossable.Habits.UserHabit
+  alias Crossable.Schema.Habits.Habit
 
   describe "user_habits" do
     test "get_active_user_habit_by_discord_id/1" do

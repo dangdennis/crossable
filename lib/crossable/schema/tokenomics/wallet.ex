@@ -1,12 +1,12 @@
-defmodule Crossable.Tokenomics.Wallet do
+defmodule Crossable.Schema.Tokenomics.Wallet do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "wallets" do
     field :deleted_at, :utc_datetime
     field :balance, :float
-    belongs_to :user, Crossable.Users.User
-    has_many :transactions, Crossable.Tokenomics.Transaction
+    belongs_to :user, Crossable.Schema.Users.User
+    has_many :transactions, Crossable.Schema.Tokenomics.Transaction
 
     timestamps()
   end

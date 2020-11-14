@@ -1,14 +1,15 @@
-defmodule Crossable.Users.User do
+defmodule Crossable.Schema.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "users" do
-    field :deleted_at, :utc_datetime
     field :discord_user_id, :string
+    field :username, :string
     field :password_hash, :string
     field :active, :boolean
-    has_one :avatar, Crossable.Avatars.Avatar
-    has_one :wallet, Crossable.Tokenomics.Wallet
+    field :deleted_at, :utc_datetime
+    has_one :avatar, Crossable.Schema.Avatars.Avatar
+    has_one :wallet, Crossable.Schema.Tokenomics.Wallet
 
     timestamps()
   end
@@ -17,12 +18,13 @@ defmodule Crossable.Users.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [
+      :username,
       :discord_user_id,
       :password_hash,
       :deleted_at,
-      :active,
+      :active
     ])
-    |> cast_assoc(:avatar, with: &Crossable.Avatars.Avatar.changeset/2)
+    |> cast_assoc(:avatar, with: &Crossable.Schema.Avatars.Avatar.changeset/2)
     |> validate_required([:discord_user_id])
     |> unique_constraint([:discord_user_id])
   end

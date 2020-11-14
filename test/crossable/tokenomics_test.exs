@@ -5,7 +5,7 @@ defmodule Crossable.TokenomicsTest do
 
   describe "wallets" do
     alias Crossable.Users
-    alias Crossable.Tokenomics.Wallet
+    alias Crossable.Schema.Tokenomics.Wallet
 
     @valid_attrs %{
       user_id: 1,
@@ -86,7 +86,7 @@ defmodule Crossable.TokenomicsTest do
   end
 
   describe "transactions" do
-    alias Crossable.Tokenomics.Transaction
+    alias Crossable.Schema.Tokenomics.Transaction
     alias Crossable.Users
 
     @valid_attrs %{

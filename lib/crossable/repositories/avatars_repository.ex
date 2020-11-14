@@ -6,7 +6,7 @@ defmodule Crossable.Avatars do
   import Ecto.Query, warn: false
   alias Crossable.Repo
 
-  alias Crossable.Avatars.Avatar
+  alias Crossable.Schema.Avatars.Avatar
 
   @doc """
   Returns the list of avatars.
@@ -60,7 +60,7 @@ defmodule Crossable.Avatars do
 
   ## Examples
 
-    iex> create_avatar_for_user(%Crossable.Users.User{field:value})
+    iex> create_avatar_for_user(%Crossable.Schema.Users.User{field:value})
     {:ok, %Avatar{}}
 
     iex> create_avatar_for_user(%{field: bad_value})
@@ -121,7 +121,7 @@ defmodule Crossable.Avatars do
   def get_by_discord_id(discord_id) do
     query =
       from a in Avatar,
-        join: u in Crossable.Users.User,
+        join: u in Crossable.Schema.Users.User,
         on: a.user_id == u.id,
         where: u.discord_user_id == ^discord_id,
         select: [:id]

@@ -7,14 +7,14 @@ defmodule Crossable.Repository.UserHabits do
   alias Crossable.Repo
 
   def create_user_habit(attrs \\ %{}) do
-    %Crossable.Habits.UserHabit{}
-    |> Crossable.Habits.UserHabit.changeset(attrs)
+    %Crossable.Schema.Habits.Habit{}
+    |> Crossable.Schema.Habits.Habit.changeset(attrs)
     |> Repo.insert()
   end
 
   def get_active_user_habit_by_discord_id(discord_id) do
-    query = from h in Crossable.Habits.UserHabit,
-      join: u in Crossable.Users.User,
+    query = from h in Crossable.Schema.Habits.Habit,
+      join: u in Crossable.Schema.Users.User,
       on: u.discord_user_id == ^discord_id,
       where: h.active == true
 

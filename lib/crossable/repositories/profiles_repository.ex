@@ -6,7 +6,7 @@ defmodule Crossable.Profiles do
   import Ecto.Query, warn: false
   alias Crossable.Repo
 
-  alias Crossable.Users.Profile
+  alias Crossable.Schema.Users.Profile
 
   @doc """
   Returns the list of profiles.

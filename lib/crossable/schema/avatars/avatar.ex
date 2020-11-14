@@ -1,10 +1,10 @@
-defmodule Crossable.Avatars.Avatar do
+defmodule Crossable.Schema.Avatars.Avatar do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "avatars" do
     field :deleted_at, :utc_datetime
-    belongs_to :user, Crossable.Users.User
+    belongs_to :user, Crossable.Schema.Users.User
 
     timestamps()
   end

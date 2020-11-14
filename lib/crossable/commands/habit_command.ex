@@ -1,24 +1,20 @@
 defmodule Crossable.Commands.MyHabit do
+  @spec invoke(Nostrum.Struct.Message.t()) :: Nostrum.Struct.Message.t()
   def invoke(msg) do
+    # retrieve the user's current habit
+    {:ok, user_habit} =
+      Crossable.Repository.UserHabits.get_active_user_habit_by_discord_id(
+        msg.author.id
+        |> Integer.to_string()
+      )
+
     dm_channel = Nostrum.Api.create_dm!(msg.author.id)
 
     Nostrum.Api.create_message!(dm_channel.id, """
-    Your habit is
+    Your habit is #{user_habit.habit}
     """)
 
     # Crossable.Tokenomics.get_wallet_by_discord_id(msg.author.id |> Integer.to_string())
     # |> handle_balance_retrieval(dm_channel.id)
-  end
-
-  def handle_user_habit({:ok, wallet}, channel_id) do
-    Nostrum.Api.create_message!(channel_id, """
-    Your total balance is #{wallet.balance |> :erlang.float_to_binary(decimals: 0)}.
-    """)
-  end
-
-  def handle_user_habit({:error, _reason}, channel_id) do
-    Nostrum.Api.create_message!(channel_id, """
-    You do not have a wallet.
-    """)
   end
 end

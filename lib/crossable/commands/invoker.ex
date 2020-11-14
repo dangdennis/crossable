@@ -1,5 +1,7 @@
 defmodule Crossable.Commands.Invoker do
   def handle(msg) do
+    IO.inspect(msg)
+
     case String.split(msg.content, " ", trim: true) do
       ["!new" | _tl] ->
         Crossable.Commands.New.invoke(msg)
@@ -14,9 +16,9 @@ defmodule Crossable.Commands.Invoker do
         Crossable.Commands.Help.invoke(msg)
 
       ["!remindme" | _tl] ->
-          Crossable.Commands.RemindMe.invoke(msg)
+        Crossable.Commands.RemindMe.invoke(msg)
 
-           # ["!raid" | _tl] ->
+      # ["!raid" | _tl] ->
       #   Crossable.Commands.Raid.invoke(msg)
 
       # ["!attack" | _tl] ->

@@ -4,7 +4,7 @@ defmodule Crossable.RaidsTest do
   alias Crossable.Raids
 
   #   describe "raid_bosses" do
-  #     alias Crossable.Raids.RaidBoss
+  #     alias Crossable.Schema.Raids.RaidBoss
 
   #     @valid_attrs %{
   #       deleted_at: "2010-04-17T14:00:00Z",
@@ -75,7 +75,7 @@ defmodule Crossable.RaidsTest do
   #   end
 
   describe "raids" do
-    # alias Crossable.Raids.Raid
+    # alias Crossable.Schema.Raids.Raid
 
     # @valid_attrs %{
     #   active: false,
@@ -161,7 +161,7 @@ defmodule Crossable.RaidsTest do
   #   end
 
   #   describe "raid_members" do
-  #     alias Crossable.Raids.RaidMember
+  #     alias Crossable.Schema.Raids.RaidMember
 
   #     @valid_attrs %{active: true, deleted_at: "2010-04-17T14:00:00Z", status: "some status"}
   #     @update_attrs %{

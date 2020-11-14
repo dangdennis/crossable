@@ -10,7 +10,7 @@ defmodule Crossable.Tokenomics do
   # WALLET
   #####################
 
-  alias Crossable.Tokenomics.Wallet
+  alias Crossable.Schema.Tokenomics.Wallet
 
   @doc """
   Returns the wallet belonging to a discord user.any()
@@ -24,7 +24,7 @@ defmodule Crossable.Tokenomics do
   def get_wallet_by_discord_id(discord_id) do
     query =
       from w in Wallet,
-        join: u in Crossable.Users.User,
+        join: u in Crossable.Schema.Users.User,
         on: w.user_id == u.id,
         where: u.discord_user_id == ^discord_id
 
@@ -86,7 +86,7 @@ defmodule Crossable.Tokenomics do
 
   ## Examples
 
-    iex> create_wallet_for_user(%Crossable.Users.User{field:value})
+    iex> create_wallet_for_user(%Crossable.Schema.Users.User{field:value})
     {:ok, %Avatar{}}
 
     iex> create_wallet_for_user(%{field: bad_value})
@@ -148,7 +148,7 @@ defmodule Crossable.Tokenomics do
   # TRANSACTIONS
   #####################
 
-  alias Crossable.Tokenomics.Transaction
+  alias Crossable.Schema.Tokenomics.Transaction
 
   @doc """
   Returns the list of transactions.

@@ -1,4 +1,4 @@
-defmodule Crossable.Messages.DiscordMessage do
+defmodule Crossable.Schema.Messages.DiscordMessage do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -8,7 +8,7 @@ defmodule Crossable.Messages.DiscordMessage do
     field :is_bot, :boolean
     field :message, :string
     field :deleted_at, :utc_datetime
-    belongs_to :user, Crossable.Users.User
+    belongs_to :user, Crossable.Schema.Users.User
 
     timestamps()
   end

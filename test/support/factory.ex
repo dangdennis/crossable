@@ -4,23 +4,23 @@ defmodule Crossable.Factory do
   # Factories
 
   def build(:avatar) do
-    %Crossable.Avatars.Avatar{}
+    %Crossable.Schema.Avatars.Avatar{}
   end
 
   def build(:raid) do
-    %Crossable.Raids.Raid{}
+    %Crossable.Schema.Raids.Raid{}
   end
 
   def build(:raid_boss) do
-    %Crossable.Raids.RaidBoss{}
+    %Crossable.Schema.Raids.RaidBoss{}
   end
 
   def build(:raid_member) do
-    %Crossable.Raids.RaidMember{}
+    %Crossable.Schema.Raids.RaidMember{}
   end
 
   def build(:user) do
-    %Crossable.Users.User{}
+    %Crossable.Schema.Users.User{}
   end
 
   # Convenience API

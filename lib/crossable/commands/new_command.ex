@@ -4,7 +4,8 @@ defmodule Crossable.Commands.New do
   def invoke(msg) do
     with {:ok, user} <-
            Users.create_user(%{
-             discord_user_id: msg.author.id |> Integer.to_string()
+             discord_user_id: msg.author.id |> Integer.to_string(),
+             username: msg.author.username <> "#" <> msg.author.discriminator
            }),
          {:ok, _wallet} <- Crossable.Tokenomics.create_wallet_for_user(user),
          {:ok, _avatar} <- Crossable.Avatars.create_avatar_for_user(user) do
@@ -30,6 +31,7 @@ defmodule Crossable.Commands.New do
 
   def handle_new_user({:error, reason}, msg) do
     IO.inspect(reason)
+
     Nostrum.Api.create_message(
       msg.channel_id,
       reason |> error_response

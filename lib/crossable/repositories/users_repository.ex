@@ -10,7 +10,7 @@ defmodule Crossable.Users do
   # USER
   ###########################
 
-  alias Crossable.Users.User
+  alias Crossable.Schema.Users.User
 
   @doc """
   Returns the list of users.
@@ -137,7 +137,7 @@ defmodule Crossable.Users do
   # PROFILE
   ###########################
 
-  alias Crossable.Users.Profile
+  alias Crossable.Schema.Users.Profile
 
   @doc """
   Returns the list of profiles.
@@ -233,7 +233,7 @@ defmodule Crossable.Users do
     Profile.changeset(profile, attrs)
   end
 
-  # def get_users_from_raid(%Crossable.Raids.Raid{} = raid) do
+  # def get_users_from_raid(%Crossable.Schema.Raids.Raid{} = raid) do
 
   # end
 end

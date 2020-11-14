@@ -1,12 +1,12 @@
-defmodule Crossable.Habits.HabitLogs do
+defmodule Crossable.Schema.Habits.HabitLog do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "user_habits" do
     field :completed, :boolean
     field :deleted_at, :utc_datetime
-    belongs_to :habit, Crossable.Habits.UserHabit
-    belongs_to :user, Crossable.Users.User
+    belongs_to :habit, Crossable.Schema.Habits.Habit
+    belongs_to :user, Crossable.Schema.Users.User
 
     timestamps()
   end

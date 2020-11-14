@@ -79,7 +79,7 @@ defmodule Crossable.UsersTest do
   end
 
   #   describe "profiles" do
-  #     alias Crossable.Users.Profile
+  #     alias Crossable.Schema.Users.Profile
 
   #     @valid_attrs %{
   #       deleted_at: "2010-04-17T14:00:00Z",
