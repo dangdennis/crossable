@@ -2,7 +2,8 @@ defmodule Crossable.Consumer do
   @moduledoc "Consumes events sent by the API gateway."
 
   alias Crossable.Consumer.{
-    MessageCreate
+    MessageCreate,
+    MessageReactionAdd
     # ChannelCreate,
     # ChannelDelete,
     # ChannelUpdate,
@@ -17,7 +18,6 @@ defmodule Crossable.Consumer do
     # GuildRoleDelete,
     # GuildRoleUpdate,
     # MessageDelete,
-    # MessageReactionAdd,
     # MessageUpdate,
     # Ready,
     # UserUpdate
@@ -31,6 +31,10 @@ defmodule Crossable.Consumer do
 
   def handle_event({:MESSAGE_CREATE, msg, _ws_state}) do
     MessageCreate.handle(msg)
+  end
+
+  def handle_event({:MESSAGE_REACTION_ADD, reaction, _ws_state}) do
+    MessageReactionAdd.handle(reaction)
   end
 
   # @impl true
@@ -75,10 +79,6 @@ defmodule Crossable.Consumer do
 
   # def handle_event({:GUILD_MEMBER_UPDATE, {guild_id, old_member, new_member}, _ws_state}) do
   #   GuildMemberUpdate.handle(guild_id, old_member, new_member)
-  # end
-
-  # def handle_event({:MESSAGE_REACTION_ADD, reaction, _ws_state}) do
-  #   MessageReactionAdd.handle(reaction)
   # end
 
   # def handle_event({:GUILD_CREATE, guild, _ws_state}) do
