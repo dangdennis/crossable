@@ -6,7 +6,7 @@ defmodule Crossable.UserHabitsTest do
   describe "user_habits" do
     test "get_active_user_habit_by_discord_id/1" do
       {:ok, user} = Crossable.Users.create_user(%{discord_user_id: "qopriasdfa"})
-      {:ok, habit} = Crossable.Repository.UserHabits.create_user_habit(%{
+      {:ok, habit} = Crossable.Habits.create_user_habit(%{
         user_id: user.id,
         active: true,
         habit: "swimming",
@@ -14,7 +14,7 @@ defmodule Crossable.UserHabitsTest do
         })
 
 
-      assert {:ok, habit} = Crossable.Repository.UserHabits.get_active_user_habit_by_discord_id(user.discord_user_id)
+      assert {:ok, habit} = Crossable.Habits.get_active_user_habit_by_discord_id(user.discord_user_id)
     end
   end
 end

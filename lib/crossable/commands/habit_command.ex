@@ -3,7 +3,7 @@ defmodule Crossable.Commands.MyHabit do
   def invoke(msg) do
     # retrieve the user's current habit
     {:ok, user_habit} =
-      Crossable.Repository.UserHabits.get_active_user_habit_by_discord_id(
+      Crossable.Habits.get_active_user_habit_by_discord_id(
         msg.author.id
         |> Integer.to_string()
       )
