@@ -19,7 +19,7 @@ defmodule Crossable.Consumer.MessageReactionAdd do
   def handle(reaction) do
     case humans_only(reaction) do
       {:human, user} ->
-        # verify if the reaction relates to a habit reminder.
+        # verify if the reaction is in response to a habit reminder.
         handle_habit_reminder_response(
           Crossable.Habits.get_habit_reminder_by_msg_id(
             reaction.message_id |> Integer.to_string(),

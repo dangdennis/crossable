@@ -1,4 +1,8 @@
 defmodule Crossable.Factory do
+  @moduledoc """
+  Factory to create our domain structs.
+  """
+
   alias Crossable.Repo
 
   # Factories

@@ -86,25 +86,19 @@ defmodule Crossable.Habits do
       {:ok, _}
   """
   def send_reminder(discord_user_id) do
-    IO.inspect("""
-    sending reminder to discord user #{discord_user_id}
+    IO.puts("""
+    attempt to send reminder to discord user #{discord_user_id}
     """)
 
     # retrieve the user's current habit
     {:ok, user_habit} = get_active_user_habit_by_discord_id(discord_user_id)
 
-    IO.inspect(user_habit)
-
     {:ok, dm_channel} = Nostrum.Api.create_dm(discord_user_id |> String.to_integer())
-
-    IO.inspect(dm_channel)
 
     msg =
       Nostrum.Api.create_message!(dm_channel.id, """
       Daily check-in! Did you complete your individual habit, #{user_habit.habit}?
       """)
-
-    IO.inspect(msg)
 
     {:ok} = set_reminder_reactions(dm_channel.id, msg.id)
 
@@ -128,6 +122,10 @@ defmodule Crossable.Habits do
         message_id: msg.id,
         content: msg.content
       })
+
+    IO.puts("""
+    successfully sent reminder to discord user #{discord_user_id}
+    """)
   end
 
   def set_reminder_reactions(channel_id, msg_id) do
@@ -141,7 +139,7 @@ defmodule Crossable.Habits do
   end
 
   def print_sql(queryable) do
-    IO.inspect(Ecto.Adapters.SQL.to_sql(:all, Repo, queryable))
+    IO.puts(Ecto.Adapters.SQL.to_sql(:all, Repo, queryable))
     queryable
   end
 end

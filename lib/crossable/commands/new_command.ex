@@ -31,8 +31,6 @@ defmodule Crossable.Commands.New do
   end
 
   def handle_new_user({:error, reason}, msg) do
-    IO.inspect(reason)
-
     Nostrum.Api.create_message(
       msg.channel_id,
       reason |> error_response

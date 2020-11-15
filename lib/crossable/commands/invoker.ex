@@ -1,6 +1,6 @@
 defmodule Crossable.Commands.Invoker do
   def handle(msg) do
-    IO.inspect(msg)
+    IO.puts(msg)
 
     case String.split(msg.content, " ", trim: true) do
       ["!new" | _tl] ->

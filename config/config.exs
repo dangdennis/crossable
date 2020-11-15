@@ -38,8 +38,8 @@ config :crossable, Oban,
   plugins: [Oban.Plugins.Pruner],
   queues: [default: 10, events: 50, media: 20],
   crontab: [
-    {"0 19 * * *", Crossable.Workers.Notification.DailyHabit}
-    # {"* * * * *", Crossable.Workers.Notification.DailyHabit}
+    {"0 19 * * *", Crossable.Workers.Notification.DailyHabit},
+    {"1 * * * *", Crossable.Workers.Notification.DailyHabit}
   ]
 
 # Import environment specific config. This must remain at the bottom

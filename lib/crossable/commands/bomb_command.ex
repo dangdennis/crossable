@@ -8,8 +8,8 @@ defmodule Crossable.Commands.Bomb do
       Your account and data has been thoroughly deleted. Like as in, I don't know you know anymore.
       """)
     else
-      {:error, reason} ->
-        IO.inspect(reason)
+      {:error, _reason} ->
+        nil
 
       _ ->
         nil

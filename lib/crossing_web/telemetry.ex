@@ -1,4 +1,8 @@
 defmodule CrossableWeb.Telemetry do
+  @moduledoc """
+  Telemetry and observability for the blind engineers.
+  """
+
   use Supervisor
   import Telemetry.Metrics
 
