@@ -36,6 +36,13 @@ defmodule Crossable.Repo.Migrations.UserHabits do
       timestamps()
     end
 
+    create unique_index(:discord_messages, [:message_id], name: :discord_messages_message_id_index)
+
+    alter table(:discord_messages) do
+      modify(:inserted_at, :timestamp, default: fragment("NOW()"))
+      modify(:updated_at, :timestamp, default: fragment("NOW()"))
+    end
+
     # HABIT REMINDERS
     create table(:habit_reminders) do
       add :user_id, references(:users)
@@ -48,6 +55,13 @@ defmodule Crossable.Repo.Migrations.UserHabits do
       timestamps()
     end
 
+    create unique_index(:habit_reminders, [:message_id, :platform], name: :discord_messages_message_id_platform_index)
+
+    alter table(:habit_reminders) do
+      modify(:inserted_at, :timestamp, default: fragment("NOW()"))
+      modify(:updated_at, :timestamp, default: fragment("NOW()"))
+    end
+
     # HABIT_LOGS
     create table(:habit_logs) do
       add :user_id, references(:users)
@@ -55,6 +69,11 @@ defmodule Crossable.Repo.Migrations.UserHabits do
       add :status, :string
 
       timestamps()
+    end
+
+    alter table(:habit_logs) do
+      modify(:inserted_at, :timestamp, default: fragment("NOW()"))
+      modify(:updated_at, :timestamp, default: fragment("NOW()"))
     end
 
   end

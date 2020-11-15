@@ -10,6 +10,7 @@ defmodule Crossable.UsersTest do
       password_hash: "some password_hash",
       avatar: %{user_id: 1}
     }
+
     # @update_attrs %{
     #   deleted_at: "2011-05-18T15:01:01Z",
     #   discord_user_id: "some updated discord_user_id",
@@ -30,6 +31,13 @@ defmodule Crossable.UsersTest do
     test "list_users/0 returns all users" do
       user = user_fixture()
       assert Users.list_users() == [user]
+    end
+
+    test "list_active_users/0 returns all active users" do
+      Users.list_active_users()
+      |> Enum.each(fn user ->
+        assert user.active == true
+      end)
     end
 
     # test "list_active_users/0 returs all active users" do

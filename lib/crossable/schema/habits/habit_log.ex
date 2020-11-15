@@ -5,10 +5,13 @@ defmodule Crossable.Schema.Habits.HabitLog do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "user_habits" do
+  schema "habit_logs" do
     belongs_to :habit, Crossable.Schema.Habits.Habit
     belongs_to :user, Crossable.Schema.Users.User
-    field :status, :string # completed, failed, ignored?
+
+    # indicates whether a user completed, incomplete, ignored? their habit
+    field :status, :string
+
     field :deleted_at, :utc_datetime
 
     timestamps()

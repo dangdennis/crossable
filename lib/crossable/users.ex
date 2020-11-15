@@ -26,6 +26,19 @@ defmodule Crossable.Users do
   end
 
   @doc """
+  Returns the list of active users.
+
+  ## Examples
+
+      iex> list_active_users()
+      [%User{active: true}, ...]
+
+  """
+  def list_active_users do
+    from(u in User, where: u.active == true) |> Repo.all()
+  end
+
+  @doc """
   Gets a single user.
 
   Raises `Ecto.NoResultsError` if the User does not exist.
@@ -124,13 +137,6 @@ defmodule Crossable.Users do
       nil -> {:error, "failed to find user of discord id #{discord_id}"}
       user -> {:ok, user}
     end
-  end
-
-  def list_active_users() do
-    from(u in User,
-      where: u.active == true
-    )
-    |> Repo.all()
   end
 
   ###########################

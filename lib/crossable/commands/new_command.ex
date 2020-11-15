@@ -5,7 +5,8 @@ defmodule Crossable.Commands.New do
     with {:ok, user} <-
            Users.create_user(%{
              discord_user_id: msg.author.id |> Integer.to_string(),
-             username: msg.author.username <> "#" <> msg.author.discriminator
+             username: msg.author.username <> "#" <> msg.author.discriminator,
+             active: true
            }),
          {:ok, _wallet} <- Crossable.Tokenomics.create_wallet_for_user(user),
          {:ok, _avatar} <- Crossable.Avatars.create_avatar_for_user(user) do

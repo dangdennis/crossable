@@ -1,9 +1,17 @@
+# Configure Oban workers in `config.exs`
+
 defmodule Crossable.Workers.Notification.DailyHabit do
   use Oban.Worker, queue: :events
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{}}) do
-    Crossable.Habits.send_reminder(5)
+    # query for all active users, and send them a reminder
+    Crossable.Users.list_active_users()
+    |> Enum.each(fn user ->
+      IO.inspect(user)
+      IO.inspect(user.discord_user_id)
+      Crossable.Habits.send_reminder(user.discord_user_id)
+    end)
 
     :ok
   end
