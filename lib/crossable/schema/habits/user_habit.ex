@@ -3,11 +3,15 @@ defmodule Crossable.Schema.Habits.Habit do
   import Ecto.Changeset
 
   schema "user_habits" do
-    field :habit, :string
-    field :active, :boolean
-    # field :frequency, Postgrex.Interval
-    field :deleted_at, :utc_datetime
+    field :habit, :string # habit name
+    field :active, :boolean # determines whether the habit is currently active and in-training
     belongs_to :user, Crossable.Schema.Users.User
+
+    # Relies on Postgres's interval type.
+    # How often the user expects to complete the habit.
+    # field :frequency, Postgrex.Interval
+
+    field :deleted_at, :utc_datetime
 
     timestamps()
   end

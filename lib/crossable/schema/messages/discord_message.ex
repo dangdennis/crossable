@@ -5,7 +5,7 @@ defmodule Crossable.Schema.Messages.DiscordMessage do
   schema "discord_messages" do
     field :recipient_id, :integer
     field :sender_id, :integer
-    field :message_id, :integer
+    field :message_id, :string
     field :is_bot, :boolean
     field :content, :string
     field :deleted_at, :utc_datetime
