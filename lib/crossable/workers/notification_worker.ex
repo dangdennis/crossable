@@ -5,7 +5,10 @@ defmodule Crossable.Workers.Notification.DailyHabit do
   Sends daily habit reminders to all active users.
   """
 
-  use Oban.Worker, queue: :events
+  use Oban.Worker,
+    queue: :events,
+    max_attempts: 3,
+    tags: ["reminders"]
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{}}) do

@@ -1,7 +1,7 @@
 defmodule Crossable.Commands.Attack do
-  alias Crossable.Raids
+  # alias Crossable.Raids
 
-  def invoke(msg) do
+  def invoke(_msg) do
     # case Raids.get_active_raid() do
     #   {:error, _} ->
     #     Nostrum.Api.create_message!(msg.channel_id, """

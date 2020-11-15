@@ -23,9 +23,7 @@ defmodule Crossable.Commands.New do
       Welcome to Crossable! You're all set!
 
       Available commands:
-      !daily - make mindful progress on your habit and check-in!
-      !wallet - view your wallet balance.
-      !help - see these set of instructions again.
+      #{Crossable.Commands.Help.available_commands()}
       """
     )
   end

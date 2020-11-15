@@ -110,7 +110,7 @@ defmodule Crossable.Habits do
       create_habit_reminder(%{
         user_id: user.id,
         habit_id: user_habit.id,
-        message_id: msg.id,
+        message_id: msg.id |> Integer.to_string(),
         platform: "discord"
       })
 
@@ -119,7 +119,7 @@ defmodule Crossable.Habits do
       Crossable.Messages.create_discord_message(%{
         recipient_id: user.id,
         is_bot: true,
-        message_id: msg.id,
+        message_id: msg.id |> Integer.to_string(),
         content: msg.content
       })
 

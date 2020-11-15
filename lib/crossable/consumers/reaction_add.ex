@@ -80,4 +80,8 @@ defmodule Crossable.Consumer.MessageReactionAdd do
         IO.puts("habit response already recorded")
     end
   end
+
+  # def handle_habit_reminder_response({:error, reason}, _reaction, _user) do
+  #   IO.puts(reason)
+  # end
 end
