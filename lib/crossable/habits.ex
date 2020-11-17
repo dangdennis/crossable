@@ -142,4 +142,29 @@ defmodule Crossable.Habits do
     IO.puts(Ecto.Adapters.SQL.to_sql(:all, Repo, queryable))
     queryable
   end
+
+  @doc """
+  Returns the number of habit log streaks belonging to a user for a given range of days
+
+  ## Examples
+
+      iex>get_habit_streak(1, 7)
+      3 # number of entries in a streak
+
+  """
+  @spec get_habit_streak(integer(), integer()) :: integer
+  def get_habit_streak(user_id, num_days_prev) do
+    # query for a number of habit_logs in the past number of days
+    start_date = Date.utc_today()
+    end_date = start_date |> Date.add(-num_days_prev)
+
+    from(hl in Crossable.Schema.Habits.HabitLog,
+      # where: hl.inserted_at < '7 days ago' and h1.inserted_at > 'now' and hl.user_id == ^user_id
+      where: hl.inserted_at >= ^start_date,
+      where: hl.inserted_at <= ^end_date,
+      where: hl.user_id == ^user_id
+    )
+    |> Repo.all()
+    |> length()
+  end
 end

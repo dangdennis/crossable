@@ -160,4 +160,40 @@ defmodule Crossable.HabitsTest do
                )
     end
   end
+
+  describe "Crossable.Habits.get_habit_streak/2" do
+    test "returns a working streak" do
+      {:ok, user} = Crossable.Users.create_user(%{discord_user_id: "qopriasdfa"})
+
+      {:ok, user_habit} =
+        Crossable.Habits.create_user_habit(%{
+          habit: "swimming",
+          active: true,
+          user_id: user.id
+        })
+
+      {:ok, _} =
+        Crossable.Habits.create_habit_log_entry(%{
+          habit_id: user_habit.id,
+          user_id: user.id,
+          status: "complete"
+        })
+
+      {:ok, _} =
+        Crossable.Habits.create_habit_log_entry(%{
+          habit_id: user_habit.id,
+          user_id: user.id,
+          status: "complete"
+        })
+
+      {:ok, _} =
+        Crossable.Habits.create_habit_log_entry(%{
+          habit_id: user_habit.id,
+          user_id: user.id,
+          status: "complete"
+        })
+
+      3 = Crossable.Habits.get_habit_streak(user.id, 1)
+    end
+  end
 end
