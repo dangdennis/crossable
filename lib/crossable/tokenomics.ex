@@ -35,6 +35,26 @@ defmodule Crossable.Tokenomics do
   end
 
   @doc """
+  Returns the wallet belonging to a user
+
+  ## Examples
+
+      iex> get_user_wallet(412)
+      {:ok, wallet}
+
+  """
+  def get_user_wallet(user_id) do
+    query =
+      from w in Wallet,
+        where: w.user_id == ^user_id
+
+    case Repo.one(query) do
+      nil -> {:error, "failed to find wallet"}
+      wallet -> {:ok, wallet}
+    end
+  end
+
+  @doc """
   Returns the list of wallets.
 
   ## Examples
@@ -242,5 +262,27 @@ defmodule Crossable.Tokenomics do
   """
   def change_transaction(%Transaction{} = transaction, attrs \\ %{}) do
     Transaction.changeset(transaction, attrs)
+  end
+
+  @doc """
+  Awards tokens to a user
+
+  ## Examples
+
+      iex> award_tokens(user, 5)
+      {:ok, wallet}
+  """
+  def award_tokens(user, amount) do
+    {:ok, wallet} = Crossable.Tokenomics.get_user_wallet(user.id)
+
+    {:ok, _} =
+      Crossable.Tokenomics.create_transaction(%{
+        amount: amount,
+        wallet_id: wallet.id
+      })
+
+    {:ok, _} = Crossable.Tokenomics.update_wallet(wallet, %{balance: wallet.balance + amount})
+
+    {:ok, wallet}
   end
 end
