@@ -139,6 +139,11 @@ defmodule Crossable.Users do
     end
   end
 
+  @spec is_admin?(integer()) :: boolean
+  def is_admin?(user_id) do
+    Enum.member?([1], user_id)
+  end
+
   ###########################
   # PROFILE
   ###########################

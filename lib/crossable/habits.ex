@@ -49,7 +49,7 @@ defmodule Crossable.Habits do
         where: hr.message_id == ^message_id and hr.platform == "discord"
 
     case Repo.one(query) do
-      nil -> {:error, "failed to find user"}
+      nil -> {:error, "failed to find habit reminder"}
       user -> {:ok, user}
     end
   end
@@ -156,15 +156,11 @@ defmodule Crossable.Habits do
   def get_habit_streak(user_id, num_days_prev) do
     # query for a number of habit_logs in the past number of days
     start_date = Date.utc_today()
-    end_date = start_date |> Date.add(-num_days_prev)
-    # {:ok, ed} = NaiveDateTime.new(end_date, ~T[00:00:00])
+    end_date = Date.add(start_date, -num_days_prev)
 
     from(hl in Crossable.Schema.Habits.HabitLog,
-      # where: hl.inserted_at < '7 days ago' and h1.inserted_at > 'now' and hl.user_id == ^user_id
-      # where: hl.inserted_at >= ^start_date,
       where: fragment("?::date", hl.inserted_at) <= ^start_date,
       where: fragment("?::date", hl.inserted_at) >= ^end_date,
-      # where: hl.inserted_at <= ^end_date,
       where: hl.user_id == ^user_id
     )
     |> Repo.all()

@@ -1,5 +1,6 @@
 defmodule Crossable.Consumer.MessageReactionAdd do
   @moduledoc "Handles the `MESSAGE_REACTION_ADD` gateway event."
+  require Logger
 
   @doc """
   Handles all message event reactions.
@@ -15,7 +16,6 @@ defmodule Crossable.Consumer.MessageReactionAdd do
     }
   ```
   """
-  @spec handle(Nostrum.Struct.Message.Reaction) :: nil
   def handle(reaction) do
     case humans_only(reaction) do
       {:human, user} ->
@@ -30,7 +30,7 @@ defmodule Crossable.Consumer.MessageReactionAdd do
         )
 
       {:unknown} ->
-        IO.puts("bot reaction ignored")
+        Logger.info("bot reaction ignored")
     end
   end
 
@@ -53,7 +53,7 @@ defmodule Crossable.Consumer.MessageReactionAdd do
     # only "❌" = incomplete
     case {reaction.emoji.name, habit_reminder.response} do
       {"👍", nil} ->
-        IO.puts("got a thumbs up yessss response!")
+        Logger.info("got a thumbs up yessss response!")
 
         {:ok, _entry} =
           Crossable.Habits.create_habit_log_entry(%{
@@ -64,10 +64,10 @@ defmodule Crossable.Consumer.MessageReactionAdd do
 
         Crossable.Habits.update_habit_reminder(habit_reminder, %{response: "yes"})
         Nostrum.Api.create_message!(reaction.channel_id, "Nice job!")
-        award_tokens(user)
+        award_tokens_with_streaks(user)
 
       {"❌", nil} ->
-        IO.puts("got a thumbs down nooooo response!")
+        Logger.info("got a thumbs down nooooo response!")
 
         {:ok, _entry} =
           Crossable.Habits.create_habit_log_entry(%{
@@ -78,14 +78,37 @@ defmodule Crossable.Consumer.MessageReactionAdd do
 
         Crossable.Habits.update_habit_reminder(habit_reminder, %{response: "no"})
         Nostrum.Api.create_message!(reaction.channel_id, "Gotcha!")
+        {:ok, _} = Crossable.Tokenomics.award_tokens(user, 1)
 
       {_, _} ->
-        IO.puts("habit response already recorded")
+        Logger.info("habit response already recorded")
     end
   end
 
-  def award_tokens(user) do
+  def handle_habit_reminder_response({:error, reason}, _reaction, user) do
+    Logger.error(reason <> " for user id" <> (user.id |> Integer.to_string()))
+  end
+
+  @spec award_tokens_with_streaks(Crossable.Schema.Users.User.t()) ::
+          {:ok, Crossable.Schema.Tokenomics.Wallet.t()}
+  def award_tokens_with_streaks(user) do
     # query the user's habit logs for streaks
-    {:ok, _} = Crossable.Tokenomics.award_tokens(user, 1)
+    # first check for a 30-day streak
+    case Crossable.Habits.get_habit_streak(user.id, 30) do
+      30 ->
+        {:ok, _} = Crossable.Tokenomics.award_tokens(user, 20)
+
+      _ ->
+        # if they're not on a 30-day streak, check for a 7-day streak
+        case Crossable.Habits.get_habit_streak(user.id, 7) do
+          7 ->
+            {:ok, _} = Crossable.Tokenomics.award_tokens(user, 5)
+
+          _ ->
+            nil
+        end
+    end
+
+    {:ok, _} = Crossable.Tokenomics.award_tokens(user, 2)
   end
 end
