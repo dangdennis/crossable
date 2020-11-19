@@ -67,6 +67,7 @@ defmodule Crossable.Repo.Migrations.UserHabits do
       add :user_id, references(:users)
       add :habit_id, references(:user_habits)
       add :status, :string
+      add :deleted_at, :utc_datetime
 
       timestamps()
     end

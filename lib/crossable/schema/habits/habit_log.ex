@@ -20,7 +20,7 @@ defmodule Crossable.Schema.Habits.HabitLog do
   @doc false
   def changeset(habit_log, attrs) do
     habit_log
-    |> cast(attrs, [:user_id, :habit_id, :status, :deleted_at])
+    |> cast(attrs, [:user_id, :habit_id, :status, :deleted_at, :inserted_at])
     |> validate_required([:user_id, :habit_id, :status])
   end
 end

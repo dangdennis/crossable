@@ -157,11 +157,14 @@ defmodule Crossable.Habits do
     # query for a number of habit_logs in the past number of days
     start_date = Date.utc_today()
     end_date = start_date |> Date.add(-num_days_prev)
+    # {:ok, ed} = NaiveDateTime.new(end_date, ~T[00:00:00])
 
     from(hl in Crossable.Schema.Habits.HabitLog,
       # where: hl.inserted_at < '7 days ago' and h1.inserted_at > 'now' and hl.user_id == ^user_id
-      where: hl.inserted_at >= ^start_date,
-      where: hl.inserted_at <= ^end_date,
+      # where: hl.inserted_at >= ^start_date,
+      where: fragment("?::date", hl.inserted_at) <= ^start_date,
+      where: fragment("?::date", hl.inserted_at) >= ^end_date,
+      # where: hl.inserted_at <= ^end_date,
       where: hl.user_id == ^user_id
     )
     |> Repo.all()

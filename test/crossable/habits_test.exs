@@ -193,6 +193,23 @@ defmodule Crossable.HabitsTest do
           status: "complete"
         })
 
+      # insert a few habit logs a few days before the desired period
+      {:ok, _} =
+        Crossable.Habits.create_habit_log_entry(%{
+          habit_id: user_habit.id,
+          user_id: user.id,
+          status: "complete",
+          inserted_at: NaiveDateTime.utc_now() |> NaiveDateTime.add(-2 * 24 * 60 * 60, :second)
+        })
+
+      {:ok, _} =
+        Crossable.Habits.create_habit_log_entry(%{
+          habit_id: user_habit.id,
+          user_id: user.id,
+          status: "complete",
+          inserted_at: NaiveDateTime.utc_now() |> NaiveDateTime.add(-3 * 24 * 60 * 60, :second)
+        })
+
       3 = Crossable.Habits.get_habit_streak(user.id, 1)
     end
   end
