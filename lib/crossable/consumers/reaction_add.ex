@@ -62,9 +62,16 @@ defmodule Crossable.Consumer.MessageReactionAdd do
             status: "completed"
           })
 
-        Crossable.Habits.update_habit_reminder(habit_reminder, %{response: "yes"})
-        Nostrum.Api.create_message!(reaction.channel_id, "Nice job!")
-        award_tokens_with_streaks(user)
+        spawn(fn -> Crossable.Habits.update_habit_reminder(habit_reminder, %{response: "yes"}) end)
+
+        spawn(fn -> Nostrum.Api.create_message!(reaction.channel_id, "Nice job!") end)
+        spawn(fn -> award_tokens_with_streaks(user) end)
+
+        spawn(fn ->
+          Crossable.Messages.broadcast_message("""
+          #{user.username} did their habit today!
+          """)
+        end)
 
       {"❌", nil} ->
         Logger.info("got a thumbs down nooooo response!")
@@ -76,9 +83,9 @@ defmodule Crossable.Consumer.MessageReactionAdd do
             status: "incomplete"
           })
 
-        Crossable.Habits.update_habit_reminder(habit_reminder, %{response: "no"})
-        Nostrum.Api.create_message!(reaction.channel_id, "Gotcha!")
-        {:ok, _} = Crossable.Tokenomics.award_tokens(user, 1)
+        spawn(fn -> Crossable.Habits.update_habit_reminder(habit_reminder, %{response: "no"}) end)
+        spawn(fn -> Nostrum.Api.create_message!(reaction.channel_id, "Gotcha!") end)
+        spawn(fn -> {:ok, _} = Crossable.Tokenomics.award_tokens(user, 1) end)
 
       {_, _} ->
         Logger.info("habit response already recorded")
