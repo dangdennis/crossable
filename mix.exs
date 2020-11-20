@@ -5,7 +5,7 @@ defmodule Crossable.MixProject do
     [
       app: :crossable,
       version: "0.1.0",
-      elixir: "~> 1.11",
+      elixir: ">= 1.9.0",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -51,10 +51,9 @@ defmodule Crossable.MixProject do
       {:faker, "~> 0.14"},
       {:nostrum, "~> 0.4"},
       {:ecto_interval, "~> 0.2.2"},
-
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.14", only: :dev},
-      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
       # {:recon, "~> 2.3", only: :dev}
     ]
   end
