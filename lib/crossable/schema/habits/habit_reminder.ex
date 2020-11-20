@@ -10,7 +10,8 @@ defmodule Crossable.Schema.Habits.HabitReminder do
     belongs_to :user, Crossable.Schema.Users.User
     belongs_to :habit, Crossable.Schema.Habits.Habit
 
-    # the plaform's, Discord/Slack/etc, message id
+    # the platform's, Discord/Slack/etc, message id.
+    # this links the reminder to a specific message.
     field :message_id, :string
 
     # the platform

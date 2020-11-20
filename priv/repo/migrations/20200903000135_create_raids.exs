@@ -3,15 +3,14 @@ defmodule Crossable.Repo.Migrations.CreateRaids do
 
   def change do
     create table(:raids) do
+      add :raid_boss_id, references(:raid_bosses)
+      add :active, :boolean
+      add :completion_percentage, :float
       add :player_limit, :integer
       add :start_time, :utc_datetime
       add :end_time, :utc_datetime
-      add :deleted_at, :utc_datetime
-      add :raid_boss_id, references(:raid_bosses)
-      add :completion_percentage, :float
-      add :active, :boolean
-
       timestamps()
+      add :deleted_at, :utc_datetime
     end
 
     create index(:raids, [:raid_boss_id])

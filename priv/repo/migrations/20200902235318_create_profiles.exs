@@ -3,15 +3,15 @@ defmodule Crossable.Repo.Migrations.CreateProfiles do
 
   def change do
     create table(:profiles) do
+      add :user_id, references(:users)
       add :first_name, :string
       add :last_name, :string
       add :username, :string
       add :email, :string
       add :phone_number, :string
-      add :deleted_at, :utc_datetime
-      add :user_id, references(:users)
-
       timestamps()
+      add :deleted_at, :utc_datetime
+
     end
 
     create index(:profiles, [:user_id])

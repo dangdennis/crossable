@@ -119,7 +119,7 @@ defmodule Crossable.Habits do
       Crossable.Messages.create_discord_message(%{
         recipient_id: user.id,
         is_bot: true,
-        message_id: msg.id |> Integer.to_string(),
+        discord_msg_id: msg.id |> Integer.to_string(),
         content: msg.content
       })
 

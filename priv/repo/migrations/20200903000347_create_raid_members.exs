@@ -5,11 +5,10 @@ defmodule Crossable.Repo.Migrations.CreateRaidMembers do
     create table(:raid_members) do
       add :status, :string
       add :active, :boolean, default: true, null: false
-      add :deleted_at, :utc_datetime
       add :raid_id, references(:raids)
       add :avatar_id, references(:avatars)
-
       timestamps()
+      add :deleted_at, :utc_datetime
     end
 
     create index(:raid_members, [:raid_id])

@@ -28,15 +28,14 @@ defmodule Crossable.Repo.Migrations.UserHabits do
     create table(:discord_messages) do
       add :recipient_id, references(:users)
       add :sender_id, references(:users)
-      add :message_id, :string
-      add :is_bot, :boolean
       add :content, :string
-      add :deleted_at, :utc_datetime
-
+      add :discord_msg_id, :string
+      add :is_bot, :boolean
       timestamps()
+      add :deleted_at, :utc_datetime
     end
 
-    create unique_index(:discord_messages, [:message_id], name: :discord_messages_message_id_index)
+    create unique_index(:discord_messages, [:discord_msg_id], name: :discord_messages_discord_msg_id_index)
 
     alter table(:discord_messages) do
       modify(:inserted_at, :timestamp, default: fragment("NOW()"))
@@ -47,12 +46,11 @@ defmodule Crossable.Repo.Migrations.UserHabits do
     create table(:habit_reminders) do
       add :user_id, references(:users)
       add :habit_id, references(:user_habits)
+      add :response, :string # the user's response to the reminder
       add :message_id, :string # the plaform's, Discord/Slack/etc, message id
       add :platform, :string # the platform
-      add :response, :string # the user's response to the reminder
-      add :deleted_at, :utc_datetime
-
       timestamps()
+      add :deleted_at, :utc_datetime
     end
 
     create unique_index(:habit_reminders, [:message_id, :platform], name: :discord_messages_message_id_platform_index)
@@ -67,9 +65,8 @@ defmodule Crossable.Repo.Migrations.UserHabits do
       add :user_id, references(:users)
       add :habit_id, references(:user_habits)
       add :status, :string
-      add :deleted_at, :utc_datetime
-
       timestamps()
+      add :deleted_at, :utc_datetime
     end
 
     alter table(:habit_logs) do

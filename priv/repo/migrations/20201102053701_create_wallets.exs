@@ -3,11 +3,10 @@ defmodule Crossable.Repo.Migrations.CreateWallets do
 
   def change do
     create table(:wallets) do
-      add :deleted_at, :utc_datetime
       add :user_id, references(:users)
       add :balance, :float
-
       timestamps()
+      add :deleted_at, :utc_datetime
     end
 
     create unique_index(:wallets, [:user_id])

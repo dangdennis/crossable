@@ -3,11 +3,10 @@ defmodule Crossable.Repo.Migrations.CreateTransactions do
 
   def change do
     create table(:transactions) do
-        add :deleted_at, :utc_datetime
-        add :amount, :float
-        add :wallet_id, references(:wallets)
-
-        timestamps()
+      add :wallet_id, references(:wallets)
+      add :amount, :float
+      timestamps()
+      add :deleted_at, :utc_datetime
     end
 
     alter table(:transactions) do

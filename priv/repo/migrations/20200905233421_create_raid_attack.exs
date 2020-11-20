@@ -5,9 +5,8 @@ defmodule Crossable.Repo.Migrations.CreateRaidAttack do
     create table(:raid_attacks) do
       add :raid_id, references(:raids)
       add :raid_member_id, references(:raid_members)
-      add :deleted_at, :utc_datetime
-
       timestamps()
+      add :deleted_at, :utc_datetime
     end
 
     alter table(:raid_attacks) do

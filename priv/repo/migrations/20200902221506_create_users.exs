@@ -6,10 +6,9 @@ defmodule Crossable.Repo.Migrations.CreateUsers do
       add :discord_user_id, :string
       add :username, :string
       add :password_hash, :string
-      add :deleted_at, :utc_datetime
       add :active, :boolean
-
       timestamps()
+      add :deleted_at, :utc_datetime
     end
 
     create unique_index(:users, [:discord_user_id])
