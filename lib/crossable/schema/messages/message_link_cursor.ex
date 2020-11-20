@@ -7,7 +7,7 @@ defmodule Crossable.Schema.Messages.MessageLinkCursor do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "message_chain_cursors" do
+  schema "message_link_cursors" do
     belongs_to :user, Crossable.Schema.Users.User
     belongs_to :message_link, Crossable.Schema.Messages.MessageLink
 
