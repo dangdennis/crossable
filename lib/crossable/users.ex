@@ -141,7 +141,15 @@ defmodule Crossable.Users do
 
   @spec is_admin?(integer()) :: boolean
   def is_admin?(user_id) do
-    Enum.member?([1], user_id)
+    Enum.member?([1, 2, 3], user_id)
+  end
+
+  @spec is_admin?(String.t()) :: boolean
+  def is_discord_admin?(discord_user_id) do
+    Enum.member?(
+      ["192906671167635457", "757380853918597221", "691353925093294161"],
+      discord_user_id
+    )
   end
 
   ###########################
