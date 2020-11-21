@@ -18,6 +18,9 @@ defmodule Crossable.Commands.Invoker do
       ["!remindme" | _tl] ->
         Crossable.Commands.RemindMe.invoke(msg)
 
+      ["!remindthem" | _tl] ->
+        Crossable.Commands.RemindThem.invoke(msg)
+
       # ["!raid" | _tl] ->
       #   Crossable.Commands.Raid.invoke(msg)
 

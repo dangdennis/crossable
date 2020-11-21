@@ -5,10 +5,13 @@ defmodule Crossable.UsersTest do
 
   describe "users" do
     @valid_attrs %{
-      deleted_at: "2010-04-17T14:00:00Z",
       discord_user_id: "some discord_user_id",
+      username: "some username",
       password_hash: "some password_hash",
-      avatar: %{user_id: 1}
+      active: true,
+      time_zone: "America/New_York",
+      avatar: %{user_id: 1},
+      deleted_at: "2010-04-17T14:00:00Z"
     }
 
     # @update_attrs %{
@@ -40,9 +43,9 @@ defmodule Crossable.UsersTest do
       end)
     end
 
-    # test "list_active_users/0 returs all active users" do
-    #   Users.list_active_users() |> IO.inspect()
-    # end
+    test "list_active_users/0 returs all active users" do
+      Users.list_active_users() |> IO.inspect()
+    end
 
     #     test "get_user!/1 returns the user with given id" do
     #       user = user_fixture()
@@ -80,10 +83,10 @@ defmodule Crossable.UsersTest do
     #       assert_raise Ecto.NoResultsError, fn -> Users.get_user!(user.id) end
     #     end
 
-    #     test "change_user/1 returns a user changeset" do
-    #       user = user_fixture()
-    #       assert %Ecto.Changeset{} = Users.change_user(user)
-    #     end
+    test "change_user/1 returns a user changeset" do
+      user = user_fixture()
+      assert %Ecto.Changeset{} = Users.change_user(user)
+    end
   end
 
   #   describe "profiles" do

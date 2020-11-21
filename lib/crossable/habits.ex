@@ -78,6 +78,22 @@ defmodule Crossable.Habits do
   end
 
   @doc """
+  Sends habit reminders to all active users if it's after 6PM their time zone
+
+  """
+  def send_active_users_habit_reminders() do
+    Crossable.Users.list_active_users()
+    |> Enum.each(fn user ->
+      {:ok, user_current_dt} =
+        DateTime.now(user.time_zone || "America/New_York", Tzdata.TimeZoneDatabase)
+
+      Crossable.Time.run_at_time(DateTime.to_time(user_current_dt), ~T[18:00:00], fn ->
+        spawn(fn -> send_reminder(user.discord_user_id) end)
+      end)
+    end)
+  end
+
+  @doc """
   Sends a habit reminder to a Discord user.
 
   ## Examples

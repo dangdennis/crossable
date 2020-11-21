@@ -7,6 +7,7 @@ defmodule Crossable.Schema.Users.User do
     field :username, :string
     field :password_hash, :string
     field :active, :boolean
+    field :time_zone, :string
     field :deleted_at, :utc_datetime
     has_one :avatar, Crossable.Schema.Avatars.Avatar
     has_one :wallet, Crossable.Schema.Tokenomics.Wallet
@@ -21,8 +22,9 @@ defmodule Crossable.Schema.Users.User do
       :username,
       :discord_user_id,
       :password_hash,
-      :deleted_at,
-      :active
+      :active,
+      :time_zone,
+      :deleted_at
     ])
     |> cast_assoc(:avatar, with: &Crossable.Schema.Avatars.Avatar.changeset/2)
     |> validate_required([:discord_user_id])
