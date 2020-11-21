@@ -15,7 +15,12 @@ defmodule Crossable.Workers.Notification.DailyHabit do
     # query for all active users, and send them a reminder
     Crossable.Users.list_active_users()
     |> Enum.each(fn user ->
-      Crossable.Habits.send_reminder(user.discord_user_id)
+      {:ok, user_current_dt} =
+        DateTime.now(user.time_zone || "America/New_York", Tzdata.TimeZoneDatabase)
+
+      Crossable.Time.run_at_time(DateTime.to_time(user_current_dt), ~T[18:00:00], fn ->
+        spawn(fn -> Crossable.Habits.send_reminder(user.discord_user_id) end)
+      end)
     end)
 
     :ok

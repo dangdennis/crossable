@@ -128,6 +128,9 @@ defmodule Crossable.Habits do
     """)
   end
 
+  @doc """
+  Sets the thumbs-up and thumbs-down emoji on a Discord message.
+  """
   def set_reminder_reactions(channel_id, msg_id) do
     with {:ok} <- Nostrum.Api.create_reaction(channel_id, msg_id, "👍"),
          :timer.sleep(500),
@@ -136,11 +139,6 @@ defmodule Crossable.Habits do
     else
       err -> {:error, err}
     end
-  end
-
-  def print_sql(queryable) do
-    IO.puts(Ecto.Adapters.SQL.to_sql(:all, Repo, queryable))
-    queryable
   end
 
   @doc """
