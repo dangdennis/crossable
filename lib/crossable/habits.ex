@@ -3,6 +3,8 @@ defmodule Crossable.Habits do
   The Habits context.
   """
 
+  require Logger
+
   import Ecto.Query, warn: false
   alias Crossable.Repo
   alias Crossable.Schema.Habits.HabitReminder
@@ -87,7 +89,7 @@ defmodule Crossable.Habits do
       {:ok, user_current_dt} =
         DateTime.now(user.time_zone || "America/New_York", Tzdata.TimeZoneDatabase)
 
-      Crossable.Time.run_at_time(DateTime.to_time(user_current_dt), ~T[18:00:00], fn ->
+      Crossable.Time.run_once_within_hour(DateTime.to_time(user_current_dt), ~T[18:00:00], fn ->
         spawn(fn -> send_reminder(user.discord_user_id) end)
       end)
     end)
@@ -102,7 +104,7 @@ defmodule Crossable.Habits do
       {:ok, _}
   """
   def send_reminder(discord_user_id) do
-    IO.puts("""
+    Logger.info("""
     attempt to send reminder to discord user #{discord_user_id}
     """)
 
@@ -139,7 +141,7 @@ defmodule Crossable.Habits do
         content: msg.content
       })
 
-    IO.puts("""
+    Logger.info("""
     successfully sent reminder to discord user #{discord_user_id}
     """)
   end
