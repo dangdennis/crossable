@@ -1,17 +1,17 @@
-defmodule Crossable.Schema.Messages.MessageLink do
+defmodule Crossable.Schema.Dialogs.DialogLink do
   @moduledoc """
-  A MessageLink is a message in a chain of messages. Chains can link off one another at any given point,
+  A DialogLink is a message in a chain of messages. Chains can link off one another at any given point,
   providing that the links are set properly to bridge chains.
   """
 
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "message_chains" do
+  schema "dialog_links" do
     # the position of the message along the chain
     field :sequence_position, :integer
 
-    field :chain_id, :integer
+    field :flow_id, :integer
 
     # name is an additional field to help identify the chain
     field :name, :string
@@ -25,9 +25,9 @@ defmodule Crossable.Schema.Messages.MessageLink do
   end
 
   @doc false
-  def changeset(msg, attrs) do
-    msg
-    |> cast(attrs, [:sequence_position, :chain_id, :name, :content, :response_match])
-    |> validate_required([:sequence_position, :chain_id, :content])
+  def changeset(dialog_link, attrs) do
+    dialog_link
+    |> cast(attrs, [:sequence_position, :flow_id, :name, :content, :response_match])
+    |> validate_required([:sequence_position, :flow_id, :content])
   end
 end

@@ -1,15 +1,15 @@
-defmodule Crossable.Schema.Messages.MessageLinkCursor do
+defmodule Crossable.Schema.Dialogs.DialogLinkCursor do
   @moduledoc """
-  A cursor to indicate where a user is in a message chain.
+  A cursor to indicate where a user is in a dialog flow.
   A user should only have one cursor.
   """
 
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "message_link_cursors" do
+  schema "dialog_link_cursors" do
     belongs_to :user, Crossable.Schema.Users.User
-    belongs_to :message_link, Crossable.Schema.Messages.MessageLink
+    belongs_to :message_link, Crossable.Schema.Dialogs.DialogLink
 
     timestamps()
   end

@@ -16,27 +16,27 @@ defmodule Crossable.Messages do
   end
 
   @doc """
-  Creates a new message link.
+  Creates a new dialog link. A dialog link exists as one of many in a dialog flow.
   """
-  def create_message_link(attrs \\ %{}) do
-    %Crossable.Schema.Messages.MessageLink{}
-    |> Crossable.Schema.Messages.MessageLink.changeset(attrs)
+  def create_dialog_link(attrs \\ %{}) do
+    %Crossable.Schema.Dialogs.DialogLink{}
+    |> Crossable.Schema.Dialogs.DialogLink.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Creates a new message link cursor for a user.
+  Creates a new dialog link cursor for a user.
   """
-  def create_message_link_cursor(attrs \\ %{}) do
-    %Crossable.Schema.Messages.MessageLinkCursor{}
-    |> Crossable.Schema.Messages.MessageLinkCursor.changeset(attrs)
+  def create_dialog_link_cursor(attrs \\ %{}) do
+    %Crossable.Schema.Dialogs.DialogLinkCursor{}
+    |> Crossable.Schema.Dialogs.DialogLinkCursor.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Moves a cursor along the chain, or to a new chain.
+  Moves a cursor along the flow.
   """
-  def move_message_link_cursor(chain_id, next_seq_position) do
+  def move_dialog_link_cursor(chain_id, next_seq_position) do
 
   end
 

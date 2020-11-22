@@ -1,9 +1,12 @@
-defmodule Crossable.Repo.Migrations.DialogLinks do
+defmodule Crossable.Repo.Migrations.DialogSystem do
   use Ecto.Migration
 
   def change do
-    create table(:message_links) do
-      add :chain_id, :integer
+    drop table("message_link_cursors")
+    drop table("message_links")
+
+    create table(:dialog_links) do
+      add :flow_id, :integer
       add :sequence_position, :integer
       add :name, :string
       add :content, :string
@@ -12,21 +15,21 @@ defmodule Crossable.Repo.Migrations.DialogLinks do
       add :deleted_at, :utc_datetime
     end
 
-    create unique_index(:message_links, [:chain_id, :sequence_position, :response_match], name: :message_links_chain_id_sequence_position_response_match_index)
+    create unique_index(:dialog_links, [:flow_id, :sequence_position, :response_match], name: :message_links_chain_id_sequence_position_response_match_index)
 
-    alter table(:message_links) do
+    alter table(:dialog_links) do
       modify(:inserted_at, :timestamp, default: fragment("NOW()"))
       modify(:updated_at, :timestamp, default: fragment("NOW()"))
     end
 
-    create table(:message_link_cursors) do
+    create table(:dialog_link_cursors) do
       add :user_id, references(:users)
-      add :message_link_id, references(:message_links)
+      add :message_link_id, references(:dialog_links)
       timestamps()
       add :deleted_at, :utc_datetime
     end
 
-    alter table(:message_link_cursors) do
+    alter table(:dialog_link_cursors) do
       modify(:inserted_at, :timestamp, default: fragment("NOW()"))
       modify(:updated_at, :timestamp, default: fragment("NOW()"))
     end
