@@ -12,6 +12,9 @@ defmodule Crossable.Commands.Invoker do
       ["!balance" | _tl] ->
         Crossable.Commands.Balance.invoke(msg)
 
+      ["!join"] ->
+        Crossable.Commands.Join.invoke(msg)
+
       ["!help" | _tl] ->
         Crossable.Commands.Help.invoke(msg)
 

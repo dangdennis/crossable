@@ -16,18 +16,19 @@ defmodule Crossable.Seeds.Dialogs do
       })
 
     thirty_day_engagement_dialog()
-    |> Enum.map(fn dm ->
-      create_thirty_day_dialog_msg(dm, dialog_flow.id)
+    |> Stream.with_index(1)
+    |> Enum.map(fn {dm, idx} ->
+      create_thirty_day_dialog_msg(dm, dialog_flow.id, idx)
     end)
   end
 
   def create_thirty_day_dialog_msg(
         dm,
-        dialog_flow_id
+        dialog_flow_id,
+        sequence
       ) do
     case dm do
       %{
-        sequence: {major, minor},
         root: root,
         yes: yes,
         no: no,
@@ -36,34 +37,33 @@ defmodule Crossable.Seeds.Dialogs do
         # create the root message
         Crossable.Dialogs.create_dialog_message(%{
           dialog_flow_id: dialog_flow_id,
-          sequence_position: major + minor / 10,
+          sequence_position: sequence,
           content: root
         })
 
         # create the following yes, no, and tip messages (if any)
         Crossable.Dialogs.create_dialog_message(%{
           dialog_flow_id: dialog_flow_id,
-          sequence_position: major + minor / 10,
+          sequence_position: sequence,
           content: yes,
           response_match: "yes"
         })
 
         Crossable.Dialogs.create_dialog_message(%{
           dialog_flow_id: dialog_flow_id,
-          sequence_position: major + minor / 10,
+          sequence_position: sequence,
           content: no,
           response_match: "no"
         })
 
         Crossable.Dialogs.create_dialog_message(%{
           dialog_flow_id: dialog_flow_id,
-          sequence_position: major + minor / 10,
+          sequence_position: sequence,
           content: tip,
           response_match: "tip"
         })
 
       %{
-        sequence: {major, minor},
         root: root,
         yes: yes,
         no: no
@@ -71,21 +71,21 @@ defmodule Crossable.Seeds.Dialogs do
         # create the root message
         Crossable.Dialogs.create_dialog_message(%{
           dialog_flow_id: dialog_flow_id,
-          sequence_position: major + minor / 10,
+          sequence_position: sequence,
           content: root
         })
 
         # create the following yes, no, and tip messages (if any)
         Crossable.Dialogs.create_dialog_message(%{
           dialog_flow_id: dialog_flow_id,
-          sequence_position: major + minor / 10,
+          sequence_position: sequence,
           content: yes,
           response_match: "yes"
         })
 
         Crossable.Dialogs.create_dialog_message(%{
           dialog_flow_id: dialog_flow_id,
-          sequence_position: major + minor / 10,
+          sequence_position: sequence,
           content: no,
           response_match: "no"
         })
