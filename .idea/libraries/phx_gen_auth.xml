@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="phx_gen_auth" type="mix">
+    <CLASSES />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/phx_gen_auth/lib" />
+      <root url="file://$PROJECT_DIR$/deps/phx_gen_auth/priv" />
+    </SOURCES>
+  </library>
+</component>

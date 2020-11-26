@@ -12,4 +12,4 @@
 require Ecto.Query
 
 Crossable.Seeds.Raids.run()
-Crossable.Seeds.DialogLinks.run()
+Crossable.Seeds.Dialogs.run()
