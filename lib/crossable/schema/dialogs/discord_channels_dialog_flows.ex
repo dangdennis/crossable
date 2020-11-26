@@ -11,6 +11,7 @@ defmodule Crossable.Schema.Dialogs.DiscordChannelDialogFlow do
     belongs_to :dialog_flow, Crossable.Schema.Dialogs.DialogFlow
     field :active, :boolean
     field :sequence_position, :float
+    belongs_to :dialog_message, Crossable.Schema.Dialogs.DialogMessage
     timestamps()
     field :deleted_at, :utc_datetime
   end

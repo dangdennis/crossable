@@ -6,10 +6,21 @@ defmodule Crossable.Dialogs do
   import Ecto.Query, warn: false
   alias Crossable.Repo
 
-  @spec create_dialog_flow(Map.t()) :: nil
+  @doc """
+  Creates a new dialog flow.
+  """
   def create_dialog_flow(attrs \\ %{}) do
     %Crossable.Schema.Dialogs.DialogFlow{}
     |> Crossable.Schema.Dialogs.DialogFlow.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Creates a new dialog message. A dialog message exists as one of many in a dialog flow.
+  """
+  def create_dialog_message(attrs \\ %{}) do
+    %Crossable.Schema.Dialogs.DialogMessage{}
+    |> Crossable.Schema.Dialogs.DialogMessage.changeset(attrs)
     |> Repo.insert()
   end
 end
