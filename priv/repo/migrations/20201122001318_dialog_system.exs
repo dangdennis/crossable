@@ -38,7 +38,6 @@ defmodule Crossable.Repo.Migrations.DialogSystem do
       add :discord_channel_id, :string
       add :dialog_flow_id, references(:dialog_flows)
       add :active, :boolean
-      add :sequence_position, :float
       add :dialog_message_id, references(:dialog_messages)
       timestamps()
       add :deleted_at, :utc_datetime

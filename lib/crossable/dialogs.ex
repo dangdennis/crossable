@@ -24,7 +24,7 @@ defmodule Crossable.Dialogs do
     |> Repo.insert()
   end
 
-  @spec assign_dialog_flow_to_channel(integer(), String.t()) :: any
+  @spec assign_dialog_flow_to_channel(String.t(), integer()) :: any
   def assign_dialog_flow_to_channel(channel_id, dialog_flow_id) do
     %Crossable.Schema.Dialogs.DiscordChannelDialogFlow{}
     |> Crossable.Schema.Dialogs.DiscordChannelDialogFlow.changeset(%{
