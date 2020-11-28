@@ -10,7 +10,7 @@ defmodule Crossable.Schema.Dialogs.DiscordChannelDialogFlow do
     field :discord_channel_id, :string
     belongs_to :dialog_flow, Crossable.Schema.Dialogs.DialogFlow
     field :active, :boolean
-    belongs_to :dialog_message, Crossable.Schema.Dialogs.DialogMessage
+    field :sequence_position, :float
     timestamps()
     field :deleted_at, :utc_datetime
   end
@@ -22,6 +22,7 @@ defmodule Crossable.Schema.Dialogs.DiscordChannelDialogFlow do
       :discord_channel_id,
       :active,
       :dialog_flow_id,
+      :sequence_position,
       :deleted_at
     ])
     |> validate_required([:discord_channel_id, :active, :dialog_flow_id])
