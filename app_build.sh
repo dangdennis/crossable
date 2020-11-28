@@ -15,4 +15,4 @@ mix phx.digest
 MIX_ENV=prod mix release --overwrite
 
 # Database setup
-MIX_ENV=prod mix ecto.setup 
+MIX_ENV=prod mix ecto.seed
