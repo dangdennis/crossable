@@ -2,6 +2,7 @@ defmodule Crossable.Commands.Help do
   def available_commands() do
     """
     !myhabit - sometimes you forget what're working on. we get it!
+    !join - sign-up for the latest habit training session.
     !balance - view your wallet balance.
     !help - get a list of all available commands
     """
