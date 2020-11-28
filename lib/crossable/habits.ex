@@ -45,6 +45,7 @@ defmodule Crossable.Habits do
     |> Repo.insert()
   end
 
+  @spec get_habit_reminder_by_msg_id(any, <<_::56>>) :: {:error, <<_::232>>} | {:ok, any}
   def get_habit_reminder_by_msg_id(message_id, "discord") do
     query =
       from hr in HabitReminder,
@@ -113,10 +114,10 @@ defmodule Crossable.Habits do
 
     {:ok, dm_channel} = Nostrum.Api.create_dm(discord_user_id |> String.to_integer())
 
-    msg =
-      Nostrum.Api.create_message!(dm_channel.id, """
-      Daily check-in! Did you complete your individual habit, #{user_habit.habit}?
-      """)
+    {:ok, dialog_message} =
+      Crossable.Dialogs.get_next_dialog_message_to_channel(dm_channel.id |> Integer.to_string())
+
+    {:ok, msg} = Nostrum.Api.create_message(dm_channel.id, dialog_message.content)
 
     {:ok} = set_reminder_reactions(dm_channel.id, msg.id)
 

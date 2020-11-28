@@ -53,6 +53,7 @@ defmodule Crossable.Consumer.MessageReactionAdd do
     # only "❌" = incomplete
     case {reaction.emoji.name, habit_reminder.response} do
       {"👍", nil} ->
+        user_response = "yes"
         Logger.info("got a thumbs up yessss response!")
 
         {:ok, _entry} =
@@ -62,9 +63,19 @@ defmodule Crossable.Consumer.MessageReactionAdd do
             status: "completed"
           })
 
-        spawn(fn -> Crossable.Habits.update_habit_reminder(habit_reminder, %{response: "yes"}) end)
+        spawn(fn ->
+          Crossable.Habits.update_habit_reminder(habit_reminder, %{response: user_response})
+        end)
 
-        spawn(fn -> Nostrum.Api.create_message!(reaction.channel_id, "Nice job!") end)
+        {:ok, dialog_message} =
+          Crossable.Dialogs.get_next_dialog_message_to_channel(
+            reaction.channel_id
+            |> Integer.to_string(),
+            user_response
+          )
+
+        spawn(fn -> Nostrum.Api.create_message!(reaction.channel_id, dialog_message.content) end)
+
         spawn(fn -> award_tokens_with_streaks(user) end)
 
         spawn(fn ->
@@ -74,6 +85,7 @@ defmodule Crossable.Consumer.MessageReactionAdd do
         end)
 
       {"❌", nil} ->
+        user_response = "no"
         Logger.info("got a thumbs down nooooo response!")
 
         {:ok, _entry} =
@@ -83,12 +95,26 @@ defmodule Crossable.Consumer.MessageReactionAdd do
             status: "incomplete"
           })
 
-        spawn(fn -> Crossable.Habits.update_habit_reminder(habit_reminder, %{response: "no"}) end)
-        spawn(fn -> Nostrum.Api.create_message!(reaction.channel_id, "Gotcha!") end)
+        spawn(fn ->
+          Crossable.Habits.update_habit_reminder(habit_reminder, %{response: user_response})
+        end)
+
+        {:ok, dialog_message} =
+          Crossable.Dialogs.get_next_dialog_message_to_channel(
+            reaction.channel_id
+            |> Integer.to_string(),
+            user_response
+          )
+
+        spawn(fn -> Nostrum.Api.create_message!(reaction.channel_id, dialog_message.content) end)
+
         spawn(fn -> {:ok, _} = Crossable.Tokenomics.award_tokens(user, 1) end)
 
       {_, _} ->
-        Logger.info("habit response already recorded")
+        Logger.info(%{
+          message: "habit reminder already handled once",
+          habit_reminder: habit_reminder.id
+        })
     end
   end
 
