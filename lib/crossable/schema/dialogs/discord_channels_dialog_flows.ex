@@ -29,5 +29,6 @@ defmodule Crossable.Schema.Dialogs.DiscordChannelDialogFlow do
     |> unique_constraint([:discord_channel_id, :dialog_flow_id],
       name: :discord_channels_dialog_flows_discord_channel_id_dialog_flow_id
     )
+    |> foreign_key_constraint(:dialog_flow_id)
   end
 end

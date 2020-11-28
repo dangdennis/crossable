@@ -126,6 +126,9 @@ defmodule Crossable.Dialogs do
   @doc """
   Finds the correct dialog message to send to a channel. If no response match is passed as a second argument,
   the root dialog message is returned.
+
+  We don't increment the sequence because we expect a response from the user.
+  On response, we move the user along the dialog flow.
   """
   def get_next_dialog_message_to_channel(channel_id) do
     # get the channel_dialog_flow entity
@@ -136,9 +139,6 @@ defmodule Crossable.Dialogs do
         dialog_flow_id: channel_dialog_flow.dialog_flow_id,
         sequence_position: channel_dialog_flow.sequence_position
       })
-
-    # we don't increment the sequence because we expect a response from the user.
-    # on response, we move the user along the dialog flow.
 
     {:ok, dialog_msg}
   end

@@ -2,6 +2,7 @@ defmodule Crossable.Seeds.Dialogs do
   @moduledoc """
   Seed data for message links.
   """
+  require Logger
   require Ecto.Query
 
   def run() do
@@ -10,16 +11,21 @@ defmodule Crossable.Seeds.Dialogs do
   end
 
   def seed_thirty_day_dialogs() do
-    {:ok, dialog_flow} =
-      Crossable.Dialogs.create_dialog_flow(%{
-        name: "30-day habit engagement"
-      })
+    case Crossable.Dialogs.create_dialog_flow(%{
+           name: "30-day habit engagement"
+         }) do
+      {:ok, dialog_flow} ->
+        Logger.info("add new dialog flow")
 
-    thirty_day_engagement_dialog()
-    |> Stream.with_index(1)
-    |> Enum.map(fn {dm, idx} ->
-      create_thirty_day_dialog_msg(dm, dialog_flow.id, idx)
-    end)
+        thirty_day_engagement_dialog()
+        |> Stream.with_index(1)
+        |> Enum.map(fn {dm, idx} ->
+          create_thirty_day_dialog_msg(dm, dialog_flow.id, idx)
+        end)
+
+      {:error, _} ->
+        Logger.info("dialog flow already exists")
+    end
   end
 
   def create_thirty_day_dialog_msg(

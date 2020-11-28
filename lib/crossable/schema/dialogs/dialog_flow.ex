@@ -18,5 +18,6 @@ defmodule Crossable.Schema.Dialogs.DialogFlow do
     dialog_flow
     |> cast(attrs, [:name, :deleted_at])
     |> validate_required([:name])
+    |> unique_constraint([:name])
   end
 end
