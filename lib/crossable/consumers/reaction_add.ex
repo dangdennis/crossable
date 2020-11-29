@@ -76,7 +76,7 @@ defmodule Crossable.Consumer.MessageReactionAdd do
 
         spawn(fn -> Nostrum.Api.create_message!(reaction.channel_id, dialog_message.content) end)
 
-        spawn(fn -> award_tokens_with_streaks(user) end)
+        spawn(fn -> award_tokens_with_streaks(user, reaction.channel_id) end)
 
         spawn(fn ->
           Crossable.Messages.broadcast_message("""
@@ -110,6 +110,8 @@ defmodule Crossable.Consumer.MessageReactionAdd do
 
         spawn(fn -> {:ok, _} = Crossable.Tokenomics.award_tokens(user, 1) end)
 
+        Nostrum.Api.create_message!(reaction.channel_id, "Here's one token!")
+
       {_, _} ->
         Logger.info(%{
           message: "habit reminder already handled once",
@@ -122,14 +124,13 @@ defmodule Crossable.Consumer.MessageReactionAdd do
     Logger.error(reason <> " for user id" <> (user.id |> Integer.to_string()))
   end
 
-  @spec award_tokens_with_streaks(Crossable.Schema.Users.User.t()) ::
-          {:ok, Crossable.Schema.Tokenomics.Wallet.t()}
-  def award_tokens_with_streaks(user) do
+  def award_tokens_with_streaks(user, channel_id) do
     # query the user's habit logs for streaks
     # first check for a 30-day streak
     case Crossable.Habits.get_habit_streak(user.id, 30) do
       30 ->
         {:ok, _} = Crossable.Tokenomics.award_tokens(user, 20)
+        Nostrum.Api.create_message!(channel_id, "You earned 20 tokens for a crazy 30-day streak!")
 
       _ ->
         # if they're not on a 30-day streak, check for a 7-day streak
@@ -137,11 +138,17 @@ defmodule Crossable.Consumer.MessageReactionAdd do
           7 ->
             {:ok, _} = Crossable.Tokenomics.award_tokens(user, 5)
 
+            Nostrum.Api.create_message!(
+              channel_id,
+              "You earned 5 tokens for a great 7-day streak!"
+            )
+
           _ ->
             nil
         end
     end
 
     {:ok, _} = Crossable.Tokenomics.award_tokens(user, 2)
+    Nostrum.Api.create_message!(channel_id, "Here are 2 tokens!")
   end
 end
