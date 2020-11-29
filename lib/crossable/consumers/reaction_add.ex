@@ -108,9 +108,10 @@ defmodule Crossable.Consumer.MessageReactionAdd do
 
         spawn(fn -> Nostrum.Api.create_message!(reaction.channel_id, dialog_message.content) end)
 
-        spawn(fn -> {:ok, _} = Crossable.Tokenomics.award_tokens(user, 1) end)
-
-        Nostrum.Api.create_message!(reaction.channel_id, "Here's one token!")
+        spawn(fn ->
+          {:ok, _} = Crossable.Tokenomics.award_tokens(user, 1)
+          Nostrum.Api.create_message!(reaction.channel_id, "Here's one token!")
+        end)
 
       {_, _} ->
         Logger.info(%{
@@ -149,6 +150,6 @@ defmodule Crossable.Consumer.MessageReactionAdd do
     end
 
     {:ok, _} = Crossable.Tokenomics.award_tokens(user, 2)
-    Nostrum.Api.create_message!(channel_id, "Here are 2 tokens!")
+    Nostrum.Api.create_message!(channel_id, "Have 2 tokens!")
   end
 end
