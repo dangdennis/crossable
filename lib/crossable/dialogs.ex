@@ -102,7 +102,7 @@ defmodule Crossable.Dialogs do
     end
   end
 
-  def update_discord_channel_dialog_flow(%DiscordChannelDialogFlow{} = dc_df, attrs) do
+  def update_discord_channel_dialog_flow(%DiscordChannelDialogFlow{} = dc_df, attrs = %{}) do
     dc_df
     |> DiscordChannelDialogFlow.changeset(attrs)
     |> Repo.update()

@@ -43,10 +43,6 @@ defmodule Crossable.UsersTest do
       end)
     end
 
-    test "list_active_users/0 returns all active users" do
-      assert [] = Users.list_active_users()
-    end
-
     #     test "get_user!/1 returns the user with given id" do
     #       user = user_fixture()
     #       assert Users.get_user!(user.id) == user

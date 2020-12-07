@@ -84,4 +84,19 @@ defmodule Crossable.DialogsTest do
                })
     end
   end
+
+  describe "Crossable.Dialogs.increment_dialog_sequence/1" do
+    test "should increment dialog sequence by one" do
+      {:ok, dialog_flow} = Crossable.Dialogs.create_dialog_flow(%{name: "random name"})
+
+      {:ok, channel_dialog_flow} =
+        Crossable.Dialogs.assign_dialog_flow_to_channel(
+          "12341241",
+          dialog_flow.id
+        )
+
+      {:ok, updated_cdf} = Crossable.Dialogs.increment_dialog_sequence(channel_dialog_flow)
+      assert updated_cdf.sequence_position == 2
+    end
+  end
 end
