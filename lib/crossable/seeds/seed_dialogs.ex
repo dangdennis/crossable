@@ -17,6 +17,10 @@ defmodule Crossable.Seeds.Dialogs do
       {:ok, dialog_flow} ->
         Logger.info("add new dialog flow")
 
+        # drop all dialog messages first to avoid conflicts
+        # dialog messages should always remain stateless.
+        Crossable.Dialogs.drop_messages_for_dialog_flow(dialog_flow.id)
+
         thirty_day_engagement_dialog()
         |> Stream.with_index(1)
         |> Enum.map(fn {dm, idx} ->

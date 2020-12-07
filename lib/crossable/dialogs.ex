@@ -13,18 +13,39 @@ defmodule Crossable.Dialogs do
   Creates a new dialog flow.
   """
   def create_dialog_flow(attrs \\ %{}) do
+    on_conflict = [
+      set: [
+        name: Map.get(attrs, :name),
+        updated_at:
+          NaiveDateTime.utc_now()
+          |> NaiveDateTime.truncate(:second)
+      ]
+    ]
+
     %DialogFlow{}
     |> DialogFlow.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert(on_conflict: on_conflict, conflict_target: :name)
   end
 
   @doc """
   Creates a new dialog message. A dialog message exists as one of many in a dialog flow.
   """
   def create_dialog_message(attrs \\ %{}) do
+    # on_conflict = [
+    #   set: [
+    #     name: Map.get(attrs, :name),
+    #     updated_at:
+    #       NaiveDateTime.utc_now()
+    #       |> NaiveDateTime.truncate(:second)
+    #   ]
+    # ]
+
     %DialogMessage{}
     |> DialogMessage.changeset(attrs)
-    |> Repo.insert(on_conflict: :replace_all)
+    |> Repo.insert(
+      # on_conflict: :replace_all,
+      # conflict_target: [:dialog_flow_id, :sequence_position, :response_match]
+    )
   end
 
   @doc """
@@ -164,5 +185,10 @@ defmodule Crossable.Dialogs do
     update_discord_channel_dialog_flow(channel_dialog_flow, %{
       sequence_position: channel_dialog_flow.sequence_position + 1
     })
+  end
+
+  def drop_messages_for_dialog_flow(flow_id) do
+    from(m in DialogMessage, where: m.dialog_flow_id == ^flow_id)
+    |> Repo.delete_all()
   end
 end
