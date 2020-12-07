@@ -140,6 +140,8 @@ defmodule Crossable.Dialogs do
         sequence_position: channel_dialog_flow.sequence_position
       })
 
+    {:ok, _updated_channel_dialog_flow} = increment_dialog_sequence(channel_dialog_flow)
+
     {:ok, dialog_msg}
   end
 
@@ -154,12 +156,13 @@ defmodule Crossable.Dialogs do
         response_match: response_match
       })
 
-    # increment the sequence for the join entity
-    {:ok, _updated_channel_dialog_flow} =
-      update_discord_channel_dialog_flow(channel_dialog_flow, %{
-        sequence_position: channel_dialog_flow.sequence_position + 1
-      })
-
     {:ok, dialog_msg}
+  end
+
+  def increment_dialog_sequence(channel_dialog_flow) do
+    # increment the sequence for the join entity
+    update_discord_channel_dialog_flow(channel_dialog_flow, %{
+      sequence_position: channel_dialog_flow.sequence_position + 1
+    })
   end
 end

@@ -45,8 +45,9 @@ defmodule Crossable.Consumer.MessageReactionAdd do
     end
   end
 
-  # Handles any reactions that may be a response to a reminder question.
-
+  @doc """
+  Handles any reactions that may be a response to a reminder question.
+  """
   def handle_habit_reminder_response({:ok, habit_reminder}, reaction, user) do
     # log whether or not the user completed their habit
     # only "👍" = completed
@@ -56,6 +57,7 @@ defmodule Crossable.Consumer.MessageReactionAdd do
         user_response = "yes"
         Logger.info("got a thumbs up yessss response!")
 
+        # log the user's habit progression
         {:ok, _entry} =
           Crossable.Habits.create_habit_log_entry(%{
             user_id: user.id,
@@ -63,10 +65,12 @@ defmodule Crossable.Consumer.MessageReactionAdd do
             status: "completed"
           })
 
+        # log the user's response to the habit
         spawn(fn ->
           Crossable.Habits.update_habit_reminder(habit_reminder, %{response: user_response})
         end)
 
+        # send out the next dialog message
         {:ok, dialog_message} =
           Crossable.Dialogs.get_next_dialog_message_to_channel(
             reaction.channel_id
@@ -76,8 +80,10 @@ defmodule Crossable.Consumer.MessageReactionAdd do
 
         spawn(fn -> Nostrum.Api.create_message!(reaction.channel_id, dialog_message.content) end)
 
+        # award the users tokens accordingly
         spawn(fn -> award_tokens_with_streaks(user, reaction.channel_id) end)
 
+        # broadcast to any subscribed general channels
         spawn(fn ->
           Crossable.Messages.broadcast_message("""
           #{user.username} did their habit today!
