@@ -127,27 +127,31 @@ defmodule Crossable.Seeds.Dialogs do
     [
       new_thirty_day_dialog_msg(
         {1, 1},
-        "Howdy! I’m your friendly CrossBot partner and I’ll be doing a daily checking with you for the next 30 days!",
-        "Awesome!",
-        "Drop a message in the #ask-the-team channel and one of our team (Human) will answer your question as soon as possible. Thanks!"
+        """
+        Howdy! I’m your CrossBot Coach and I’ll be doing a daily checking in with you for the next 30 days to make sure you're doing your habit!
+        I know you want your Avatar looking sharp so you get 2 tokens for logging you've completed your habit and 1 token just for checking in, even if you haven't completed your habit.
+        Click 👍 if you understand, click the ❌ if you do not.
+        """,
+        "Awesome! Great to have you on board.",
+        "Drop a message in the #ask-the-team channel and one of our team (a real human) will help you as soon as possible. Thanks!"
       ),
       new_thirty_day_dialog_msg(
         {1, 2},
         "Good morning! Did you get a chance to do your new habit yesterday?",
-        "Well done friend. You're a hero!",
+        "Well done, friend. You're a hero!",
         "We all fall short sometimes. It happens. What defines us is our ability to come back."
       ),
       new_thirty_day_dialog_msg(
         {1, 3},
-        "Hey teammate! How did it go yesterday? React 👍  if you did your habit and ❌ if not.",
-        "Awesome work buddy! Keep it up.",
+        "Hey teammate! How did it go yesterday? React 👍  if you did your habit otherwise a ❌ is cool.",
+        "Awesome work, buddy! Keep it up.",
         "Not to worry, if you feel you need some support, reach out to a human member of the team on the #ask-the-team."
       ),
       new_thirty_day_dialog_msg(
         {1, 4},
         "Hello, this is your friendly CrossBot. We are on day 3 of your new habit! Did you complete your habit?",
         "You're a warrior - keep up the great work!",
-        "That's okay. Hopefully it will be easier to find the time and motivation tomorrow.",
+        "Let not make a habit out of this! We recommend scheduling some time in your calendar to do your habit. We are more likely to complete a habit if it is schedule of a specific time.",
         """
         😇 Habit anchoring tip:
         Did you know that it’s easier to start a new habit if it’s anchored to an existing habit in your life?
@@ -157,9 +161,9 @@ defmodule Crossable.Seeds.Dialogs do
       ),
       new_thirty_day_dialog_msg(
         {1, 5},
-        "Hi folks, how’s it going? 5 days of Crossable and going strong 💪. React 👍 if you did your habit yesterday and if ❌ not.",
-        "This is too easy for you! Maybe we need to increase the difficult settings!",
-        "That sucks. No worries though and let the Crossable team know if you need any support on the #ask-the-team channel.",
+        "Hey, how’s it going? React 👍 if you did your habit yesterday and ❌ if not.",
+        "This is too easy for you! Maybe we need to increase the difficult setting!",
+        "No worries, let the Crossable team know if you need any support on the #ask-the-team channel.",
         """
         😇 My 2 cents? In order to finish the week strong, make a plan now for when to accomplish your habit on Saturday and Sunday and when to rest!
         """
@@ -168,35 +172,35 @@ defmodule Crossable.Seeds.Dialogs do
         {1, 6},
         "What's up? Did you complete your habit?",
         "You make me so proud. I'm going to start running my pride protocol!",
-        "Ah no worries. Visualize doing it tomorrow and how great it will feel to complete it tomorrow."
+        "Ah no worries. Visualize doing it tomorrow and how great it will feel to complete it."
       ),
       new_thirty_day_dialog_msg(
         {1, 7},
         "You know the drill.",
         "Excellent work my friend - see you again soon!",
-        "Ah it's okay, see you soon and looking forward to hearing about how you completed your habit.",
+        "Ah, I'm a little disappointed. Are you? See you soon and looking forward to hearing about how you completed your habit.",
         """
         🔨 Crossable team action:
-        Also, congrats on completing a week of Crossable. Give yourselves a pat on the back, a self-hug, or even a high-five and share your new avatars with each other in this channel!
+        Also, congrats on completing a week of Crossable. Give yourselves a pat on the back, a self-hug, or even a high-five and share your new avatars with each other in the general channel!
         """
       ),
       new_thirty_day_dialog_msg(
         {2, 1},
-        "Hey there! It’s been a whole week since you started your new habit :eyes: Did you get a chance to do your habit over the weekend? React 👍 for Yes and ❌ for No.",
+        "Hey there! It’s been a whole week since you started your new habit 👀. Did you complete your habit? 👍 for Yes and ❌ for No.",
         "Congratulations! Great to have you on the team champ.",
-        "Don't worry, I'm sure you've had a hard day. Try and schedule some time for tomorrow for your habit."
+        "\"If you fall off a horse, you get back up\". Schedule some time for tomorrow for your habit."
       ),
       new_thirty_day_dialog_msg(
         {2, 2},
-        "Good morning :) If you got your habit done yesterday, react 👍 If not, react ❌.",
-        "Well done friend. You're a hero!",
+        "Good morning :) If you got your habit done yesterday, react 👍. If not, react ❌.",
+        "Well done, friend. You're a hero!",
         "We all fall short sometimes. It happens. What defines us is our ability to come back."
       ),
       new_thirty_day_dialog_msg(
         {2, 3},
         "Hey team! How did it go yesterday? React 👍 if you did your habit and ❌ if not.",
-        "Awesome work buddy! Keep it up.",
-        "Not to worry, if you feel you need some support, reach out to a human member of the team on the #ask-the-team."
+        "Awesome work, buddy! Keep it up.",
+        "Not to worry, if you feel you need some support, reach out to a human member of the team in #ask-the-team."
       ),
       new_thirty_day_dialog_msg(
         {2, 4},
@@ -213,13 +217,13 @@ defmodule Crossable.Seeds.Dialogs do
         "Howdy! If you completed your habit yesterday, react 👍, if not, react ❌.",
         "This is too easy for you! Maybe we need to increase the difficult settings!",
         "That sucks. No worries though and let the Crossable team know if you need any support on the #ask-the-team channel.",
-        "🔨12 days into your new habit! Have you noticed any changes in your thoughts or actions throughout the day?"
+        "🔨12 days into your new habit! Have you noticed any changes in your thoughts or actions throughout the day? Post it in the #general channel."
       ),
       new_thirty_day_dialog_msg(
         {2, 6},
         "What's up? Did you complete your habit?",
         "You make me so proud. I'm going to start running my pride protocol!",
-        "Ah no worries. Visualize doing it tomorrow and how great it will feel to complete it tomorrow."
+        "Ah no worries. Visualize doing it tomorrow and how great it will feel to complete it."
       ),
       new_thirty_day_dialog_msg(
         {2, 7},
@@ -229,23 +233,23 @@ defmodule Crossable.Seeds.Dialogs do
       ),
       new_thirty_day_dialog_msg(
         {3, 1},
-        " Hey team! It’s been two weeks since you started your new habit 🙌. Let’s keep up the momentum this week. Did you get a chance to do your habit over the weekend? React 👍 for Yes and ❌ for No.",
+        "Heya! It’s been two weeks since you started your new habit 🙌. Let’s keep up the momentum this week. Did you get a chance to do your habit today? React 👍 for Yes and ❌ for No.",
         "Congratulations! Great to have you on the team champ.",
-        "Don't worry, I'm sure you've had a hard day. Try and schedule some time for tomorrow for your habit."
+        "Don't worry, you've have a tough day. Try and schedule some time for tomorrow for your habit."
       ),
       new_thirty_day_dialog_msg(
         {3, 2},
         """
-        Hi folks, If you got your habit done yesterday, react 👍, If not, react ❌.
-        Congrats again on your new avatar upgrades. Feel free to flex your new avatars with each other in this channel!
+        Hello! If you got your habit done yesterday, react 👍. Otherwise, react ❌.
+        Congrats again on your new avatar upgrades. Feel free to flex your new avatars with each other in the general channel!
         """,
-        "Well done friend. You're a hero!",
+        "Well done, friend. You're a hero!",
         "We all fall short sometimes. It happens. What defines us is our ability to come back."
       ),
       new_thirty_day_dialog_msg(
         {3, 3},
-        "Good morning :) How did it go yesterday? React 👍 if you did your habit and ❌ if not.",
-        "Awesome work buddy! Keep it up.",
+        "Good morning :) How did it go yesterday? React 👍 if you did your habit, otherwise ❌ is fine too!",
+        "Awesome work, buddy! Keep it up.",
         "Not to worry, if you feel you need some support, reach out to a human member of the team on the #ask-the-team."
       ),
       new_thirty_day_dialog_msg(
@@ -271,15 +275,15 @@ defmodule Crossable.Seeds.Dialogs do
       ),
       new_thirty_day_dialog_msg(
         {3, 6},
-        "What's up? Did you complete your habit? ",
+        "What's up? Did you complete your habit?",
         "You make me so proud. I'm going to start running my pride protocol! ",
-        "Ah no worries. Visualize doing it tomorrow and how great it will feel to complete it tomorrow. "
+        "Ah no worries. Visualize doing it tomorrow and how great it will feel to complete it."
       ),
       new_thirty_day_dialog_msg(
         {3, 7},
         "You know the drill.",
         "Excellent work my friend - see you again soon! ",
-        "Ah it's okay, see you soon and looking forward to hearing about how you completed your habit. "
+        "Ah it's okay, see you soon and looking forward to hearing from you when you next complete your habit."
       ),
       new_thirty_day_dialog_msg(
         {4, 1},
@@ -296,13 +300,13 @@ defmodule Crossable.Seeds.Dialogs do
         Hiya! If you got your habit done yesterday, react 👍. If not, react ❌.
         Congrats again on your new avatar upgrades. Feel free to flaunt your new avatars with each other in this channel, or keep it a surprise until graduation!
         """,
-        "Well done friend. You're a hero!",
+        "Well done, friend. You're a hero!",
         "We all fall short sometimes. It happens. What defines us is our ability to come back."
       ),
       new_thirty_day_dialog_msg(
         {4, 3},
-        "Hi folks, How did it go yesterday? React 👍 if you did your habit and ❌ if not. You are so close!",
-        "Awesome work buddy! Keep it up.",
+        "Howdy! How did it go yesterday? React 👍 if you did your habit and ❌ if not. You are so close!",
+        "Awesome work, buddy! Keep it up.",
         "Not to worry, if you feel you need some support, reach out to a human member of the team on the #ask-the-team."
       ),
       new_thirty_day_dialog_msg(
@@ -323,14 +327,14 @@ defmodule Crossable.Seeds.Dialogs do
       new_thirty_day_dialog_msg(
         {4, 6},
         "What's up? We're almost there! Did you complete your habit?",
-        "You make me so proud. I'm going to start running my pride protocol! ",
-        "Ah no worries. Visualise doing it tomorrow and how great it will feel to complete it tomorrow. "
+        "You make me so proud. I'm running my pride protocol one more time!",
+        "No sweat. Streaks don't matter! Finish it strong tomorrow."
       ),
       new_thirty_day_dialog_msg(
         {4, 7},
-        "Final stretch! You know the drill.",
+        "Home stretch! You know the drill.",
         "Excellent work my friend - we made it to the very end of 30 days!",
-        " There's always more after this!"
+        "There'll be more after this!"
       )
     ]
   end

@@ -24,7 +24,7 @@ defmodule Crossable.Dialogs do
   def create_dialog_message(attrs \\ %{}) do
     %DialogMessage{}
     |> DialogMessage.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert(on_conflict: :replace_all)
   end
 
   @doc """
