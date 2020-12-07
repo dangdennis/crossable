@@ -133,15 +133,6 @@ defmodule Crossable.Habits do
         platform: "discord"
       })
 
-    # Log all bot messages
-    {:ok, _} =
-      Crossable.Messages.create_discord_message(%{
-        recipient_id: user.id,
-        is_bot: true,
-        discord_msg_id: msg.id |> Integer.to_string(),
-        content: msg.content
-      })
-
     Logger.info("""
     successfully sent reminder to discord user #{discord_user_id}
     """)
