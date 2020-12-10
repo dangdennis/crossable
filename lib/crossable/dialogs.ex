@@ -31,21 +31,45 @@ defmodule Crossable.Dialogs do
   Creates a new dialog message. A dialog message exists as one of many in a dialog flow.
   """
   def create_dialog_message(attrs \\ %{}) do
-    # on_conflict = [
-    #   set: [
-    #     name: Map.get(attrs, :name),
-    #     updated_at:
-    #       NaiveDateTime.utc_now()
-    #       |> NaiveDateTime.truncate(:second)
-    #   ]
-    # ]
+    on_conflict = [
+      set: [
+        content: Map.get(attrs, :content),
+        updated_at:
+          NaiveDateTime.utc_now()
+          |> NaiveDateTime.truncate(:second)
+      ]
+    ]
+
+    opts =
+      case Map.get(attrs, :response_match) do
+        nil ->
+          IO.puts("no res match")
+          IO.inspect(attrs)
+
+          [
+            on_conflict: on_conflict,
+            conflict_target:
+              {:unsafe_fragment,
+               "(dialog_flow_id, response_match, sequence_position) WHERE response_match is null"}
+          ]
+
+        _ ->
+          IO.puts("res match")
+
+          [
+            on_conflict: on_conflict,
+            conflict_target: [:dialog_flow_id, :sequence_position, :response_match]
+          ]
+      end
 
     %DialogMessage{}
     |> DialogMessage.changeset(attrs)
-    |> Repo.insert(
-      # on_conflict: :replace_all,
-      # conflict_target: [:dialog_flow_id, :sequence_position, :response_match]
-    )
+    |> Repo.insert(opts)
+  end
+
+  def print_sql(queryable) do
+    IO.inspect(Ecto.Adapters.SQL.to_sql(:all, Repo, queryable))
+    queryable
   end
 
   @doc """

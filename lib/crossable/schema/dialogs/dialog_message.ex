@@ -24,5 +24,11 @@ defmodule Crossable.Schema.Dialogs.DialogMessage do
     msg
     |> cast(attrs, [:sequence_position, :dialog_flow_id, :content, :response_match])
     |> validate_required([:sequence_position, :dialog_flow_id, :content])
+    |> unique_constraint([:dialog_flow_id, :sequence_position],
+      name: "dialog_messages_dialog_flow_id_sequence_position_index"
+    )
+    |> unique_constraint([:dialog_flow_id, :sequence_position, :response_match],
+      name: "dialog_messages_dialog_flow_id_sequence_position_response_match"
+    )
   end
 end

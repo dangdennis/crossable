@@ -27,6 +27,12 @@ defmodule Crossable.Messages do
 
   @spec broadcast_channels :: [integer()]
   def broadcast_channels() do
-    [746_529_655_133_175_952]
+    # TODO move these channels to a database table
+    channels = %{
+      crossable_dev_general: 746_529_655_133_175_952,
+      crossable_community_daily_update_channel: 748_927_605_520_203_836
+    }
+
+    Enum.map(channels, fn {_k, v} -> v end)
   end
 end
