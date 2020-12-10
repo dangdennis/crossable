@@ -17,6 +17,8 @@ defmodule Crossable.Seeds.Dialogs do
       {:ok, dialog_flow} ->
         Logger.info("created or updated dialog flow")
 
+        # Crossable.Dialogs.drop_messages_for_dialog_flow(dialog_flow.id)
+
         thirty_day_engagement_dialog()
         |> Stream.take(1)
         |> Stream.with_index(1)
@@ -129,13 +131,12 @@ defmodule Crossable.Seeds.Dialogs do
       new_thirty_day_dialog_msg(
         {1, 1},
         """
-        ZSHSS
         Howdy! I’m your CrossBot Coach and I’ll be doing a daily checking in with you for the next 30 days to make sure you're doing your habit!
         I know you want your Avatar looking sharp so you get 2 tokens for logging you've completed your habit and 1 token just for checking in, even if you haven't completed your habit.
         Click 👍 if you understand, click the ❌ if you do not.
         """,
-        "asdfsafaf Awesome! Great to have you on board.",
-        "zzzz Drop a message in the #ask-the-team channel and one of our team (a real human) will help you as soon as possible. Thanks!"
+        "Awesome! Great to have you on board.",
+        "Drop a message in the #ask-the-team channel and one of our team (a real human) will help you as soon as possible. Thanks!"
       ),
       new_thirty_day_dialog_msg(
         {1, 2},

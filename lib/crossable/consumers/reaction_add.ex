@@ -86,7 +86,7 @@ defmodule Crossable.Consumer.MessageReactionAdd do
         # broadcast to any subscribed general channels
         spawn(fn ->
           Crossable.Messages.broadcast_message("""
-          #{user.username} did their habit today!
+          #{user.username} did their habit!
           """)
         end)
 
