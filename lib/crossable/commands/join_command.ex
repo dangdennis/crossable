@@ -7,7 +7,7 @@ defmodule Crossable.Commands.Join do
     case Crossable.Dialogs.assign_dialog_flow_to_channel(dm_channel.id |> Integer.to_string(), 1) do
       {:ok, _channel_dialog_flow} ->
         Nostrum.Api.create_message!(dm_channel.id, """
-        You're on for a 30-day treat!
+        You're on for a 30-day treat! I'll check in with you every day at 6PM your time. Will you please make sure you tell the Crossable team your preferred time zone?
         """)
 
       {:error, _reason} ->
